@@ -1,0 +1,34 @@
+h5 a {
+  color: #07141b;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+p a {
+  color: #07141b;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+p a:hover {
+  color: #0d222d;
+  text-decoration: underline;
+}
+
+h5 a:hover {
+  color: #0d222d;
+  text-decoration: underline;
+}
+
+.table a {
+  color: #283d4a;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
+.table a:hover {
+  color: #043f62;
+  text-decoration: underline;
+}
+
