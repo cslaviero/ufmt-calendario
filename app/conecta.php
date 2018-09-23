@@ -3,7 +3,7 @@
 //DEFINE O LOGIN E SENHA PARA CONEXÃO COM O BANCO DE DADOS
 $ConnLocal = "localhost";
 $ConnLogin = "root";
-$ConnSenha = "root";
+$ConnSenha = "";
 $ConnDatabase = "calendario";
 
 // CONECTA-SE COM O BANCO DE DADOS MySQLi
