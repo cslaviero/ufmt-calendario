@@ -9,4 +9,5 @@ $ConnDatabase = "calendario";
 // CONECTA-SE COM O BANCO DE DADOS MySQLi
 global $Conn;
 $Conn = new mysqli($ConnLocal, $ConnLogin, $ConnSenha, $ConnDatabase);
+mysqli_set_charset($Conn, "utf8");
 if (mysqli_connect_errno()) trigger_error(mysqli_connect_error());
