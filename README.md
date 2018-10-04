@@ -10,4 +10,4 @@ Arquivo de conexão ao Banco de Dados
 - "app\src\conecta.php"
 
 Banco de Dados em SQL para instalação
-- "bd.sql"
+- "calendario.sql"
