@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="assets/fonts/typicons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
     <link rel="stylesheet" href="assets/css/Header-Blue.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
@@ -22,95 +23,77 @@
                 <img class="card-img-top w-100 d-block" src="assets/img/logo.png" style="max-width:338px;margin-right:auto;margin-left:auto;">
             </div>
             <div class="intro">
-                <div class="dropdown" style="margin: 0px auto;width: 300px;padding-left: 42px;">
+                <div class="dropdown" id="drop-periodos" style="margin: 0px auto;width: 300px;padding-left: 42px;">
 
-                    <a class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button" href="#" style="margin: 0px auto;margin-right: auto;margin-left: auto;margin-top: 0px;margin-bottom: 0px;color: rgb(0,0,0);">Calendário 2018/1</a>
+                    <a class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button" href="#" style="margin: 0px auto;margin-right: auto;margin-left: auto;margin-top: 0px;margin-bottom: 0px;color: rgb(0,0,0);">{{nome_periodo}}</a>
 
                     <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" role="presentation" href="#">Calendário 2018/2</a>
-                        <a class="dropdown-item" role="presentation" href="#">Calendário 2017/1</a>
-                        <a class="dropdown-item" role="presentation" href="#">Calendário 2017/2</a>
+                        <a class="dropdown-item" role="presentation" href="#">{{nome_periodo}}</a>
                     </div>
                 </div>
             </div>
-        <form class="form-inline" method="post">
+        <form class="form-inline" id="form-busca">
             <div class="form-group">
-                <input class="form-control" type="search" name="busca" required="" placeholder="Pesquise por eventos">
+                <input class="form-control" type="search" name="busca" id="busca" required="" placeholder="Pesquise por eventos">
             </div>
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Buscar</button>
             </div>
         </form>
     </div>
+
     <div class="card" style="margin:0px;">
         <div class="card-header" style="padding-top:6px;padding-bottom:6px;">
             <h6 class="mb-0">Filtrar</h6>
         </div>
-        <div class="card-body">
+        <div class="card-body" id="categorias">
             <p class="card-text">
-                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;">Dia Letivo</a>
-                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;background-color:rgb(231,58,47);">Feriado</a>
-                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;background-color:rgb(44,186,21);">Eventos</a>
-                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;background-color:rgb(235,203,35);">Recesso</a>
-                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;background-color:rgb(231,146,47);">Semestre Letivo</a>
-                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;background-color:rgb(231,47,191);">Matrícula/Rematrícula</a>
+                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;">{{nome_cat}}</a>
             </p>
         </div>
     </div>
-    </div><h5>Próximos eventos <div class="dropdown show d-inline float-right"><a class="btn btn-outline-link dropdown-toggle d-inline float-right" data-toggle="dropdown" aria-expanded="false" role="button" href="#" style="font-size:12px;">Todos os campus</a>
-    <div role="menu" class="dropdown-menu show"><a role="presentation" href="#" class="dropdown-item" style="font-size:12px;">Campus Cuiabá</a><a role="presentation" href="#" class="dropdown-item" style="font-size:12px;">Campus Rondonópolis</a><a role="presentation" href="#" class="dropdown-item"
-            style="font-size:12px;">Campus Araguaia</a><a role="presentation" href="#" class="dropdown-item" style="font-size:12px;">Campus Pontal</a><a role="presentation" href="#" class="dropdown-item" style="font-size:12px;">Campus Sinop</a><a role="presentation"
-            href="#" class="dropdown-item" style="font-size:12px;">Campus Várzea Grande</a></div>
-</div></h5>
-    <hr style="margin:0px;margin-bottom:16px;"><div class="media">
-    <a href="evento.html"><img src="assets/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:#e10e0e;" /></a>
-    <div class="media-body">
-        <h5><a href="evento.html">10/abr à 12/jul</a></h5>
-        <p><a href="evento.html">Início do Período Letivo 2018/1</a></p>
     </div>
-</div>
-    <hr style="margin-top:0px;margin-bottom:2px;"><div class="media">
-    <a href="evento.html"><img src="assets/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:#527dee;" /></a>
-    <div class="media-body">
-        <h5><a href="evento.html">12/abr</a></h5>
-        <p><a href="evento.html">Início do Período Letivo 2018/1</a></p>
+
+    <div id="breadcrumb">
+        <!--<ol class="breadcrumb" style="margin: 10px 0;">
+            <li class="breadcrumb-item"><a><span>Home</span> <i class="typcn typcn-delete"></i></a></li>
+        </ol>-->
     </div>
-</div>
+
+    <h5>Próximos eventos
+        <div class="dropdown show d-inline float-right" id="dropdown-campus">
+            <a class="btn btn-outline-link dropdown-toggle d-inline float-right" data-toggle="dropdown" aria-expanded="false" role="button" href="#" style="font-size:12px;">Todos os campus</a>
+
+            <div role="menu" class="dropdown-menu">
+                <a role="presentation" href="#" class="dropdown-item" style="font-size:12px;">{{nome_campus}}</a>
+            </div>
+        </div>
+    </h5>
+    <hr style="margin:0px;margin-bottom:16px;">
+    <div id="prox-eventos">
+        <div class="media">
+            <a href="evento?id=1">
+                <img src="assets/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:#e10e0e;" />
+            </a>
+            <div class="media-body">
+                <h5><a href="evento?id=1">{{data_ext}}</a></h5>
+                <p><a href="evento?id=1">{{titulo}}</a></p>
+            </div>
+        </div>
+    </div>
+
     <h5>Eventos por mês</h5>
+
     <hr style="margin-top:0px;">
     <div role="tablist" id="accordion-1">
         <div class="card">
             <div class="card-header" role="tab">
-                <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="div#accordion-1 .item-1" style="font-size:16px;">JANEIRO</a></h5>
+                <h5 class="mb-0">
+                    <a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="div#accordion-1 .item-1" style="font-size:16px;">{{mes}}</a>
+                </h5>
             </div>
+
             <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-1">
-                <div class="card-body"><div class="table-responsive" style="font-size:12px;">
-    <table class="table table-striped table-hover table-sm">
-        <thead>
-            <tr>
-                <th style="min-width:28px;max-width:65px;">DATA</th>
-                <th style="min-width:100px;">EVENTO</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="min-width:28px;max-width:65px;"><a href="evento.html">10/abr à 12/jul</a></td>
-                <td style="min-width:100px;"><a href="evento.html">Início do Período Letivo 2018/1</a></td>
-            </tr>
-            <tr>
-                <td style="min-width:28px;max-width:65px;"><a href="evento.html">12/abr</a></td>
-                <td style="min-width:100px;"><a href="evento.html">Início do Período Letivo 2018/1</a></td>
-            </tr>
-        </tbody>
-    </table>
-</div></div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" role="tab">
-                <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="div#accordion-1 .item-2" style="font-size:16px;">FEVEREIRO</a></h5>
-            </div>
-            <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
                 <div class="card-body">
                     <div class="table-responsive" style="font-size:12px;">
                         <table class="table table-striped table-hover table-sm">
@@ -122,41 +105,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="min-width:28px;max-width:65px;">10/abr à 12/jul</td>
-                                    <td style="min-width:100px;">Início do Período Letivo 2018/1<br></td>
+                                    <td style="min-width:28px;max-width:65px;"><a href="evento?id=1">{{data_ext}}</a></td>
+                                    <td style="min-width:100px;"><a href="evento?id=1">{{titulo}}</a></td>
                                 </tr>
                                 <tr>
-                                    <td style="min-width:28px;max-width:65px;">12/abr</td>
-                                    <td style="min-width:100px;">Início do Período Letivo 2018/1<br></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" role="tab">
-                <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="div#accordion-1 .item-3" style="font-size:16px;">MARÇO</a></h5>
-            </div>
-            <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
-                <div class="card-body">
-                    <div class="table-responsive" style="font-size:12px;">
-                        <table class="table table-striped table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    <th style="min-width:28px;max-width:65px;">DATA</th>
-                                    <th style="min-width:100px;">EVENTO</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="min-width:28px;max-width:65px;">10/abr à 12/jul</td>
-                                    <td style="min-width:100px;">Início do Período Letivo 2018/1<br></td>
-                                </tr>
-                                <tr>
-                                    <td style="min-width:28px;max-width:65px;">12/abr</td>
-                                    <td style="min-width:100px;">Início do Período Letivo 2018/1<br></td>
+                                    <td style="min-width:28px;max-width:65px;"><a href="evento?id=1">{{data_ext}}</a></td>
+                                    <td style="min-width:100px;"><a href="evento?id=1">{{titulo}}</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -165,6 +119,7 @@
             </div>
         </div>
     </div>
+
     <footer style="padding:10px;padding-top:10px;background-color:#4086ef;margin-top:16px;">
         <h5 class="text-center" style="color:rgb(205,231,247);">
             <em>
@@ -172,7 +127,7 @@
             </em>
             Calendário em formato PDF
         </h5>
-        <p class="text-center" style="margin-top:16px;">
+        <p class="text-center" id="bot-visualizar" style="margin-top:16px;">
             <a class="btn btn-danger btn-lg" role="button" href="#" target="_blank" style="margin:0px;margin-top:0px;margin-bottom:0px;font-size:16px;">
                 <i class="fa fa-file-pdf-o" style="font-size:20px;margin-right:8px;"></i>
                 Visualize a versão em PDF
@@ -187,7 +142,92 @@
     </div>
 
     <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/main.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.blockUI.js"></script>
+    <script type="text/javascript">
+        prox_eventos('', '', '', '');
+        eventos('', '', '', '');
+
+        var cat = '';
+        var camp = '';
+        var prd = '';
+        var b = '';
+
+        var nome_cat = '';
+        var nome_camp = '';
+        var nome_prd = '';
+        var nome_b = '';
+
+        function bread(nome_cat, nome_camp, nome_prd, nome_b) {
+            var breadcrumb = '';
+
+            if(nome_cat != '' || nome_camp != '' || nome_prd != '' || nome_b != ''){
+                breadcrumb += '<ol class="breadcrumb" style="margin: 10px 0;">';
+                if(nome_cat != ''){
+                    breadcrumb += '<li class="breadcrumb-item"><a href="#retirar" title="Retirar filtro" onclick="getRetira(\'categoria\')"><span>'+nome_cat+'</span> <i class="typcn typcn-delete"></i></a></li>';
+                }
+                if(nome_camp != ''){
+                    breadcrumb += '<li class="breadcrumb-item"><a href="#retirar" title="Retirar filtro" onclick="getRetira(\'campus\')"><span>'+nome_camp+'</span> <i class="typcn typcn-delete"></i></a></li>';
+                }
+                if(nome_prd != ''){
+                    breadcrumb += '<li class="breadcrumb-item"><a href="#retirar" title="Retirar filtro" onclick="getRetira(\'periodo\')"><span>'+nome_prd+'</span> <i class="typcn typcn-delete"></i></a></li>';
+                }
+                if(nome_b != ''){
+                    breadcrumb += '<li class="breadcrumb-item"><a href="#retirar" title="Retirar filtro" onclick="getRetira(\'busca\')"><span>'+nome_b+'</span> <i class="typcn typcn-delete"></i></a></li>';
+                }
+                breadcrumb += '</ol>';
+            }
+            $('#breadcrumb').html(breadcrumb);
+        }
+
+        function getPrepara(metodo, valor, nome){
+            switch (metodo){
+                case 'periodo':     prd = valor;    nome_prd = nome;            break;
+                case 'categoria':   cat = valor;    nome_cat = nome;           break;
+                case 'campus':      camp = valor;   nome_camp = nome;            break;
+                case 'busca':       b = valor;      nome_b = 'Busca: '+nome;    break;
+            }
+
+            block('Aguarde...');
+
+            prox_eventos(cat, camp, prd, b);
+            eventos(cat, camp, prd, b);
+
+            bread(nome_cat,nome_camp,nome_prd,nome_b);
+
+            unblock();
+        }
+
+        function getRetira(metodo){
+            switch (metodo){
+                case 'periodo':     prd = '';    nome_prd = '';  break;
+                case 'categoria':   cat = '';    nome_cat = ''; break;
+                case 'campus':      camp = '';   nome_camp = '';  break;
+                case 'busca':       b = '';      nome_b = '';    break;
+            }
+
+            block('Aguarde...');
+
+            prox_eventos(cat, camp, prd, b);
+            eventos(cat, camp, prd, b);
+
+            bread(nome_cat,nome_camp,nome_prd,nome_b);
+
+            unblock();
+        }
+
+        // Receber busca da página evento.html
+        if(location.search) {
+            var request = location.search.substring(1).split('&');
+
+            var m = request[0].substr(2);
+            var v = request[1].substr(2);
+            var n = request[2].substr(2);
+
+            getPrepara(m, v, n);
+        }
+    </script>
 </body>
 
 </html>
