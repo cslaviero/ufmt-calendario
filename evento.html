@@ -49,11 +49,32 @@
         <a class="btn btn-info" role="button" href="#" target="_blank" style="margin-left:10px;">Link</a>
     </span>
 
+    <span id="calendar">
+        <a class="btn btn-info" id="add-event-button" role="button" href="#google-calendar" style="margin-left:10px;">Adicionar ao Calendário</a>
+    </span>
+
     <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.blockUI.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/calendar.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad();"
+            onreadystatechange="if (this.readyState === 'complete') this.onload();"></script>
     <script type="text/javascript">
+        var titulo = '';
+        var local = '';
+        var descricao = '';
+        var di = '';
+        var hi = '';
+        var data_ini = '';
+        var df = '';
+        var hf = '';
+        var data_fim = '';
+
         $(function () {
+            block('Aguarde...');
+
             var request = $.ajax({
                 method: "get",
                 url:"app/public/evento",
@@ -70,12 +91,41 @@
                 $('#local').html(e[0].local);
                 $('#descricao').html(e[0].desc);
                 $('#link').html('<a class="btn btn-info" role="button" href="'+e[0].url+'" target="_blank" style="margin-left:10px;">Link</a>');
+                titulo   = e[0].nome;
+                local    = e[0].local;
+                descricao = e[0].desc;
+
+                di = e[0].data_ini.split(' ');
+                df = e[0].data_fim.split(' ');
+
+                di = di[0].split('-');
+                hi = di[1].split(':');
+                df = df[0].split('-');
+                hf = df[1].split(':');
+
+                data_ini = new Date(di[0], di[1], di[2], hi[0], hi[1], hi[2], 0);
+                data_fim = new Date(df[0], df[1], df[2], hf[0], hf[1], hf[2], 0);
             });
+            unblock();
         });
 
         function getPrepara(metodo, valor, nome){
 
             $(location).attr('href','index.html?m='+metodo+'&v='+valor+'&n='+nome+'');
+        }
+
+        var addEventButton = document.getElementById('add-event-button');
+
+        addEventButton.onclick = handleAddEventClick;
+
+        // cria um evento no Google Calendar
+        function handleAddEventClick(event){
+            // var d = new Date(2017, 8, 4, 13, 0, 0, 0);
+            handleAuthClick();
+
+            criarEvento(titulo, local, descricao, data_ini, data_fim);
+
+            handleSignoutClick();
         }
     </script>
 </body>

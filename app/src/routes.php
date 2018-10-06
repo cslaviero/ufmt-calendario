@@ -40,6 +40,39 @@ $app->post('/usuarios', function (Request $request, Response $response) {
     return $response->withJson($user);
 });
 
+$app->post('/push/clientes', function (Request $request, Response $response) {
+    $token = $_POST['token'];
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://iid.googleapis.com/iid/v1/".$token."/rel/topics/clientes",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POST, true,
+        CURLOPT_HTTPHEADER => array(
+            "authorization: key=AAAAVaQJ-YM:APA91bG3bY56WZTnryd4c49Ri1hCywt8uj9z2SHD3srcmB9yI_rtgyBDyfNUYu3Rbr0fQI4w4Di1flIPk0yrdYAaIsbEo-tCzLGdwojHJGuRIjwahGbcP5ZKaQ1sFwBe02tokYhOHvoM",
+            "content-type: application/json",
+            "content-length: 0"
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+        return "cURL Error #:" . $err;
+    } else {
+        return $response;
+    }
+});
+
 $app->get('/periodos', function (Request $request, Response $response) {
     require "conecta.php";
     $date = date("Y-m-d H:i:s");

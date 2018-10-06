@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="assets/css/Header-Blue.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
 </head>
 
 <body style="margin:2%;">
@@ -145,9 +147,12 @@
     <script src="assets/js/main.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/jquery.blockUI.js"></script>
+    <script src="assets/js/push.js"></script>
     <script type="text/javascript">
+        block('Aguarde...');
         prox_eventos('', '', '', '');
         eventos('', '', '', '');
+        unblock();
 
         var cat = '';
         var camp = '';
@@ -227,6 +232,18 @@
 
             getPrepara(m, v, n);
         }
+    </script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDw5b00wL6hGK6AdjNrOdwoHNbwJ3TwMBA",
+            authDomain: "ufmt-calendar.firebaseapp.com",
+            databaseURL: "https://ufmt-calendar.firebaseio.com",
+            projectId: "ufmt-calendar",
+            storageBucket: "",
+            messagingSenderId: "367824337283"
+        };
+        firebase.initializeApp(config);
     </script>
 </body>
 
