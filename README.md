@@ -22,8 +22,8 @@ Baixe o XAMPP para Windows
 - Ative o mod_rewrite no arquivo httpd.conf, clicando em "config" no painel do Xampp. Dentro do arquivo php.ini descomente a linha correspondente ao comando "LoadModule rewrite_module modules/mod_rewrite.so"
 
 Instalar Banco de dados
-- Inicie o Serviço phpMyAdmin usando o Browser (http://localhost/phpMyAdmin ou clique em phpMyAdmin no botão "config" do Apache no painel do Xampp) e efetue o login digitando os valores padrões de login: root, senha: <em branco>.
-- Importe o arquivo calendario.sql que consta na pasta raíz deste projeto clicando em "Importar".
+- Inicie o Serviço phpMyAdmin usando o Browser (http://localhost/phpMyAdmin ou clique em phpMyAdmin no botão "config" do Apache no painel do Xampp) e efetue o login digitando os valores padrões de login: root, senha: <em branco>
+- Importe o arquivo calendario.sql que consta na pasta raíz deste projeto clicando em "Importar"
 
 Acessar o site do Calendário
 - Acesse o site através do Browser (http://localhost)
