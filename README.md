@@ -4,7 +4,7 @@ Reprojeto do calendário acadêmico da Universidade Federal de Mato Grosso.
 
 Pré Requisitos
 - PHP 5.6 ou superior
-- Apache 2.x com modo Rewrite ativado
+- Apache 2.x com mod_rewrite ativado
 
 Arquivo de conexão ao Banco de Dados
 - "app\src\conecta.php"
@@ -24,7 +24,7 @@ Baixe o XAMPP para Windows
 Instalar Banco de dados
 - Inicie o Serviço phpMyAdmin usando o Browser (http://localhost/phpMyAdmin ou clique em phpMyAdmin no botão "config" do Apache no painel do Xampp) e efetue o login digitando os valores padrões de login: root, senha: <em branco>.
 - Importe o arquivo calendario.sql que consta na pasta raíz deste projeto clicando em "Importar".
-  
+
 Acessar o site do Calendário
 - Acesse o site através do Browser (http://localhost)
 - Para acessar a Área Administrativa (http://localhost/admin)
