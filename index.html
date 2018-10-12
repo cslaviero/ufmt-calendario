@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/typicons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="assets/css/Brands.css">
     <link rel="stylesheet" href="assets/css/Header-Blue.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 
@@ -19,41 +21,61 @@
 </head>
 
 <body style="margin:2%;">
-    <div class="newsletter-subscribe" style="padding:5px;padding-right:0px;padding-left:0px;">
-        <div class="container" style="margin-bottom:6px;">
-            <div class="card border-white">
-                <img class="card-img-top w-100 d-block" src="assets/img/logo.png" style="max-width:338px;margin-right:auto;margin-left:auto;">
-            </div>
-            <div class="intro">
-                <div class="dropdown" id="drop-periodos" style="margin: 0px auto;width: 300px;padding-left: 42px;">
-
-                    <a class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button" href="#" style="margin: 0px auto;margin-right: auto;margin-left: auto;margin-top: 0px;margin-bottom: 0px;color: rgb(0,0,0);">{{nome_periodo}}</a>
-
-                    <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" role="presentation" href="#">{{nome_periodo}}</a>
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <div class="card border-white">
+                        <img class="img-fluid card-img-top w-100 d-block" src="assets/img/ufmt.jpg" style="max-width: 100px;margin-right: auto;margin-left: auto;max-height: auto;">
                     </div>
+                </a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2">
+                    <span class="sr-only">Navegação</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2">
+                    <ul class="nav navbar-nav mx-auto">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="#">
+                                <div class="intro">
+                                    <li class="dropdown" id="drop-periodos" style="margin: 0px auto;width: 300px;padding-left: 42px;">
+                                        <a class="dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(0,0,0);font-size: 20px;">{{nome_periodo}}</a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a class="dropdown-item" role="presentation" href="#">{{nome_periodo}}</a>
+                                        </div>
+                                    </li>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        <form class="form-inline" id="form-busca">
-            <div class="form-group">
-                <input class="form-control" type="search" name="busca" id="busca" required="" placeholder="Pesquise por eventos">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
-        </form>
+        </nav>
     </div>
+    <div class="newsletter-subscribe" style="padding:5px;padding-right:0px;padding-left:0px;">
+        <div class="container" style="margin-bottom:6px;">
+            <form class="form-inline" id="form-busca">
+                <div class="form-group">
+                    <input class="form-control" type="search" name="busca" id="busca" required="" placeholder="Pesquise por eventos">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+            </form>
+        </div>
 
-    <div class="card" style="margin:0px;">
-        <div class="card-header" style="padding-top:6px;padding-bottom:6px;">
-            <h6 class="mb-0">Filtrar</h6>
+        <!-- CARD DE FILTRO DAS CATEGORIAS -->
+        <div class="card" id="card-categorias" style="margin:0px;">
+            <div class="card-header" style="padding-top:6px;padding-bottom:6px;">
+                <h6 class="mb-0">Filtrar</h6>
+            </div>
+            <div class="card-body" id="categorias">
+                <p class="card-text">
+                    <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;">{{nome_cat}}</a>
+                </p>
+            </div>
         </div>
-        <div class="card-body" id="categorias">
-            <p class="card-text">
-                <a class="badge badge-primary" href="#" style="padding:8px;margin:4px;">{{nome_cat}}</a>
-            </p>
-        </div>
-    </div>
+        <!-- FIM DO CARD DE FILTRO DAS CATEGORIAS -->
     </div>
 
     <div id="breadcrumb">
@@ -188,10 +210,14 @@
 
         function getPrepara(metodo, valor, nome){
             switch (metodo){
-                case 'periodo':     prd = valor;    nome_prd = nome;            break;
-                case 'categoria':   cat = valor;    nome_cat = nome;           break;
-                case 'campus':      camp = valor;   nome_camp = nome;            break;
-                case 'busca':       b = valor;      nome_b = 'Busca: '+nome;    break;
+                case 'periodo':     prd = valor;    nome_prd = nome;   break;
+                case 'categoria':   cat = valor;    nome_cat = nome;   break;
+                case 'campus':      camp = valor;   nome_camp = nome;  break;
+                case 'busca':
+                    b = valor;
+                    nome_b = 'Busca: '+nome;
+                    $('#card-categorias').css("display", "none"); // ocultar o card de categorias, caso for feita uma busca
+                    break;
             }
 
             block('Aguarde...');
@@ -209,7 +235,11 @@
                 case 'periodo':     prd = '';    nome_prd = '';  break;
                 case 'categoria':   cat = '';    nome_cat = ''; break;
                 case 'campus':      camp = '';   nome_camp = '';  break;
-                case 'busca':       b = '';      nome_b = '';    break;
+                case 'busca':
+                    b = '';
+                    nome_b = '';
+                    $('#card-categorias').css("display", "block"); // exibir o card de categorias
+                    break;
             }
 
             block('Aguarde...');
