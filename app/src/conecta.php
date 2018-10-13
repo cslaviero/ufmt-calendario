@@ -9,10 +9,12 @@ $ConnDatabase = "calendario";
 // CONECTA-SE COM O BANCO DE DADOS MySQLi
 global $Conn;
 $Conn = new mysqli($ConnLocal, $ConnLogin, $ConnSenha, $ConnDatabase);
-mysqli_set_charset($Conn, "utf8");
-if (mysqli_connect_errno()) trigger_error(mysqli_connect_error());
 
-function periodo_atual ($d, $c){
+mysqli_set_charset($Conn, "utf8"); // define o charset dos dados, será o mesmo charset das páginas
+if (mysqli_connect_errno()) trigger_error(mysqli_connect_error()); // imprimir alguma mensagem caso houve erro
+
+// função para retornar a ID do período que está ativo no momento (período atual)
+function periodo_atual ($d, $c){ // parâmetro $d é a data atual, $c é para conectar do banco de dados
     $sqll = "SELECT prd_id, prd_data_ini, prd_data_fim FROM tbl_periodos;";
     $exel = $c->query($sqll);
 
@@ -20,14 +22,15 @@ function periodo_atual ($d, $c){
 
     while ($reg = $exel->fetch_array()) {
         if(strtotime($reg['prd_data_ini']) <= strtotime($d)
-            && strtotime($reg['prd_data_fim']) >= strtotime($d)){
-            $periodo = $reg['prd_id'];
+            && strtotime($reg['prd_data_fim']) >= strtotime($d)){ // verifica pela data atual qual o período que está dentro deste intervalo
+            $periodo = $reg['prd_id']; // quando achar, imprime a id
         }
     }
 
-    return $periodo;
+    return $periodo; // retorna a id
 }
 
+// função para receber o mês em dígitos numéricos e retornar em texto abreviado
 function mes ($m){
     switch ($m) {
         case "01":    $mes = "Jan";   break;
@@ -44,9 +47,10 @@ function mes ($m){
         case "12":    $mes = "Dez";   break;
     }
 
-    return $mes;
+    return $mes; // retorna o mês abreviado
 }
 
+// função para receber o mês em dígitos numéricos e retornar em texto completo
 function mescomp ($m){
     switch ($m) {
         case "01":    $mesc = "JANEIRO";     break;
@@ -63,5 +67,5 @@ function mescomp ($m){
         case "12":    $mesc = "DEZEMBRO";    break;
     }
 
-    return $mesc;
+    return $mesc; // retorna o mês completo
 }

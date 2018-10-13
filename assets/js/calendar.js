@@ -1,8 +1,8 @@
 // aqui voce informa o Client ID da sua app
 var CLIENT_ID = '367824337283-og7td64nbimbicgiov2evn5uddhosm6f.apps.googleusercontent.com';
 // permissoes que serao concedidas ao usuario que esta logando no calendario
-var SCOPES = "https://www.googleapis.com/auth/calendar"; // leitura e escrita ou calendar.readonly para apenas leitura
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+var SCOPES = "https://www.googleapis.com/auth/calendar"; // leitura e escrita ou calendar.readonly para apenas leitura (Não mudar)
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]; // Link de requisições (Não mudar)
 
 // esta funcao sera chamada logo apos a carga do script calendar em https://apis.google.com/js/api.js
 function handleClientLoad() {
@@ -30,6 +30,7 @@ function handleSignoutClick(event) {
     gapi.auth2.getAuthInstance().signOut();
 }
 
+// organiza os dados do evento e prepara o array para o sincronismo para o calendário do usuário
 function criarEvento(titulo, localizacao, texto, horaInicio, horaFim){
 
     var event = {
@@ -57,7 +58,7 @@ function criarEvento(titulo, localizacao, texto, horaInicio, horaFim){
     });
 
     request.execute(function(event) {
-        console.log(event);
+        //console.log(event);
     });
 
 }

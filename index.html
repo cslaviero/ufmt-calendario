@@ -17,11 +17,13 @@
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 
+    <!-- Conexão ao serviço de notificações do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
 </head>
 
-<body style="margin:2%;">
+<body style="margin:0px 2%;">
     <div>
+        <!-- Topo -->
         <nav class="navbar navbar-light navbar-expand-md">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
@@ -33,13 +35,14 @@
                     <span class="sr-only">Navegação</span>
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navcol-2">
                     <ul class="nav navbar-nav mx-auto">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" href="#">
                                 <div class="intro">
                                     <li class="dropdown" id="drop-periodos" style="margin: 0px auto;width: 300px;padding-left: 42px;">
-                                        <a class="dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(0,0,0);font-size: 20px;">{{nome_periodo}}</a>
+                                        <a class="dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(0,0,0);font-size: 20px;text-transform: uppercase;">{{nome_periodo}}</a>
                                         <div class="dropdown-menu" role="menu">
                                             <a class="dropdown-item" role="presentation" href="#">{{nome_periodo}}</a>
                                         </div>
@@ -53,6 +56,7 @@
         </nav>
     </div>
     <div class="newsletter-subscribe" style="padding:5px;padding-right:0px;padding-left:0px;">
+        <!-- BUSCA -->
         <div class="container" style="margin-bottom:6px;">
             <form class="form-inline" id="form-busca">
                 <div class="form-group">
@@ -78,12 +82,14 @@
         <!-- FIM DO CARD DE FILTRO DAS CATEGORIAS -->
     </div>
 
+    <!-- Caixa de ítens pesquisados (Categoria, Período, Campus, Busca) -->
     <div id="breadcrumb">
         <!--<ol class="breadcrumb" style="margin: 10px 0;">
             <li class="breadcrumb-item"><a><span>Home</span> <i class="typcn typcn-delete"></i></a></li>
         </ol>-->
     </div>
 
+    <!-- Caixa de próximos eventos -->
     <h5>Próximos eventos
         <div class="dropdown show d-inline float-right" id="dropdown-campus">
             <a class="btn btn-outline-link dropdown-toggle d-inline float-right" data-toggle="dropdown" aria-expanded="false" role="button" href="#" style="font-size:12px;">Todos os campus</a>
@@ -96,16 +102,17 @@
     <hr style="margin:0px;margin-bottom:16px;">
     <div id="prox-eventos">
         <div class="media">
-            <a href="evento?id=1">
+            <a href="evento?id={{id}}">
                 <img src="assets/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:#e10e0e;" />
             </a>
             <div class="media-body">
-                <h5><a href="evento?id=1">{{data_ext}}</a></h5>
-                <p><a href="evento?id=1">{{titulo}}</a></p>
+                <h5><a href="evento?id={{id}}">{{data_ext}}</a></h5>
+                <p><a href="evento?id={{id}}">{{titulo}}</a></p>
             </div>
         </div>
     </div>
 
+    <!-- Caixa de eventos por mês -->
     <h5>Eventos por mês</h5>
 
     <hr style="margin-top:0px;">
@@ -129,12 +136,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="min-width:28px;max-width:65px;"><a href="evento?id=1">{{data_ext}}</a></td>
-                                    <td style="min-width:100px;"><a href="evento?id=1">{{titulo}}</a></td>
+                                    <td style="min-width:28px;max-width:65px;"><a href="evento?id={{id}}">{{data_ext}}</a></td>
+                                    <td style="min-width:100px;"><a href="evento?id={{id}}">{{titulo}}</a></td>
                                 </tr>
                                 <tr>
-                                    <td style="min-width:28px;max-width:65px;"><a href="evento?id=1">{{data_ext}}</a></td>
-                                    <td style="min-width:100px;"><a href="evento?id=1">{{titulo}}</a></td>
+                                    <td style="min-width:28px;max-width:65px;"><a href="evento?id={{id}}">{{data_ext}}</a></td>
+                                    <td style="min-width:100px;"><a href="evento?id={{id}}">{{titulo}}</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -144,6 +151,7 @@
         </div>
     </div>
 
+    <!-- RODAPÉ -->
     <footer style="padding:10px;padding-top:10px;background-color:#4086ef;margin-top:16px;">
         <h5 class="text-center" style="color:rgb(205,231,247);">
             <em>
@@ -165,27 +173,29 @@
         <p class="text-center" style="color: rgb(255,255,255);font-size: 14px;">© Copyright 2018 - UFMT - Todos os direitos reservados.<br></p>
     </div>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.blockUI.js"></script>
-    <script src="assets/js/push.js"></script>
+    <script src="assets/js/jquery.min.js"></script> <!-- jQuery -->
+    <script src="assets/js/main.js"></script>  <!-- Funções de chamadas da API -->
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script> <!-- Efeitos do Bootstrap -->
+    <script src="assets/js/jquery.blockUI.js"></script> <!-- Modal de Aguarde -->
+    <script src="assets/js/push.js"></script> <!-- Chamada à API do Firebase para notificações -->
     <script type="text/javascript">
-        block('Aguarde...');
-        prox_eventos('', '', '', '');
-        eventos('', '', '', '');
-        unblock();
+        block('Aguarde...'); // Chama modal enquanto carrega os eventos (função em main.js)
+        prox_eventos('', '', '', ''); // Chama os próximos eventos à partir da função no arquivo main.js
+        eventos('', '', '', ''); // Chama todos os eventos à partir da função no arquivo main.js
+        unblock(); // Fecha o modal após carregar os eventos (função em main.js)
 
-        var cat = '';
-        var camp = '';
-        var prd = '';
-        var b = '';
+        // Variáveis globais para receber valores de acordo com a nevegação do usuário
+        var cat = ''; // Variável para o ID da categoria
+        var camp = ''; // Variável para o ID de Campus
+        var prd = ''; // Variável para o ID de Período
+        var b = ''; // Variável para receber o termo da pesquisa no campo busca
 
-        var nome_cat = '';
-        var nome_camp = '';
-        var nome_prd = '';
-        var nome_b = '';
+        var nome_cat = ''; // Variável para escrever o nome da categoria na caixa de ítens pesquisados
+        var nome_camp = ''; // Variável para escrever o nome do campus na caixa de ítens pesquisados
+        var nome_prd = ''; // Variável para escrever o nome do período na caixa de ítens pesquisados
+        var nome_b = ''; // Variável para escrever o termo da pesquisa na caixa de ítens pesquisados
 
+        // função para preencher os ítens pesquisados
         function bread(nome_cat, nome_camp, nome_prd, nome_b) {
             var breadcrumb = '';
 
@@ -205,15 +215,16 @@
                 }
                 breadcrumb += '</ol>';
             }
-            $('#breadcrumb').html(breadcrumb);
+            $('#breadcrumb').html(breadcrumb); // enviar à div#breadcrumb as tags escritas acima
         }
 
+        // função para preparar a próxima pesquisa de acordo com a chamada na navegação
         function getPrepara(metodo, valor, nome){
             switch (metodo){
-                case 'periodo':     prd = valor;    nome_prd = nome;   break;
-                case 'categoria':   cat = valor;    nome_cat = nome;   break;
-                case 'campus':      camp = valor;   nome_camp = nome;  break;
-                case 'busca':
+                case 'periodo':     prd = valor;    nome_prd = nome;   break; // caso o usuário clicou em algum outro período, vai trocar o id do período e escrever na caixa de ítens pesquisados o novo período
+                case 'categoria':   cat = valor;    nome_cat = nome;   break; // caso o usuário clicou em alguma outra categoria, vai trocar o id da categoria e escrever na caixa de ítens pesquisados a nova categoria
+                case 'campus':      camp = valor;   nome_camp = nome;  break; // caso o usuário clicou em algum outro campus, vai trocar o id do campus e escrever na caixa de ítens pesquisados o novo campus
+                case 'busca': // caso o usuário efetuou uma busca, vai trocar enviar o termo da pesquisa e escrever na caixa de ítens pesquisados o termo pesquisado
                     b = valor;
                     nome_b = 'Busca: '+nome;
                     $('#card-categorias').css("display", "none"); // ocultar o card de categorias, caso for feita uma busca
@@ -225,11 +236,12 @@
             prox_eventos(cat, camp, prd, b);
             eventos(cat, camp, prd, b);
 
-            bread(nome_cat,nome_camp,nome_prd,nome_b);
+            bread(nome_cat,nome_camp,nome_prd,nome_b); // chamar a função para escrever os novos ítens pesquisados
 
             unblock();
         }
 
+        // função para limpar o termo antes pesquisado clicado na caixa de ítens pesquisados
         function getRetira(metodo){
             switch (metodo){
                 case 'periodo':     prd = '';    nome_prd = '';  break;
@@ -253,18 +265,19 @@
         }
 
         // Receber busca da página evento.html
-        if(location.search) {
-            var request = location.search.substring(1).split('&');
+        if(location.search) { // se vier algum elemento GET na página
+            var request = location.search.substring(1).split('&'); // capturar o termo pesquisado
 
-            var m = request[0].substr(2);
-            var v = request[1].substr(2);
-            var n = request[2].substr(2);
+            var m = request[0].substr(2); // separar o método pesquisado
+            var v = request[1].substr(2); // separar o valor de id enviado
+            var n = request[2].substr(2); // separar o nome do valor enviado
 
             getPrepara(m, v, n);
         }
     </script>
     <script>
-        // Initialize Firebase
+        // Chamada das credenciais do Firebase
+        // Dados do usuário. Checar na conta do Firebase clicando em Serviço de Mensagens e Notificações
         var config = {
             apiKey: "AIzaSyDw5b00wL6hGK6AdjNrOdwoHNbwJ3TwMBA",
             authDomain: "ufmt-calendar.firebaseapp.com",
