@@ -28,5 +28,5 @@ Instalar Banco de dados
 Acessar o site do Calendário
 - Acesse o site através do Browser (http://localhost)
 - Para acessar a Área Administrativa (http://localhost/admin)
--- Usuário: admin
--- Senha: admin
+  * Usuário: admin
+  * Senha: admin
