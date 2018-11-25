@@ -24,7 +24,7 @@ $(function(){
     requestCategorias.done(function (e) {
         var button = '<p class="card-text">';
         for(var k in e){
-            button += '<a class="badge badge-primary" href="#categorias" onclick="getPrepara('+"'categoria'"+', '+e[k].id+', \''+e[k].nome+'\')" style="padding:8px;margin:4px;background-color:'+e[k].cor+';">'+e[k].nome+'</a>';
+            button += '<a class="badge badge-primary" href="#categorias" onclick="getPrepara('+"'categoria'"+', '+e[k].id+', \''+e[k].nome+'\')" style="padding:8px;margin:4px;background-color:#'+e[k].cor+';">'+e[k].nome+'</a>';
         }
         button += '</p>';
         $('#categorias').html(button); // adiciona à div#categorias as tags para listagem das categorias
@@ -132,7 +132,7 @@ function prox_eventos(cat, camp, prd, b) {
                 if (k != 0) {
                     list += '<hr style="margin-top:0px;margin-bottom:2px;">'; // se o índice não for o primeiro, começar a imprimir a tag hr para separar com uma linha um evento do outro
                 }
-                list += '<div class="media"><a href="evento?id='+e[k].id+'"><img src="assets/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:'+e[k].cor+';" /></a><div class="media-body"><h5><a href="evento?id='+e[k].id+'">' + e[k].data_titulo + '</a></h5><p><a href="evento?id='+e[k].id+'">'+e[k].nome+'</a></p></div></div>';
+                list += '<div class="media"><a href="evento?id='+e[k].id+'"><img src="assets/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:#'+e[k].cor+';" /></a><div class="media-body"><h5><a href="evento?id='+e[k].id+'">' + e[k].data_titulo + '</a></h5><p><a href="evento?id='+e[k].id+'">'+e[k].nome+'</a></p></div></div>';
             } else {
                 list = '<div class="media"><div class="media-body"><p>Nenhum evento encontrado</p></div></div>';
             }

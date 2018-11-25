@@ -92,7 +92,7 @@
             request.done(function (e) {
                 // Incluindo dados do evento nos elementos das divs
                 $('#titulo').html(e[0].nome);
-                $('#categoria').attr('style', 'background: '+e[0].cor+';');
+                $('#categoria').attr('style', 'background: #'+e[0].cor+';');
                 $('#categoria').html(e[0].cat_nome);
                 $('#data').html(e[0].data_ext);
                 $('#local').html(e[0].local);
