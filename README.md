@@ -1,4 +1,4 @@
-# Calendario Acadêmico UFMT
+# Calendario Acadêmico UFR
 
 Reprojeto do calendário acadêmico da Universidade Federal de Mato Grosso.
 
