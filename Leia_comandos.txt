@@ -1,0 +1,47 @@
+ambiente virtual:
+py -3 -m venv venv
+venv\Scripts\activate  
+---------------- 
+instalações:
+pip install Flask
+pip install flask-sqlalchemy
+pip install flask-login
+pip install flask-mysql
+...etc
+pip install -r requirements.txt
+----------------
+start projeto:
+set FLASK_ENV=development #opcional
+set FLASK_CONFIG=development
+set FLASK_APP=run.py
+flask run
+configurar projeto-> https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
+----------------
+referência estrutura:
+-> https://explore-flask.readthedocs.io/en/latest/organizing.html
+estrutura:
+config.py
+requirements.txt
+run.py
+instance/
+  config.py
+calendario/
+  __init__.py
+  models.py
+  views.py
+  templates/
+  static/
+----------------
+x  Login   
+https://codeshack.io/login-system-python-flask-mysql/
+https://arkayapps.com/user-authentication-with-python-flask-and-mysql/
+https://flask.palletsprojects.com/en/1.1.x/patterns/sqlalchemy/
+
+https://flask-marshmallow.readthedocs.io/en/latest/
+----------------
+Banco migração
+flask db init
+flask db migrate
+----------------
+boostrap  limk:
+https://mdbootstrap.com/docs/standard/navigation/pills/

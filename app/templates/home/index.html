@@ -1,0 +1,14 @@
+<!-- app/templates/home/index.html -->
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  <div class="container">
+    <a href="{{ url_for('user.login') }}"><h1>{{("Login")}}</h1></a>
+    <li></li>
+    <p>{{("My text text tex")}}</p>
+  </div>
+</div>
+
+{% endblock %}
