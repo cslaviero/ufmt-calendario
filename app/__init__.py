@@ -7,6 +7,7 @@ from flaskext.mysql import MySQL
 from flask_bootstrap import Bootstrap
 from config import app_config
 from flask_migrate import Migrate
+from flask_fontawesome import FontAwesome
 
 # inicialização da variável db
 db = SQLAlchemy()
@@ -19,7 +20,8 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
     
-    Bootstrap(app)
+    bootstrap = Bootstrap(app)
+    fa = FontAwesome(app)
     db.init_app(app)
     mysql.init_app(app)
     login_manager.init_app(app)

@@ -7,7 +7,7 @@ from .. import mysql
 from . import periodo
 
 
-@periodo.route('/periodos', methods=['POST'])
+@periodo.route('/periodos', methods=['GET', 'POST'])
 def add():
   #if request.method == 'POST':
   cur = mysql.get_db().cursor()

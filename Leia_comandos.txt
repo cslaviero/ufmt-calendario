@@ -7,6 +7,7 @@ pip install Flask
 pip install flask-sqlalchemy
 pip install flask-login
 pip install flask-mysql
+pip install Flask-FontAwesome
 ...etc
 pip install -r requirements.txt
 ----------------
