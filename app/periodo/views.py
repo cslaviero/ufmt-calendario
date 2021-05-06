@@ -17,5 +17,5 @@ def add():
   for x in rv:
     print(x[0], x[1])
 
-  return render_template('periodo/periodo.html', periodos=rv, title="Periodos")
+  return render_template('periodo.html', periodos=rv, title="Periodos")
   

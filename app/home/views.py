@@ -12,7 +12,7 @@ def homepage():
     """
     Renderize o template da página inicial index.html
     """
-    return render_template('home/index.html', title="Bem vindo(a)")
+    return render_template('index.html', title="Bem vindo(a)")
 
 
 @home.route('/dashboard')
@@ -21,7 +21,7 @@ def dashboard():
     """
     Renderize o template do painel na rota / dashboard
     """
-    return render_template('home/dashboard.html', title="Dashboard")
+    return render_template('dashboard.html', title="Dashboard")
 
 @home.route('/add', methods=['GET', 'POST'])
 @login_required

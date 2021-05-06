@@ -29,10 +29,10 @@ def register():
         flash(u'You have successfully registered! You may now login.')
 
         # redirect to the login page
-        return redirect(url_for('user.login'))
+        return redirect(url_for('user.login')) 
 
     # load registration template
-    return render_template('user/register.html', form=form, title='Register')
+    return render_template('register.html', form=form, title='Register')
 
 
 @user.route('/login', methods=['GET', 'POST'])
@@ -62,12 +62,12 @@ def login():
             flash('Invalid email or password.')
         
     # load login template
-    return render_template('user/login.html', form=form, title='Login')
+    return render_template('login.html', form=form, title='Login')
     #return '<h2> olá login</h2>'
 
 @user.route('/logout')
 #login_manager.login_message = "Você precisa estar"
-#@login_required
+@login_required
 def logout():
     """
     Handle requests to the /logout route

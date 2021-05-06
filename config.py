@@ -5,7 +5,7 @@ class Config(object):
     Common configurations
     """
 
-    # Put any configurations here that are common across all environments
+    # Aqui configurações que sejam comuns a todos os ambientes
 
 
 class DevelopmentConfig(Config):
