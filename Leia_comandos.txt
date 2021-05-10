@@ -1,48 +1,100 @@
-ambiente virtual:
-py -3 -m venv venv
-venv\Scripts\activate  
+Start projeto
+
+use os comandos abaixo:
+usando o clone do projeto com a instalação do ambiente virtual
+acesse o diretório do projeto:
+exemplo: 
+#
+	cd c:/calendarioufr
+#
+ativar ambiente virtual
+#
+	venv\Scripts\activate
+#
+start projeto:
+opcional Windows cmd:
+#
+	set FLASK_ENV=development 
+	set FLASK_CONFIG=development
+#
+opcional Linux and Mac:
+#
+	export FLASK_ENV=development 
+	export FLASK_CONFIG=development
+#
+obrigatório Windows cmd:
+#
+	set FLASK_APP=run.py 
+	flask run
+#
+obrigatório Linux and Mac:
+#
+	export FLASK_APP=run.py 
+	flask run
+#
+configurar start projeto-> link
+	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
+----------------
+
+start projeto sem a instalação do ambiente virtual
+Installar o python
+acesse o diretório do projeto:
+exemplo: 
+#
+	cd c:/calendarioufr
+#
+instalação ambiente virtual:
+#
+	py -3 -m venv venv
+#
+start ambiente virtual:
+#
+	venv\Scripts\activate
+#
 ---------------- 
 instalações:
-pip install Flask
-pip install flask-sqlalchemy
-pip install flask-login
-pip install flask-mysql
-pip install Flask-FontAwesome
-...etc
-pip install -r requirements.txt
+#
+	pip install -r requirements.txt
+#
 ----------------
-start projeto:
-set FLASK_ENV=development #opcional
-set FLASK_CONFIG=development
-set FLASK_APP=run.py
-flask run
-configurar projeto-> https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
+Banco migração:
+#
+	flask db init
+	flask db migrate
+#
 ----------------
-referência estrutura:
--> https://explore-flask.readthedocs.io/en/latest/organizing.html
-estrutura:
-config.py
-requirements.txt
-run.py
-instance/
-  config.py
-calendario/
-  __init__.py
-  models.py
-  views.py
-  templates/
-  static/
+após execute os comados de start projeto: acima listados
 ----------------
-x  Login   
-https://codeshack.io/login-system-python-flask-mysql/
-https://arkayapps.com/user-authentication-with-python-flask-and-mysql/
-https://flask.palletsprojects.com/en/1.1.x/patterns/sqlalchemy/
 
-https://flask-marshmallow.readthedocs.io/en/latest/
+referência estrutura:
+	https://explore-flask.readthedocs.io/en/latest/organizing.html
+estrutura:
+
+	config.py
+	requirements.txt
+	run.py
+	instance/
+	  config.py
+	calendario/
+	  __init__.py
+	  models.py
+	  views.py
+	  templates/
+	  static/
+
 ----------------
-Banco migração
-flask db init
-flask db migrate
+referência de desenvolvimento:
+x  Login:
+	https://codeshack.io/login-system-python-flask-mysql/
+	https://arkayapps.com/user-authentication-with-python-flask-and-mysql/
+	https://flask.palletsprojects.com/en/1.1.x/patterns/sqlalchemy/
+
+	https://flask-marshmallow.readthedocs.io/en/latest/
 ----------------
 boostrap  limk:
-https://mdbootstrap.com/docs/standard/navigation/pills/
+	https://mdbootstrap.com/docs/standard/navigation/pills/
+----------------
+Filtro com dropdown:
+	parte1 - https://www.youtube.com/watch?v=ZOQwyFEFmS4
+	parte2 - https://www.youtube.com/watch?v=r07P2npmOAw
+----------------

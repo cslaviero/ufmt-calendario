@@ -1,7 +1,7 @@
 # app/user/forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError
+from wtforms import PasswordField, StringField, SubmitField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
 from app.models.models import Usuario
@@ -30,6 +30,7 @@ class LoginForm(FlaskForm):
     """
     Form para users logar
     """
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', [Email(message='Email inválido!')])
     password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Lembrar-me')
     submit = SubmitField('Login')

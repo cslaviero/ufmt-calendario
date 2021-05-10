@@ -49,8 +49,7 @@ def login():
         # the password entered matches the password in the database
         user = Usuario.query.filter_by(usu_email=form.email.data).first()
         
-        if user is not None and user.verify_password(
-                form.password.data):
+        if user is not None and user.verify_password(form.password.data):
             # log user in
             login_user(user)
 
