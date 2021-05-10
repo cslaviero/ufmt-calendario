@@ -2,7 +2,7 @@
 
 from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
-
+from datetime import datetime, timedelta
 from app.user import user
 from app.user.forms import RegistrationForm, LoginForm
 from app import db
@@ -26,7 +26,7 @@ def register():
         #https://docs.sqlalchemy.org/en/14/orm/declarative_tables.html#declarative-table-configuration
         # add user to the database
         #db.session.commit()
-        flash(u'You have successfully registered! You may now login.')
+        flash('You have successfully registered! You may now login.')
 
         # redirect to the login page
         return redirect(url_for('user.login')) 
@@ -37,43 +37,34 @@ def register():
 
 @user.route('/login', methods=['GET', 'POST'])
 def login():
-    """
-    Handle requests to the /login route
-    Log an user in through the login form
-    """
-   
-    form = LoginForm()
-    if form.validate_on_submit():
-        print("'---------------subimetido----------------'")
-        # check whether user exists in the database and whether
-        # the password entered matches the password in the database
-        user = Usuario.query.filter_by(usu_email=form.email.data).first()
-        
-        if user is not None and user.verify_password(form.password.data):
-            # log user in
-            login_user(user)
 
-            # redirect to the dashboard page after login
-            return redirect(url_for('home.dashboard'))
-
-        # when login details are incorrect
+    form = LoginForm()#metodo com os inputs do formulário
+    if form.validate_on_submit():#condição de validação dos inputs
+        user = Usuario.query.filter_by(usu_email=form.email.data).first()# busca o usuário no banco de dados
+        if user is None:#verifica se o usuário existe no banco de dados
+            flash('Email não encontrado!')# usuário não existe, então email também não.
+            # Usuário redirecionado para a página login
+        elif user is not None and user.verify_password(form.password.data):#verifica se os atributos do usuário existe no banco de dados
+        #Se usúario e senha existe no mesmo objeto
+            if form.remember.data:#verifica o checkbok marcado
+                 login_user(user, remember=True, duration=timedelta(days=1))#Seta o usuário na sessão por um dia
+            else: #o checkbok desmarcado
+                login_user(user, remember=False)#Seta o usuário na sessão até fechar o navegador
+            return redirect(url_for('home.homepage')) #usuário logado e redirecionado para a página inicial
         else:
-            flash('Invalid email or password.')
-        
-    # load login template
-    return render_template('login.html', form=form, title='Login')
-    #return '<h2> olá login</h2>'
+            #Usuário existe, mas senha não esta correta
+            flash('Senha inválida!')#redirecionado para a página login com a msg
+    return render_template('login.html', form=form, title='Login')#renderiza a página login
 
 @user.route('/logout')
-#login_manager.login_message = "Você precisa estar"
-@login_required
+@login_required #
 def logout():
     """
     Handle requests to the /logout route
     Log an user out through the logout link
     """
     logout_user()
-    flash('You have successfully been logged out.')
+    flash('Usuário fez logout.')
 
     # redirect to the login page
     return redirect(url_for('user.login'))

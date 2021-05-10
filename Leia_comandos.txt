@@ -12,26 +12,21 @@ ativar ambiente virtual
 	venv\Scripts\activate
 #
 start projeto:
-opcional Windows cmd:
+Windows cmd:
 #
 	set FLASK_ENV=development 
 	set FLASK_CONFIG=development
-#
-opcional Linux and Mac:
-#
-	export FLASK_ENV=development 
-	export FLASK_CONFIG=development
-#
-obrigatório Windows cmd:
-#
 	set FLASK_APP=run.py 
 	flask run
 #
-obrigatório Linux and Mac:
+Linux and Mac:
 #
+	export FLASK_ENV=development 
+	export FLASK_CONFIG=development
 	export FLASK_APP=run.py 
 	flask run
 #
+
 configurar start projeto-> link
 	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
 ----------------
@@ -98,3 +93,10 @@ Filtro com dropdown:
 	parte1 - https://www.youtube.com/watch?v=ZOQwyFEFmS4
 	parte2 - https://www.youtube.com/watch?v=r07P2npmOAw
 ----------------
+
+
+09/05 -firefox
+https://betterprogramming.pub/how-to-use-flask-wtforms-faab71d5a034
+https://hackersandslackers.com/flask-jinja-templates/
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins
+https://flask-login.readthedocs.io/en/latest/_modules/flask_login/utils.html
