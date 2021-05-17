@@ -1,3 +1,9 @@
+Install
+#
+	pip install flask-sqlalchemy mysql-python
+	
+#
+
 Start projeto
 
 use os comandos abaixo:
@@ -13,17 +19,19 @@ ativar ambiente virtual
 #
 start projeto:
 Windows cmd:
-#
-	set FLASK_ENV=development 
+# 
 	set FLASK_CONFIG=development
-	set FLASK_APP=run.py 
+	set FLASK_APP=run.py
+	set FLASK_ENV=development
+	set FLASK_DEBUG=True 
 	flask run
 #
 Linux and Mac:
-#
-	export FLASK_ENV=development 
+# 
 	export FLASK_CONFIG=development
-	export FLASK_APP=run.py 
+	export FLASK_APP=run.py
+	export FLASK_ENV=development
+	export FLASK_DEBUG=True
 	flask run
 #
 
@@ -55,7 +63,13 @@ instalações:
 Banco migração:
 #
 	flask db init
+#
+se já iniciado:
+#
+	flask db stamp head
+#
 	flask db migrate
+	flask db upgrade
 #
 ----------------
 após execute os comados de start projeto: acima listados
@@ -94,7 +108,9 @@ Filtro com dropdown:
 	parte2 - https://www.youtube.com/watch?v=r07P2npmOAw
 ----------------
 
-
+-------email e datafield---------
+https://hackersandslackers.com/flask-wtforms-forms/
+----------------
 09/05 -firefox
 https://betterprogramming.pub/how-to-use-flask-wtforms-faab71d5a034
 https://hackersandslackers.com/flask-jinja-templates/

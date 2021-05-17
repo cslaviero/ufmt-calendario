@@ -1,12 +1,13 @@
 # app/user/views.py
 
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
 from app.user import user
 from app.user.forms import RegistrationForm, LoginForm
 from app import db
 from app.models.models import Usuario
+from .. import mysql
 
 
 @user.route('/register', methods=['GET', 'POST'])
@@ -34,12 +35,26 @@ def register():
     # load registration template
     return render_template('register.html', form=form, title='Register')
 
-
+#
 @user.route('/login', methods=['GET', 'POST'])
 def login():
-
+    #xdate = request.form['date']
+    #print('-----------', xdate ,'------------------')
     form = LoginForm()#metodo com os inputs do formulário
+    x = str(form.date.data)
+    
+    y = x+' '+str(form.hora.data)
+
     if form.validate_on_submit():#condição de validação dos inputs
+        print('------------dataTime: ', y)
+
+        cur = mysql.get_db().cursor()
+        sql = 'INSERT INTO tbl_periodos (prd_nome, prd_data_ini, prd_data_fim, prd_url)VALUES (%s, %s, %s, %s)'
+        val = ('teste0', y, y, x)
+        cur.execute(sql, val)
+        mysql.get_db().commit()
+
+
         user = Usuario.query.filter_by(usu_email=form.email.data).first()# busca o usuário no banco de dados
         if user is None:#verifica se o usuário existe no banco de dados
             flash('Email não encontrado!')# usuário não existe, então email também não.
@@ -52,7 +67,7 @@ def login():
                 login_user(user, remember=False)#Seta o usuário na sessão até fechar o navegador
             return redirect(url_for('home.homepage')) #usuário logado e redirecionado para a página inicial
         else:
-            #Usuário existe, mas senha não esta correta
+            #Usuário existe, mas senha não está correta
             flash('Senha inválida!')#redirecionado para a página login com a msg
     return render_template('login.html', form=form, title='Login')#renderiza a página login
 

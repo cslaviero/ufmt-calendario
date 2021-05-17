@@ -1,0 +1,42 @@
+{% block javascript %}
+	<script type="text/javascript">
+		{% include "js/jquery.min.js" %}
+	</script>
+	<script type="text/javascript">
+		{% include "js/tempusdominus-bootstrap-4.min.js" %}
+	</script>
+	<script type="text/javascript">
+		{% include "js/bootstrap.min.js" %}
+	</script>
+	<script type="text/javascript">
+		{% include "js/metisMenu.min.js" %}
+	</script>
+	<script type="text/javascript">
+		{% include "js/jquery.dataTables.min.js" %}
+	</script>
+	<script type="text/javascript">
+		{% include "js/dataTables.bootstrap.min.js" %}
+	</script>
+	<script type="text/javascript">
+		{% include "js/dataTables.responsive.js" %}
+	</script>
+	<script type="text/javascript">
+		{% include "js/sb-admin-2.js" %}
+	</script>
+	<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+
+        $('#datetimepicker1').datetimepicker({
+            locale: 'pt-br',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+        $('#datetimepicker2').datetimepicker({
+            locale: 'pt-br',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+    });
+	</script>
+	{% endblock %}
