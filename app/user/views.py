@@ -2,7 +2,6 @@
 
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user
-#from datetime import datetime, timedelta
 from app.user import user
 from app.user.forms import RegistrationForm, LoginForm
 from app import db
@@ -23,10 +22,10 @@ def register():
         print('------------email------------: ', usuario.usu_email)
         #print('senha: ', usuario.password)
         print('------------aqui------------:', usuario)
-        #db.session.add(usuario)
+        db.session.add(usuario)
         #https://docs.sqlalchemy.org/en/14/orm/declarative_tables.html#declarative-table-configuration
-        # add user to the database
-        #db.session.commit()
+        #add user to the database
+        db.session.commit()
         flash('You have successfully registered! You may now login.')
 
         # redirect to the login page
@@ -51,7 +50,7 @@ def login():
         cur = mysql.get_db().cursor()
         sql = 'INSERT INTO tbl_periodos (prd_nome, prd_data_ini, prd_data_fim, prd_url)VALUES (%s, %s, %s, %s)'
         val = ('teste0', y, y, x)
-        cur.execute(sql, val)
+        #cur.execute(sql, val)
         mysql.get_db().commit()
 
 

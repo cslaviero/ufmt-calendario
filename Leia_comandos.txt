@@ -1,9 +1,3 @@
-Install
-#
-	pip install flask-sqlalchemy mysql-python
-	
-#
-
 Start projeto
 
 use os comandos abaixo:
@@ -18,6 +12,9 @@ ativar ambiente virtual
 	venv\Scripts\activate
 #
 start projeto:
+#
+	pip install -r requirements.txt
+#
 Windows cmd:
 # 
 	set FLASK_CONFIG=development
@@ -38,7 +35,17 @@ Linux and Mac:
 configurar start projeto-> link
 	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
 ----------------
-
+Banco migração:
+#
+	flask db init
+#
+se já iniciado:
+#
+	flask db stamp head
+#
+	flask db migrate
+	flask db upgrade
+#
 start projeto sem a instalação do ambiente virtual
 Installar o python
 acesse o diretório do projeto:
@@ -58,18 +65,6 @@ start ambiente virtual:
 instalações:
 #
 	pip install -r requirements.txt
-#
-----------------
-Banco migração:
-#
-	flask db init
-#
-se já iniciado:
-#
-	flask db stamp head
-#
-	flask db migrate
-	flask db upgrade
 #
 ----------------
 após execute os comados de start projeto: acima listados
@@ -92,27 +87,4 @@ estrutura:
 	  static/
 
 ----------------
-referência de desenvolvimento:
-x  Login:
-	https://codeshack.io/login-system-python-flask-mysql/
-	https://arkayapps.com/user-authentication-with-python-flask-and-mysql/
-	https://flask.palletsprojects.com/en/1.1.x/patterns/sqlalchemy/
 
-	https://flask-marshmallow.readthedocs.io/en/latest/
-----------------
-boostrap  limk:
-	https://mdbootstrap.com/docs/standard/navigation/pills/
-----------------
-Filtro com dropdown:
-	parte1 - https://www.youtube.com/watch?v=ZOQwyFEFmS4
-	parte2 - https://www.youtube.com/watch?v=r07P2npmOAw
-----------------
-
--------email e datafield---------
-https://hackersandslackers.com/flask-wtforms-forms/
-----------------
-09/05 -firefox
-https://betterprogramming.pub/how-to-use-flask-wtforms-faab71d5a034
-https://hackersandslackers.com/flask-jinja-templates/
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins
-https://flask-login.readthedocs.io/en/latest/_modules/flask_login/utils.html

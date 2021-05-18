@@ -35,9 +35,9 @@ class LoginForm(FlaskForm):
     password = PasswordField('Senha', validators=[DataRequired(message='Campo obrigatório.')])
     remember = BooleanField('Lembrar-me')
     hora = TimeField(format='%H:%M')
-    date = DateField(format='%Y-%m-%d')
+    #date = DateField(format='%Y/%m/%d')
     submit = SubmitField('Login')
-    #date = DateTimeField('Which date favorite', format='%Y/%m/%d %H:%M:%S')
+    date = DateTimeField('Which date favorite', format='%Y/%m/%d %H:%M:%S')
     #date = TimeField('Which date favorite', format='%H:%M')
 """
 class template_filter('to_date')
