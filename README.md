@@ -1,2 +1,5 @@
-# calendarioacademicoufmt
-Reprojeto do calendário acadêmico da Universidade Federal de Mato Grosso.
+# calendarioufr
+Reprojeto do calendário acadêmico da Universidade Federal de Rondonópolis
+"""
+  Flask run
+"""
