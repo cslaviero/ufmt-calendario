@@ -50,7 +50,7 @@ class ItemPermitido(db.Model):
     __tablename__ = 'tbl_item_permissao'
 
     pri_id = db.Column(db.Integer, primary_key=True)
-    pri_nome = db.Column(db.String(200), unique=True, nullable=False)
+    pri_nome_menu = db.Column(db.String(200), unique=True, nullable=False)
     permissoes = db.relationship('Permissoes', backref='item_permitido', lazy='dynamic')
 
     def __repr__(self):
@@ -82,6 +82,13 @@ class Periodo(db.Model):
     prd_url = db.Column(db.Text, nullable=True)
     evento = db.relationship('Evento', backref='periodo', lazy='dynamic')
 
+    def __init__(self, prd_nome, prd_data_ini, prd_data_fim, prd_url):
+
+        self.prd_nome = prd_nome
+        self.prd_data_ini = prd_data_ini
+        self.prd_data_fim = prd_data_fim
+        self.prd_url = prd_url
+
     def __repr__(self):
         return '<Período: {}>'.format(self.prd_nome)
 
@@ -110,6 +117,17 @@ class Evento(db.Model):
     eve_data_fim = db.Column(db.DateTime, nullable=False)
     eve_descricao = db.Column(db.Text, nullable=False)
     eve_url = db.Column(db.String(255), nullable=True)
+
+    def __init__(self, eve_periodo, eve_categoria, eve_nome, eve_local, eve_data_ini, eve_data_fim, eve_descricao, eve_url):
+
+        self.eve_periodo = eve_periodo
+        self.eve_categoria = eve_categoria
+        self.eve_nome = eve_nome
+        self.eve_local = eve_local
+        self.eve_data_ini = eve_data_ini
+        self.eve_data_fim = eve_data_fim
+        self.eve_descricao = eve_descricao
+        self.eve_url = eve_url
 
     def __repr__(self):
         return '<Evento: {}>'.format(self.eve_nome)

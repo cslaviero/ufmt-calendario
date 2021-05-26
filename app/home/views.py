@@ -23,7 +23,7 @@ def dashboard():
     """
     return render_template('dashboard.html', title="Dashboard")
 
-@home.route('/add', methods=['GET', 'POST'])
+@home.route('/', methods=['GET', 'POST'])
 @login_required
 def add():
   #if request.method == 'POST':
@@ -32,7 +32,7 @@ def add():
     #cur.execute('''INSERT INTO tbl_campus (cps_id, cps_nome) VALUES (%s, %s)''',(id, nome))
     #mysql.connection.commit()
     #return render_template('index.html')
-  cur.execute('''SELECT cps_id, cps_nome FROM tbl_campus''')
+  #cur.execute('''SELECT cps_id, cps_nome FROM tbl_campus''')
   rv = cur.fetchall()
   for x in rv:
     print(x[0], x[1])

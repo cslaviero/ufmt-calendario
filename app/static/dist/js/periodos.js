@@ -176,7 +176,17 @@ function deleta(cod) {
 
 // ativar select de importação dos periodos
 function ativa_imp() {
-    $('#periodo').attr("disabled", false);
+    if ($('#importar').is(':checked')) {
+        $('#periodo').attr("disabled", false);
+        alert($('#importar').is(':checked'));
+    }else{
+        $('#periodo').attr("disabled", true);
+        alert($('#importar').is(':checked'));
+    }
+    $('#msg').html('<div class="alert alert-danger text-center">\n' +
+                    '<strong>Falha ao excluir período!</strong>\n' +
+                    '</div>');
+                $('#mensagem').modal('show');
 }
 
 function logout() {

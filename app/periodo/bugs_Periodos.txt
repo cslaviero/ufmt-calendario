@@ -1,0 +1,20 @@
+bugs e correções 
+- input data se passado vazio, gera exception
+- solução: corrigir a validação
+
+- tratar a possibilidade de um período não ter evento!
+
+- verificar os campos da model que são obrigatórios
+
+- datapicker não está carregando no update período
+
+- ao deletar período com eventos exception
+sqlalchemy.exc.IntegrityError: (MySQLdb._exceptions.IntegrityError) (1451, 'Cannot delete or update a parent row: a foreign key
+
+?
+- link de inserir abrir o modal simultâneos no menu lateral
+
+- verificar título das rotas (todos no plural como menu lateral)
+
+
+

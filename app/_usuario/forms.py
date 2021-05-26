@@ -1,4 +1,4 @@
-# app/user/forms.py
+# app/_usuario/forms.py
 
 from flask_wtf import FlaskForm
 from wtforms import widgets, Form as _Form
@@ -35,9 +35,9 @@ class LoginForm(FlaskForm):
     password = PasswordField('Senha', validators=[DataRequired(message='Campo obrigatório.')])
     remember = BooleanField('Lembrar-me')
     hora = TimeField(format='%H:%M')
-    #date = DateField(format='%Y/%m/%d')
+    date = DateField()
     submit = SubmitField('Login')
-    date = DateTimeField('Which date favorite', format='%Y/%m/%d %H:%M:%S')
+    #date = DateTimeField('Which date favorite', format='%Y/%m/%d %H:%M:%S')
     #date = TimeField('Which date favorite', format='%H:%M')
 """
 class template_filter('to_date')

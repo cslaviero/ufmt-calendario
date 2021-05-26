@@ -4,4 +4,4 @@ from flask import Blueprint
 
 periodo = Blueprint('periodo', __name__)
 
-from . import views
+from . import viewsPeriodo

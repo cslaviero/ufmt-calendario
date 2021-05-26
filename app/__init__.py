@@ -29,20 +29,23 @@ def create_app(config_name):
     login_manager.init_app(app)
 
     login_manager.login_message = "Você precisa estar logado para acessar esta página."
-    login_manager.login_view = "user.login"
+    login_manager.login_view = "usuario.login"
     migrate = Migrate(app, db)
     from app.models import models
-
-    from .admin import admin as admin_blueprint
-    app.register_blueprint(admin_blueprint, url_prefix='/admin')
-
-    from .user import user as user_blueprint
-    app.register_blueprint(user_blueprint)
 
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
 
     from .periodo import periodo as periodo_blueprint
     app.register_blueprint(periodo_blueprint)
+
+    from .evento import evento as evento_blueprint
+    app.register_blueprint(evento_blueprint)
+
+    from ._usuario import usuario as usuario_blueprint
+    app.register_blueprint(usuario_blueprint)
+
+    from ._categoria import categoria as categoria_blueprint
+    app.register_blueprint(categoria_blueprint)
 
     return app

@@ -1,11 +1,11 @@
 <!-- /#modal inserir evento -->
-<div class="modal fade" id="ins_periodo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="ins_evento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{url_for('periodo.insertPeriodo')}}" method="POST" id="insere">
+            <form action="{{url_for('evento.insertEvento')}}" method="POST" id="insere">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Inserir período</h4>
+                    <h4 class="modal-title" id="myModalLabel">Inserir evento</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -13,9 +13,22 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Nome do período</label>
-                                        <input name="nome" placeholder="Calendário 2018/1" required="required" class="form-control">
+                                        <label>Nome do evento</label>
+                                        <input name="nome" required="required" class="form-control">
                                         <p class="help-block">Até 255 caracteres.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label>Período</label>
+                                        <select name="periodo" id="periodo" required="required" class="form-control">
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Campus</label>
+                                        <select name="campus" id="campus" required="required" class="form-control">
+                                        </select>
                                     </div>
                                 </div>
 
@@ -24,7 +37,7 @@
                                         <label>Data/Hora de Início</label>
                                         <div class="form-group">
                                             <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                <input type="text" name="dataini" placeholder="20/03/2018 20:30:00" class="form-control datetimepicker-input" data-target="#datetimepicker1">
+                                                <input type="text" name="dataini" class="form-control datetimepicker-input" data-target="#datetimepicker1">
                                                 <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -35,8 +48,8 @@
                                     <div class="col-lg-6">
                                         <label>Data/Hora de Fim</label>
                                         <div class="form-group">
-                                            <div class="input-group date" id="datetimepicker2" data-target-input="nearest" required="required">
-                                                <input type="text" name="datafim" placeholder="20/03/2018 22:30:00" class="form-control datetimepicker-input" data-target="#datetimepicker2">
+                                            <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                                                <input type="text" name="datafim" class="form-control datetimepicker-input" data-target="#datetimepicker2">
                                                 <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -46,32 +59,33 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <label>URL</label>
-                                        <input name="url" placeholder="URL do Calendário" class="form-control">
+                                    <div class="col-lg-6">
+                                        <label>Categoria</label>
+                                        <select name="categoria" id="categoria" required="required" class="form-control">
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="form-group">
                                     <div class="col-lg-6" style="margin: 30px 0px;">
                                         <label>
-                                            {{ form.importar(onchange='ativa_imp()') }}
-                                             Importar eventos de outros períodos
+                                            <input name="notificacao" type="checkbox" value="1"> Enviar notificação
                                         </label>
-                                        <!-- <label>
-                                            {{ form.importar(onclick="ativa_imp()") }}
-                                            <input id="importar" name="importar" type="checkbox" checked = "False" onclick="ativa_imp();"> Importar eventos de outros períodos
-                                        </label>-->
-                                    </div>
-                                    <div class="col-lg-6">
-                                            <label>Período</label>
-                                            <select name="periodo" id="periodo" required="required" class="form-control" disabled="false" value='0'>
-                                                <option value='{{ 0 }}'> Selecione </option>
-                                                {% for row in periodos %}
-                                                    <option value ='{{ row.0 }}'>{{ row.1 }}</option>
-                                                {% endfor %}
-                                            </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label>Local</label>
+                                        <input name="local" class="form-control">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>URL</label>
+                                        <input name="url" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Descrição</label>
+                                    <textarea name="desc" class="form-control" rows="3"></textarea>
+                                </div>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -88,16 +102,16 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /#modal inserir periodo -->
+<!-- /#modal inserir evento -->
 
-<!-- /#modal alterar periodo -->
-<div class="modal fade" id="alt_periodo{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<!-- /#modal alterar evento -->
+<div class="modal fade" id="alt_evento{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url_for( 'periodo.updatePeriodo' , prd_id= row.0 ) }}" method="POST" id="altera">
+            <form action="{{ url_for( 'evento.updateEvento' , eve_id= row.0 ) }}" method="POST" id="altera">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Alterar período</h4>
+                    <h4 class="modal-title" id="myModalLabel">Alterar evento</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -105,10 +119,23 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Nome do período</label>
-                                        <input name="nome" id="nome2" required="required" class="form-control" value="{{row.1}}">
+                                        <label>Nome do evento</label>
+                                        <input name="nome" id="nome2" required="required" class="form-control">
                                         <input name="id" id="id2" type="hidden">
                                         <p class="help-block">Até 255 caracteres.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label>Período</label>
+                                        <select name="periodo" id="periodo2" required="required" class="form-control">
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Campus</label>
+                                        <select name="campus" id="campus2" required="required" class="form-control">
+                                        </select>
                                     </div>
                                 </div>
 
@@ -117,7 +144,7 @@
                                         <label>Data/Hora de Início</label>
                                         <div class="form-group">
                                             <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                                <input type="text" name="dataini" id="dataini2" placeholder="20/03/2018 20:30:00" class="form-control datetimepicker-input" data-target="#datetimepicker3" value="{{row.2}}">
+                                                <input type="text" name="dataini" id="dataini2" class="form-control datetimepicker-input" data-target="#datetimepicker3">
                                                 <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -129,7 +156,7 @@
                                         <label>Data/Hora de Fim</label>
                                         <div class="form-group">
                                             <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                                <input type="text" name="datafim" id="datafim2" placeholder="20/03/2018 22:30:00" class="form-control datetimepicker-input" data-target="#datetimepicker4" value="{{row.3}}">
+                                                <input type="text" name="datafim" id="datafim2" class="form-control datetimepicker-input" data-target="#datetimepicker4">
                                                 <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -139,10 +166,31 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <label>URL</label>
-                                        <input name="url" id="url2" placeholder="URL do Calendário" class="form-control">
+                                    <div class="col-lg-6">
+                                        <label>Categoria</label>
+                                        <select name="categoria" id="categoria2" required="required" class="form-control">
+                                        </select>
                                     </div>
+                                    <div class="col-lg-6" style="margin: 30px 0px;">
+                                        <label>
+                                            <input name="notificacao" type="checkbox" value="1"> Enviar notificação
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label>Local</label>
+                                        <input name="local" id="local2" class="form-control">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>URL</label>
+                                        <input name="url" id="url2" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Descrição</label>
+                                    <textarea name="desc" id="desc2" class="form-control" rows="3"></textarea>
                                 </div>
 
                             </div>
@@ -161,23 +209,22 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /#modal alterar período -->
+<!-- /#modal alterar evento -->
 
 <!-- modal de exclusão -->
-<div class="modal fade" id="del_periodo{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="del_evento{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url_for( 'periodo.deletePeriodo' , prd_id= row.0 ) }}" method="POST" id="deletar">
+            <form action="{{ url_for( 'evento.deleteEvento' , eve_id= row.0 ) }}" method="POST" id="deletar">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    Tem certeza que deseja excluir?<br />
-                    Todos os eventos deste período também serão excluídos.
-                    <p>{{row.0}} , {{row.1}}</p>
+                    Tem certeza que deseja excluir?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                    <input type="hidden" name="id" id="cod_evento">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Sim</button>
                 </div>
             </form>
@@ -197,7 +244,7 @@
                 Mensagem
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="location.href='periodos.php';" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-default" onclick="location.reload();" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
