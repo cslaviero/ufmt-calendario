@@ -4,13 +4,13 @@ use os comandos abaixo:
 usando o clone do projeto com a instalação do ambiente virtual
 acesse o diretório do projeto:
 exemplo: 
-#
+"""
 	cd c:/calendarioufr
-#
+"""
 ativar ambiente virtual
-#
+"""
 	venv\Scripts\activate
-#
+"""
 start projeto:
 #
 	pip install -r requirements.txt
