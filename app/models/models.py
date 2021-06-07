@@ -1,4 +1,4 @@
-# app/models.py
+# app/models/models.py
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -100,6 +100,10 @@ class Categoria(db.Model):
     cat_nome = db.Column(db.String(100), unique=True, nullable=False)
     cat_cor = db.Column(db.String(8), nullable=False)
     evento = db.relationship('Evento', backref='categoria', lazy='dynamic')
+
+    def __init__(self, cat_nome, cat_cor):
+        self.cat_nome = cat_nome
+        self.cat_cor = cat_cor
 
     def __repr__(self):
         return '<Categoria: {}>'.format(self.cat_nome)

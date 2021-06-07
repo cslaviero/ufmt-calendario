@@ -33,13 +33,16 @@ def create_app(config_name):
     migrate = Migrate(app, db)
     from app.models import models
 
-    from .home import home as home_blueprint
+    from ._home import home as home_blueprint
     app.register_blueprint(home_blueprint)
 
-    from .periodo import periodo as periodo_blueprint
+    from ._periodo import periodo as periodo_blueprint
     app.register_blueprint(periodo_blueprint)
 
-    from .evento import evento as evento_blueprint
+    from ._inicio import inicio as inicio_blueprint
+    app.register_blueprint(inicio_blueprint)
+
+    from ._evento import evento as evento_blueprint
     app.register_blueprint(evento_blueprint)
 
     from ._usuario import usuario as usuario_blueprint

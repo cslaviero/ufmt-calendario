@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     {% block head %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +35,8 @@
 
 <body>
 {% block content %}
-
+    {% import "bootstrap/utils.html" as utils %}
+    {% import "bootstrap/wtf.html" as wtf %}
 <div id="wrapper">
 
     {% include 'navegacao.html' %} <!-- Nav com topo e menu lateral -->
@@ -42,6 +44,24 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
+                <div id="msg" class="center-block" style="width: 500px">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {%- for category, msg in messages %}
+                                {% if category == 'success' %}
+                                <div class="alert alert-success">
+                                    <p class="small text-center">{{ msg }}</p>
+                                </div>
+                                {% endif %}
+                                {% if category == 'error' %}
+                                <div class="alert alert-danger">
+                                    <p class="small text-center">{{ msg }}</p>
+                                </div>
+                                {% endif %}
+                            {% endfor -%}
+                        {% endif %}
+                    {% endwith %}
+                </div>
                 <h1 class="page-header">Usuários
                     <a role="button" data-toggle="modal" data-target="#ins_usuario" class="btn btn-primary" style="float: right;">Inserir usuários</a>
                 </h1>
@@ -65,12 +85,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for row in users %}
+                            {% for row in usuarios %}
                             <tr class="gradeX">
                                 <td>{{ row.1 }}</td>
                                 <td class="center" style="min-width: 70px;">
-                                    <a role="button" title="Editar" data-toggle="modal" data-target="#alt_usuario{{row.0}}" class="btn btn-info btn-circle" onclick="altera('{{row.0}}');"><i class="fa fa-pencil"></i></a>
-                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_usuario{{row.0}}" class="btn btn-danger btn-circle" onclick="deleta('{{row.0}}');"><i class="fa fa-times"></i></a>
+                                    <a role="button" title="Editar" data-toggle="modal" data-target="#alt_usuario{{row.0}}" class="btn btn-info btn-circle" onclick="altera('');"><i class="fa fa-pencil"></i></a>
+                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_usuario{{row.0}}" class="btn btn-danger btn-circle" onclick="deleta('');"><i class="fa fa-times"></i></a>
                                 </td>
                             </tr>
                             {% include 'form_users.html' %}<!-- Modal de cadastro de evento -->

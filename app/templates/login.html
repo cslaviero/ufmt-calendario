@@ -9,15 +9,13 @@
 	<meta name="viewport" content="width=device-width initial-scale=1">
 	<meta charset="utf-8">
 	<title>Login | Calendário UFR</title>
-	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
 	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 	<!-- MetisMenu CSS -->
 	<link href="{{ url_for('static', filename='css/metisMenu.min.css') }}" rel="stylesheet">
-	<!-- DataTables CSS -->
-	<link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
-	<!-- DataTables Responsive CSS -->
-	<link href="{{ url_for('static', filename='css/dataTables.responsive.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
 	<link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet">
 	<link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
@@ -48,8 +46,18 @@
 									{{ form.submit(class='btn btn-lg btn-success btn-block') }}
 								</div>
 								<div class="checkbox">
-									{{ wtf.form_field(form.date, class='form-control', placeholder='Lembrar-me') }}
+									{{ form.date(class='form-control', placeholder='Lembrar-me') }}
 								</div>
+{% block scripts %}
+  
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+{% block content %}
+  <form class="verticalform">
+    <input type="text" class="form-control dp" />
+  </form>
+{% endblock %}
 							</fieldset>
 						</form>
 					</div>

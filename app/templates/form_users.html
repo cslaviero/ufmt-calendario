@@ -2,7 +2,8 @@
 <div class="modal fade" id="ins_usuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="insere">
+            <form action="{{url_for('usuario.insertUser')}}" method="POST" id="insere">
+                {{form.hidden_tag()}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Inserir usuário</h4>
@@ -14,7 +15,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Nome do usuário</label>
-                                        <input name="nome" id="nome" placeholder="Auxiliar" required="required" class="form-control">
+                                        {{ form.name( id='nome', placeholder='Nome', required='required', class='form-control') }}
                                         <p class="help-block">Até 255 caracteres.</p>
                                     </div>
                                 </div>
@@ -22,18 +23,18 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input name="email" id="email" placeholder="email@email.com" required="required" class="form-control">
+                                        {{ form.email( class='form-control', placeholder='Email usuário') }}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-lg-6">
                                         <label>Login</label>
-                                        <input name="usuario" id="usuario" placeholder="usuario" required="required" class="form-control">
+                                        {{ form.tipo( id='usuario', placeholder='Usuário', required='required', class='form-control') }}
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Senha</label>
-                                        <input name="senha" id="senha" required="required" class="form-control">
+                                        {{ form.password( id='senha', required='required', class='form-control') }}
                                         <p class="help-block">De 6 à 15 caracteres.</p>
                                     </div>
                                 </div>
@@ -48,40 +49,19 @@
                                     <div class="col-xs-6 col-sm-4">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                                Menu Campus
-                                            </div>
-                                            <div class="panel-body">
-                                                <label>
-                                                    <input id="inscampus" name="inscampus" type="checkbox" checked="checked" value="1"> Inserir
-                                                </label>
-                                                <br />
-                                                <label>
-                                                    <input id="altcampus" name="altcampus" type="checkbox" checked="checked" value="1"> Alterar
-                                                </label>
-                                                <br />
-                                                <label>
-                                                    <input id="delcampus" name="delcampus" type="checkbox" checked="checked" value="1"> Remover
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-6 col-sm-4">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
                                                 Menu Categorias
                                             </div>
                                             <div class="panel-body">
                                                 <label>
-                                                    <input id="inscat" name="inscat" type="checkbox" checked="checked" value="1"> Inserir
+                                                    {{ form.inscat(id='inscat', checked='checked') }} Inserir
                                                 </label>
                                                 <br />
                                                 <label>
-                                                    <input id="altcat" name="altcat" type="checkbox" checked="checked" value="1"> Alterar
+                                                    {{ form.altcat(id='altcat', checked='checked') }} Alterar
                                                 </label>
                                                 <br />
-                                                <label>
-                                                    <input id="delcat" name="delcat" type="checkbox" checked="checked" value="1"> Remover
+                                                <label> 
+                                                    {{ form.delcat(id='delcat', checked='checked') }} Remover
                                                 </label>
                                             </div>
                                         </div>
@@ -94,15 +74,15 @@
                                             </div>
                                             <div class="panel-body">
                                                 <label>
-                                                    <input id="inseve" name="inseve" type="checkbox" checked="checked" value="1"> Inserir
+                                                    {{ form.inseve(id='inseve', checked='checked') }} Inserir
                                                 </label>
                                                 <br />
                                                 <label>
-                                                    <input id="alteve" name="alteve" type="checkbox" checked="checked" value="1"> Alterar
+                                                    {{ form.alteve(id='alteve', checked='checked') }} Alterar
                                                 </label>
                                                 <br />
                                                 <label>
-                                                    <input id="deleve" name="deleve" type="checkbox" checked="checked" value="1"> Remover
+                                                    {{ form.deleve(id='deleve', checked='checked') }} Remover
                                                 </label>
                                             </div>
                                         </div>
@@ -115,15 +95,15 @@
                                             </div>
                                             <div class="panel-body">
                                                 <label>
-                                                    <input id="insprd" name="insprd" type="checkbox" checked="checked" value="1"> Inserir
+                                                    {{ form.insprd(id='insprd', checked='checked') }} Inserir
                                                 </label>
                                                 <br />
                                                 <label>
-                                                    <input id="altprd" name="altprd" type="checkbox" checked="checked" value="1"> Alterar
+                                                    {{ form.altprd(id='altprd', checked='checked') }} Alterar
                                                 </label>
                                                 <br />
                                                 <label>
-                                                    <input id="delprd" name="delprd" type="checkbox" checked="checked" value="1"> Remover
+                                                    {{ form.delprd(id='delprd', checked='checked') }} Remover 
                                                 </label>
                                             </div>
                                         </div>
@@ -136,15 +116,15 @@
                                             </div>
                                             <div class="panel-body">
                                                 <label>
-                                                    <input id="insusu" name="insusu" type="checkbox" checked="checked" value="1"> Inserir
+                                                    {{ form.insusu(id='insusu', checked='checked') }} Inserir
                                                 </label>
                                                 <br />
                                                 <label>
-                                                    <input id="altusu" name="altusu" type="checkbox" checked="checked" value="1"> Alterar
+                                                    {{ form.altusu(id='altusu', checked='checked') }} Alterar
                                                 </label>
                                                 <br />
                                                 <label>
-                                                    <input id="delusu" name="delusu" type="checkbox" checked="checked" value="1"> Remover
+                                                    {{ form.delusu(id='delusu', checked='checked') }} Remover
                                                 </label>
                                             </div>
                                         </div>
@@ -158,7 +138,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    {{ form.submit(class='btn btn-primary') }}
                 </div>
             </form>
         </div>
@@ -169,10 +149,11 @@
 <!-- /#modal inserir usuário -->
 
 <!-- /#modal alterar usuário -->
-<div class="modal fade" id="alt_usuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="alt_usuario{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="altera">
+            <form action="{{url_for('usuario.insertUser')}}" method="POST" id="altera">
+                {{form.hidden_tag()}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Alterar usuário</h4>
@@ -193,7 +174,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input name="email" id="email2" placeholder="email@email.com" required="required" class="form-control">
+                                        {{ form.email( id='email2', placeholder='email@email.com', required='required', class='form-control') }}
                                     </div>
                                 </div>
 
@@ -344,6 +325,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="altera">
+                {{form.hidden_tag()}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Alterar usuário</h4>
@@ -511,10 +493,11 @@
 <!-- /#modal alterar perfil -->
 
 <!-- modal de exclusão -->
-<div class="modal fade" id="del_usuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="del_usuario{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="deletar">
+            <form action="{{url_for('usuario.insertUser')}}" method="POST" id="deletar">
+                {{form.hidden_tag()}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
@@ -531,21 +514,3 @@
     </div>
 </div>
 <!-- /.modal de exclusão -->
-
-<!-- modal de mensagens -->
-<div class="modal fade" id="mensagem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div id="msg" class="modal-body">
-                Mensagem
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="location.href='usuarios.php';" data-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.modal de mensagens -->

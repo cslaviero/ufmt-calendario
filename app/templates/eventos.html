@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% import "bootstrap/utils.html" as utils %}
+    {% import "bootstrap/wtf.html" as wtf %}
+
     {% block head %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,7 +63,7 @@
                             <thead>
                             <tr>
                                 <th>Evento</th>
-                                <th>Período</th>
+                                <th class="center" style="min-width: 80px;">Período</th>
                                 <th>Categoria</th>
                                 <th>Início</th>
                                 <th>Fim</th>
@@ -71,11 +74,11 @@
                             {% for row in eventos %}
                             <tr class="gradeX">
                                 <td>{{row.1}}</td>
-                                <td>{{row.2}}</td>
+                                <td >{{row.2}}</td>
                                 <td>{{row.3}}</td>
                                 <td>{{row.4}}</td>
                                 <td>{{row.5}}</td>
-                                <td class="center" style="min-width: 70px;">
+                                <td class="center" style="min-width: 80px;">
                                     <a role="button" title="Editar" data-toggle="modal" data-target="#alt_evento{{row.0}}" class="btn btn-info btn-circle" onclick="altera('');"><i class="fa fa-pencil"></i></a>
                                     <a role="button" title="Excluir" data-toggle="modal" data-target="#del_evento{{row.0}}" class="btn btn-danger btn-circle" onclick="deleta('');"><i class="fa fa-times"></i></a>
                                 </td>

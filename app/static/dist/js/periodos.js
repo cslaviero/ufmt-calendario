@@ -1,5 +1,8 @@
 $(function () {
-
+    //alert("periodos js")
+    setTimeout(function () {
+        $('#msg').fadeToggle(2800);//elemento de msg
+    }, 2000);
     //var token = localStorage.getItem('token');
     //função onLoad para verificar se o token do login está correto
     var requestLogin = $.ajax({
@@ -127,6 +130,7 @@ $(function () {
     if(location.search.indexOf('insere') != -1){
         $('#ins_periodo').modal('show');
     }
+
 });
 
 // funções onload
@@ -147,8 +151,8 @@ function carrega() {
 }
 
 // alterar evento
-function altera(cod) {
-    alert(cod );
+/*function altera(cod) {
+    //alert(cod );
     var request = $.ajax({
         method: "get",
         url:"../../app/public/listar/periodo", // chama a rota para retornar os dados do periodo
@@ -166,13 +170,13 @@ function altera(cod) {
         $('#url2').val(e[0].url); // campo url
 
     });
-}
+}*/
 
 // deletar evento
-function deleta(cod) {
-    alert(cod );
-    $('#cod_periodo').val(cod);
-}
+//function deleta(cod) {
+    //alert(cod );
+  //  $('#cod_periodo').val(cod);
+//}
 
 // ativar select de importação dos periodos
 function ativa_imp() {
@@ -186,7 +190,7 @@ function ativa_imp() {
     $('#msg').html('<div class="alert alert-danger text-center">\n' +
                     '<strong>Falha ao excluir período!</strong>\n' +
                     '</div>');
-                $('#mensagem').modal('show');
+    $('#mensagem').modal('show');
 }
 
 function logout() {
@@ -194,3 +198,23 @@ function logout() {
     localStorage.removeItem('id');
     $(location).attr("href", "index.php");
 }
+$('#dataTables-example').DataTable({
+            responsive: true
+        });
+
+$('#datetimepicker1').datetimepicker({
+            locale: 'pt-br',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+        $('#datetimepicker2').datetimepicker({
+            locale: 'pt-br',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+        $('#datetimepicker3').datetimepicker({
+            locale: 'pt-br',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+        $('#datetimepicker4').datetimepicker({
+            locale: 'pt-br',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
