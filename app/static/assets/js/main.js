@@ -47,6 +47,7 @@ $(function(){
 
     $('#form-busca').submit(function () { // quando o campo de busca for enviado para pesquisa
         getPrepara('busca', $(':input[name=busca]').val(), $(':input[name=busca]').val());
+        //alert('getPrepara', $('#busca').val())
         return false;
     });
 });

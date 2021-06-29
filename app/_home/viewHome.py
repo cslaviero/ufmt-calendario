@@ -1,47 +1,56 @@
 # app/_home/views.py
 
-from flask import render_template, request, jsonify
+from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required
 from wtforms import Form, BooleanField, StringField, PasswordField, SelectField, validators
 from .. import mysql
+from .. import db
 from . import home
+from .. models.models import Evento, Categoria, Comentario
+from datetime import datetime
 
 @home.route('/')
 def homepage():
 
 	cur = mysql.get_db().cursor()
-	#sql = 'SELECT tbp.prd_nome as nome , date_format(tbp.prd_data_fim, %s) as date_fim FROM tbl_periodos as tbp ORDER BY date_fim DESC LIMIT 1'
 	sql='SELECT tbp.prd_id, tbp.prd_nome, COUNT(tbe.eve_id) as eventos, date_format(tbp.prd_data_ini, %s) as inicio, date_format(tbp.prd_data_fim, %s) as fim FROM tbl_periodos as tbp, tbl_eventos as tbe WHERE tbe.eve_periodo = tbp.prd_id GROUP BY tbe.eve_periodo DESC ORDER BY tbp.prd_data_fim DESC LIMIT 4'
 	data1 = ('%d/%m/%Y %H:%i:%s')
 	data2 = ('%d/%m/%Y %H:%i:%s')
 	cur.execute(sql, (data1, data2))
-	rowsNome = cur.fetchall()
-	cur.close()
-
-	cur = mysql.get_db().cursor()
-	sql = 'SELECT * FROM tbl_periodos ORDER BY date_format(tbl_periodos.prd_data_fim, %s) DESC limit 4'
-	cur.execute(sql, data1)
 	rows = cur.fetchall()
 
+	sql = 'SELECT * FROM tbl_categoria'
+	cur.execute(sql)
+	cats = cur.fetchall()
+
 	cur.close()
-	return render_template('index.html', pNome= rowsNome, periodos=rows, title='Home')
+	return render_template('index.html', periodos=rows, categorias= cats, title='Home')
 
-@home.route('/dashboard')
-@login_required
-def dashboard():
+@home.route('/coment', methods=['POST'])
+def coment():
 
-	cur = mysql.get_db().cursor()
-	sql = 'SELECT tbp.prd_nome as nome , date_format(tbp.prd_data_fim, %s) as date_fim FROM tbl_periodos as tbp ORDER BY date_fim DESC LIMIT 1'
-	data = ('%d/%m/%Y %H:%i:%s')
-	cur.execute(sql, data)
-	rowsNome = cur.fetchall()
-	cur.close()
-	return render_template('home.html', title='Dashboard')
+	if request.method == 'POST':
+		try:
+			name = request.form['name']
+			email = request.form['email']
+			curso = request.form['curso']
+			texto = request.form['texto']
+			nota = request.form['fb']
+			comentario = Comentario(name, email, curso, texto, nota)
+			print('======== comentário: ', comentario)
+			db.session.add(comentario)#adiciona o comentário no db
+			db.session.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			return redirect(url_for('home.homepage'))
 
-@home.route('/add/<string:periodoNome>', methods=['GET', 'POST'])
-#@login_required
-def add(periodoNome):
-	print('str: ', periodoNome)
+@home.route('/add/<string:idPeriodo>/<string:idCat>/<string:strBusca>', methods=['GET', 'POST'])
+def add(idPeriodo, idCat, strBusca):
+	print('idPeriodo: ', idPeriodo)
+	print('idCat: ', idCat)
+	print('strBusca: ', strBusca)
+
 	cur = mysql.get_db().cursor()
 	sql = 'SELECT tbp.prd_id, tbp.prd_nome as nome , date_format(tbp.prd_data_ini, %s) as  date_inicio , date_format(tbp.prd_data_fim, %s) as date_fim, tbp.prd_url FROM tbl_periodos as tbp ORDER BY date_fim DESC LIMIT 3'
 	data1 = ('%d/%m/%Y %H:%i:%s')
@@ -49,7 +58,7 @@ def add(periodoNome):
 	cur.execute(sql, (data1, data2))
 	rows = cur.fetchall()
 	cur.close()
-	eventDict={
+	eventDict={# cria um dicionário de dados
 		'Janeiro': {1:['x/01', '10/05', 'matricula']},
 		'Fevereiro': {1:['20/01', '22/05', 'ajuste matricula']},
 		'Março': {1:['23/01', '25/05', 'recesso'], 2:['20/01', '10/05', 'matricula']},
@@ -63,232 +72,159 @@ def add(periodoNome):
 		'Novembro': {},
 		'Dezembro': {}
 	}
-	#https://www.fullstackpython.com/flask-json-jsonify-examples.html
-	#jsonify({'eventDict': eventDict})
-	return render_template('dadosPeriodo.html', eventDict= eventDict, periodos= rows, title= 'Períodos')
+	# cria as listas do dicionário para inseri mais de um evento
+	jan ={}
+	fev ={}
+	mar ={}
+	abr ={}
+	mai ={}
+	jun ={}
+	jul ={}
+	ago ={}
+	sete ={}
+	out ={}
+	nov ={}
+	dez ={}
+	# busca todos eventos do período pelo id do período
+	evento='';
+	if idCat == 'None' and strBusca == 'None':
+		print('2 nulas---------------------')
+		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).order_by(Evento.eve_data_ini.asc()).all()
+	elif idCat != 'None' and strBusca == 'None':
+		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).filter_by(eve_categoria = int(idCat)).order_by(Evento.eve_data_ini.asc()).all()
+		print('Str nula---------------------')
+	elif idCat == 'None' and strBusca != 'None':
+		strBusca = '%'+strBusca+'%'
+		print('Cat nula---------------------print strBusca: ', strBusca)
+		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).filter(Evento.eve_nome.like(strBusca)).all()
+		print('Cat nula---------------------print evento: ', evento)
+	else:
+		strBusca = '%'+strBusca+'%'
+		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).filter_by(eve_categoria = int(idCat)).filter(Evento.eve_nome.like(strBusca)).all()
+		print('Cat nula---------------------print evento: ', evento)
+		print('Cat nula---------------------print strBusca: ', strBusca)
 
-	#cur = mysql.get_db().cursor()
-	#cur.execute('INSERT INTO tbl_campus (cps_id, cps_nome) VALUES (%s, %s)',(id, nome))
-	#mysql.connection.commit()
-	#rv = cur.fetchall()
-	#for x in rv:
-	#	print(x[0], x[1])
-	#	return str(rv)
-	#return render_template('index.html')
+	mesFim = '' # variavel para esvrever abreviação do mês final do evento
+	for row in evento: # inseri um objeto por vez a lista
+		dataFim = str(row.eve_data_fim)
+		if dataFim[5:7] == '01':
+			mesFim = 'Jan' # atribui a string de abreviação do mês
+		elif dataFim[5:7] == '02':
+			mesFim = 'Fev'
+		elif dataFim[5:7] == '03':
+			mesFim = 'Mar'
+		elif dataFim[5:7] == '04':
+			mesFim = 'Abr'
+		elif dataFim[5:7] == '05':
+			mesFim = 'Mai'
+		elif dataFim[5:7] == '06':
+			mesFim = 'Jun'
+		elif dataFim[5:7] == '07':
+			mesFim = 'Jul'
+		elif dataFim[5:7] == '08':
+			mesFim = 'Ago'
+		elif dataFim[5:7] == '09':
+			mesFim = 'Set'
+		elif dataFim[5:7] == '10':
+			mesFim = 'Out'
+		elif dataFim[5:7] == '11':
+			mesFim = 'Nov'
+		elif dataFim[5:7] == '12':
+			mesFim = 'Dez'
 
-"""
+		data = str(row.eve_data_ini)
+		if data[5:7] == '01': # captura o evento e ordena pelo mês
+			jan[row.eve_id] = str(row.eve_data_ini)[8:10],'Fev', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '02':
+			fev[row.eve_id] = str(row.eve_data_ini)[8:10],'Fev', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '03':
+			mar[row.eve_id] = str(row.eve_data_ini)[8:10],'Mar', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '04':
+			abr[row.eve_id] = str(row.eve_data_ini)[8:10],'Abr', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '05':
+			mai[row.eve_id] = str(row.eve_data_ini)[8:10],'Mai', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '06':
+			jun[row.eve_id] = str(row.eve_data_ini)[8:10],'Jun', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '07':
+			jul[row.eve_id] = str(row.eve_data_ini)[8:10],'Jul', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '08':
+			ago[row.eve_id] = str(row.eve_data_ini)[8:10],'Ago', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '09':
+			sete[row.eve_id] = str(row.eve_data_ini)[8:10],'Set', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '10':
+			out[row.eve_id] = str(row.eve_data_ini)[8:10],'Out', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '11':
+			nov[row.eve_id] = str(row.eve_data_ini)[8:10],'Nov', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
+		elif data[5:7] == '12':
+			dez[row.eve_id] = str(row.eve_data_ini)[8:10],'Dez', str(row.eve_data_fim)[8:10], mesFim, row.eve_nome
 
-import json
+	eventDict['Janeiro'] = jan # inseri a lista de tuplas no dicionário
+	eventDict['Fevereiro'] = fev
+	eventDict['Março'] = mar
+	eventDict['Abril'] = abr
+	eventDict['Maio'] = mai
+	eventDict['Junho'] = jun
+	eventDict['Julho'] = jul
+	eventDict['Agosto'] = ago
+	eventDict['Setembro'] = sete
+	eventDict['Outubro'] = out
+	eventDict['Novembro'] = nov
+	eventDict['Dezembro'] = dez
+	return render_template('dadosPeriodo.html', eventDict= eventDict)
 
-thisdict =	{
-  "jan": "Ford",
-  "fev": "Mustang",
-  "abr": 1964
-}
-#thisdict["mai"] = "modells"
-ele = {}
-ele ["modells"] = "04/05","10/05", "receso", "11/05","20/05", "receso2","21/05","30/05", "receso3"
-thisdict["mai"]  = ele
-#("04/05","10/05", "receso"),(), ("21/05","30/05", "receso3")
-#print(thisdict)
+@home.route('/showEvento/?<string:idEvento>?', methods=['GET', 'POST'])
+def showEvento(idEvento):
 
-for x in thisdict:
-  print(x)
-print('----------------------')
-for x in thisdict.values():
-  print(x)
-print('----------------------')  
-for x in ele.values():
-  print(x)
-print('----------------------')  
-pessoa_json = json.dumps(thisdict)
-print(pessoa_json)
-print('----------------------')
-p_json = json.dumps(ele)
-print(p_json)
+	eve = Evento.query.filter_by(eve_id = int(idEvento)).first()
+	if eve is None:
+		cat= None
+		flash('Erro na identificação do Evento!', 'error')
+	else:
+		cat = Categoria.query.filter_by(cat_id = eve.eve_categoria).first()
 
+	return render_template('eventoShow.html', evento= eve, categoria= cat, title='Evento')
 
---------------------
-import re
+@home.route('/buscaEvento', methods=['POST'])
+def buscaEvento():
+	if request.method == 'POST':
+		busca = request.form['busca']
 
-#Check if the string starts with "The" and ends with "Spain":
+	cur = mysql.get_db().cursor()
+	sql='SELECT tbp.prd_id, tbp.prd_nome, COUNT(tbe.eve_id) as eventos, date_format(tbp.prd_data_ini, %s) as inicio, date_format(tbp.prd_data_fim, %s) as fim FROM tbl_periodos as tbp, tbl_eventos as tbe WHERE tbe.eve_periodo = tbp.prd_id GROUP BY tbe.eve_periodo DESC ORDER BY tbp.prd_data_fim DESC LIMIT 4'
+	data1 = ('%d/%m/%Y %H:%i:%s')
+	data2 = ('%d/%m/%Y %H:%i:%s')
+	cur.execute(sql, (data1, data2))
+	rows = cur.fetchall()
 
-txt = "The rain in Spain"
-x = re.search("*Spain$", txt)
+	sql = 'SELECT * FROM tbl_categoria'
+	cur.execute(sql)
+	cats = cur.fetchall()
 
-if x:
-  print("YES! We have a match!")
-else:
-  print("No match")
-  ---------------------------
-<!DOCTYPE html>
-<html>
-<body>
+	cur.close()
 
-<p>Looping through arrays inside arrays.</p>
-<p id="demo"></p>
-<p id="demo2"></p>
+	return render_template('index.html', strBusca=  busca, periodos=rows, categorias= cats, title='Home')
 
-<script>
-let data_inicio = "";
-let data_fim = "";
-let nomeEvento = "";
-const dadosjan = {"models":["10/01", "10/05", "matricula"]}
-    
-const myObj = {
-  "name":"John",
-  "age":30,
-  "jan": [{"models": ["04/05", "10/05", "receso", "11/05", "20/05", "receso2", "21/05", "30/05", "receso3"]}],
-  "fev": [
-    {"name":"Ford", "models":["Fiesta", "Focus", "Mustang"]},
-    {"name":"BMW", "models":["320", "X3", "X5"]}
-  ]
-}
+@home.route('/showProxEvento/<string:idPeriodoAtual>', methods=['POST'])
+def showProxEvento(idPeriodoAtual):
 
-for (let i in myObj.jan) {
-  data_inicio += "<h2>" + myObj.jan[i].name + "</h2>";
-  for (let j in myObj.jan[i].models) {
-    data_fim = myObj.jan[i].models;
-  }
-}
-/*for (let i in myObj.fev) {
-  data_inicio += "<h2>" + myObj.fev[i].name + "</h2>";
-   
-  for (let j in myObj.fev[i].models) {
-      //data_inicio += myObj.fev[i].models ;
-      //data_inicio=j;
-      for (let k in myObj.fev[i].models) {
-        //data_inicio = myObj.fev[0].models;
-        data_fim = myObj.fev[1].models ;
-      }
-  }
-}*/
+	data_hora_atuais = datetime.now()
+	data_e_hora_em_texto = data_hora_atuais.strftime('%d/%m/%Y')
+	dia = data_hora_atuais.strftime('%d')
+	mes = data_hora_atuais.strftime('%m')
+	ano = data_hora_atuais.strftime('%Y')
+	dia2 = int(dia)+7
+	mes2= mes;
+	ano2= int(ano);
+	if dia2 > 30:
+		dia2 = dia2 - 30
+		mes2 = int(mes)+1
+		if str(mes) == '12':
+			mes2 = '01'
+			ano2 = int(ano)+1
 
-document.getElementById("demo").innerHTML = "aqui"+data_inicio+"fim";
-document.getElementById("demo2").innerHTML = data_fim;
-</script>
+	data1 = (str(ano)+'-'+str(mes)+'-'+str(dia))
+	data2 = (str(ano2)+'-'+str(mes2)+'-'+str(dia2))
 
-</body>
-</html>
-https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask-pt
--------------------------
-<!DOCTYPE html>
-<html>
-<body>
+	eventos = Evento.query.filter_by(eve_periodo = int(idPeriodoAtual)).filter(Evento.eve_data_ini.between(data1, data2)).order_by(Evento.eve_data_ini.asc()).all()
 
-<p>Looping through arrays inside arrays.</p>
-<p id="demo"></p>
-<p id="demo2"></p>
-
-<script>
-let data_inicio = "";
-let data_fim = "";
-let nomeEvento = "";
-const dadosjan = {"models":["10/01", "10/05", "matricula"]}
-    
-const myObj = {
-  "name":"John",
-  "age":30,
-  "jan": [{"models": ["04/05", "10/05", "receso", "11/05", "20/05", "receso2", "21/05", "30/05", "receso3"]}],
-  "fev": [
-    {"name":"Ford", "models":["Fiesta", "Focus", "Mustang"]},
-    {"name":"BMW", "models":["320", "X3", "X5"]}
-  ]
-}
-
-for (let i in myObj.jan) {
-  data_inicio += "<h2>" + myObj.jan[i].name + "</h2>";
-  for (let j in myObj.jan[i].models) {
-    data_fim = myObj.jan[i].models;
-  }
-}
-/*for (let i in myObj.fev) {
-  data_inicio += "<h2>" + myObj.fev[i].name + "</h2>";
-   
-  for (let j in myObj.fev[i].models) {
-      //data_inicio += myObj.fev[i].models ;
-      //data_inicio=j;
-      for (let k in myObj.fev[i].models) {
-        //data_inicio = myObj.fev[0].models;
-        data_fim = myObj.fev[1].models ;
-      }
-  }
-}*/
-
-document.getElementById("demo").innerHTML = "aqui"+data_inicio+"fim";
-document.getElementById("demo2").innerHTML = data_fim;
-</script>
-
-</body>
-</html>
-
-
-thisdict =	{
-  "jan":{'1':['10/01', '10/05', 'matricula'], 2:['10/01', '10/05', 'matricula'], 3:['10/01', '10/05', 'matricula']},
-  "fev":  {1:['10/01', '10/05', 'matricula'], 2:['10/01', '10/05', 'matricula'], 3:['10/01', '10/05', 'matricula']},
-  "mai": {1:['10/01', '10/05', 'matricula'], 2:['10/01', '10/05', 'matricula'], 3:['10/01', '10/05', 'matricula'], 4:['10/01', '10/05', 'matricula'] }
-}
-jan = {}
-for i in rowDoBanco:
-	jan [len(i)] = i[0],i[1],i[2]
-x = thisdict.get("jan")
-print(x.get('1')[0],x.get('1')[1], x.get('1')[2] )
-
-print('------------')
-
-x = thisdict.get("mai")
-print(x)
-
-print('------------')
-
-x = thisdict.get("fev")
-print(x)
-
------------------------------------
-cars = (10, "Ford", "Volvo", "BMW"),(2, "x", "y", "z"), (3, "p", "o","i")
-
-x = 0
-listMeses = {
-				'jan':'j',
-                'fev':'f'
-            }
-jan ={}
-for i in cars:
-	jan[i[0]] = i[0],i[1],i[2],i[3]
-    
-listMeses['jan'] = jan    
-c = listMeses.get('jan')
-print(c)
-for j in c:
-	#print(j)
-    print(c.get(j)[0],c.get(j)[1], c.get(j)[2])
-print('----------')
-print(c.get(10)[0],c.get(10)[1], c.get(10)[2] )
-print(listMeses)
-
-==========================
-cars = (10, "Ford", "Volvo", "BMW"),(2, "/12/", "y", "z"), (3, "/07/", "o","i"),  (31, "/09/", "o","i"),
-
-x = 0
-listMeses = {
-				'jan':None,
-                'fev':None
-            }
-print(listMeses)
-jan ={}
-for i in cars:
-	jan[i[0]] = i[0],i[1][1:3],i[2],i[3]
-    
-listMeses['jan'] = jan    
-c = listMeses.get('jan')
-print(c)
-for j in c:
-	#print(j)
-    print(c.get(j)[0],c.get(j)[1], c.get(j)[2])
-print('----------')
-print(c.get(10)[0],c.get(10)[1], c.get(10)[2] )
-print(listMeses)
-==========================
-------------------------------------
-"""
-
+	return render_template('showProxEventos.html', eventos= eventos)

@@ -1,10 +1,10 @@
 # app/_usuario/views.py
 from flask import flash, redirect, render_template, url_for, request
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from . import usuario
 from .. _usuario.formsUsuario import RegistrationForm, LoginForm
 from .. import db
-from .. models.models import Usuario
+from .. models.models import Usuario, Permissoes, Comentario
 from .. import mysql
 
 @usuario.route('/usuarios', methods=['GET', 'POST'])
@@ -16,7 +16,13 @@ def usuarios():
     cur.execute(sql)
     rows = cur.fetchall()
     cur.close()
-    return render_template('user.html', form= form, usuarios= rows, title= "Usuários")
+    auxId = current_user.get_id()
+    prmEvento = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 1).first ()
+    prmCategoria = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 2).first ()
+    prmPeriodo = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 3).first ()
+    prmUsuario = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 4).first ()
+
+    return render_template('user.html', form= form, usuarios= rows, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Usuários")
 
 @usuario.route('/insertUser', methods=['GET', 'POST'])
 def insertUser():
@@ -59,7 +65,7 @@ def login():
                  login_user(user, remember=True, duration=timedelta(days=1))#Seta o usuário na sessão por um dia
             else: #o checkbok desmarcado
                 login_user(user, remember=False)#Seta o usuário na sessão até fechar o navegador
-            return redirect(url_for('home.homepage')) #usuário logado e redirecionado para a página inicial
+            return redirect(url_for('inicio.listaInicio')) #usuário logado e redirecionado para a página inicial
         else:
             #Usuário existe, mas senha não está correta
             flash('Senha inválida!')#redirecionado para a página login com a msg
@@ -73,3 +79,15 @@ def logout():
     flash('Usuário fez logout.')
     # redireciona para a página login
     return redirect(url_for('usuario.login'))
+
+@usuario.route('/comentarios', methods=['GET', 'POST'])
+def comentarios():
+
+    coment = Comentario.query.all()
+    auxId = current_user.get_id()
+    prmEvento = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 1).first ()
+    prmCategoria = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 2).first ()
+    prmPeriodo = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 3).first ()
+    prmUsuario = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 4).first ()
+
+    return render_template('comentarios.html', coment= coment, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Comentários")

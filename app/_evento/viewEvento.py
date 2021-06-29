@@ -1,20 +1,19 @@
 # app/_evento/viewsEvento.py
 from flask import flash, redirect, render_template, url_for, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from datetime import datetime
 from . import evento
 from wtforms import Form, BooleanField, StringField, PasswordField, SelectField, validators
 from .. _evento.formEvento import EventoForm
 from .. import db
 from .. import mysql
-from .. models.models import Evento
+from .. models.models import Evento, Permissoes
 
 @evento.route('/eventos', methods=['GET', 'POST'])
 def eventos():
 
 	form = EventoForm()
 	cur = mysql.get_db().cursor()
-	#sql = 'SELECT tbe.eve_id, tbe.eve_periodo, tbe.eve_nome , date_format(tbp.prd_data_ini, %s) as  date_inicio , date_format(tbe.prd_data_fim, %s) as date_fim, tbe.prd_url FROM tbl_eventos as tbe'
 	sql = 'SELECT eve_id, eve_nome, prd_nome, cat_nome, date_format(eve_data_ini, %s) as inicio, date_format(eve_data_fim, %s) as fim FROM tbl_categoria, tbl_periodos, tbl_eventos WHERE cat_id = eve_categoria AND prd_id = eve_periodo ORDER BY eve_data_ini DESC LIMIT 500'
 	data1 = ('%d/%m/%Y %H:%i:%s')
 	data2 = ('%d/%m/%Y %H:%i:%s')
@@ -31,7 +30,13 @@ def eventos():
 
 	cur.close()
 
-	return render_template('eventos.html', form= form, eventos= rows, periodos= rowsPeriodo, categorias= rowsCategoria, title= "Eventos")
+	auxId = current_user.get_id()
+	prmEvento = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 1).first ()
+	prmCategoria = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 2).first ()
+	prmPeriodo = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 3).first ()
+	prmUsuario = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 4).first ()
+
+	return render_template('eventos.html', form= form, eventos= rows, periodos= rowsPeriodo, categorias= rowsCategoria, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Eventos")
 
 @evento.route('/insertEvento', methods=['POST'])
 def insertEvento():

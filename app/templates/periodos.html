@@ -13,26 +13,20 @@
     <title>{% block title %}{{title}}{% endblock %} | Calendário UFR</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/v3.3.7.bootstrap.min.css') }}" rel="stylesheet">
     <!-- MetisMenu CSS -->
-    <link href="{{ url_for('static', filename='vendor/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/metisMenu.min.css') }}" rel="stylesheet">
     <!-- DataTables CSS -->
-    <link href="{{ url_for('static', filename='vendor/datatables-plugins/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
     <!-- DataTables Responsive CSS -->
-    <link href="{{ url_for('static', filename='vendor/datatables-responsive/dataTables.responsive.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dataTables.responsive.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='dist/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet">
     <!-- Custom Fonts -->
-    <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <!-- tempusdominus-bootstrap-4 -->
-    <link href="{{ url_for('static', filename='vendor/bootstrap/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     {% endblock %}
 </head>
 <body>
@@ -61,7 +55,13 @@
                     {% endwith %}
                 </div>
                 <h1 class="page-header">Períodos
+                {% if  prmPeriodo.prm_inserir == 1 %}
                     <a role="button" data-toggle="modal" data-target="#ins_periodo" class="btn btn-primary" style="float: right;">Inserir período</a>
+                {% else %}
+                    <a role="button" class="btn btn-primary" style="float: right;" disabled="true">
+                        <i class="fa fa-lock"></i> Inserir período
+                    </a>
+                {% endif %}
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -91,8 +91,22 @@
                                 <td>{{row.2}}</td>
                                 <td>{{row.3}}</td>
                                 <td class="center" style="min-width: 70px;">
-                                    <a role="button" title="Editar" data-toggle="modal" data-target="#alt_periodo{{row.0}}" class="btn btn-info btn-circle" onclick="altera('{{row.0}}')"><i class="fa fa-pencil"></i></a>
-                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_periodo{{row.0}}" class="btn btn-danger btn-circle" onclick="deleta('{{row.0}}')"><i class="fa fa-times"></i></a>
+                                {% if  prmPeriodo.prm_alterar == 1 %}
+                                    <a role="button" title="Editar" data-toggle="modal" data-target="#alt_periodo{{row.0}}" class="btn btn-info btn-circle" onclick="setDatepickerFim('{{row.0}}')"><i class="fa fa-pencil"></i>
+                                    </a>
+                                {% else %}
+                                    <i class="fa fa-lock"></i>
+                                    <a role="button" title="Editar" class="btn btn-info btn-circle" disabled="true">
+                                    <i class="fa fa-pencil"></i></a>
+                                {% endif %}
+                                {% if  prmPeriodo.prm_deletar == 1 %}
+                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_periodo{{row.0}}" class="btn btn-danger btn-circle" onclick="deleta('{{row.0}}')"><i class="fa fa-times"></i>
+                                    </a>
+                                {% else %}
+                                    <i class="fa fa-lock"></i>
+                                    <a role="button" title="Excluir" class="btn btn-danger btn-circle" disabled="true">
+                                    <i class="fa fa-times"></i></a>
+                                {% endif %}
                                 </td>
                             </tr>
                             <!-- Modal periodos -->
@@ -115,26 +129,26 @@
 </div>
 <!-- /#wrapper -->
 <!-- jQuery -->
-<script type="text/javascript" src="/static/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <!-- Moment.js -->
-<script type="text/javascript" src="/static/vendor/moment/moment/moment.js"></script>
+<script type="text/javascript" src="/static/js/moment.js"></script>
 
 <!-- tempusdominus-bootstrap-4 -->
-<script type="text/javascript" src="/static/vendor/bootstrap/js/tempusdominus-bootstrap-4.min.js"></script>
+<script type="text/javascript" src="/static/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script type="text/javascript" src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script type="text/javascript" src="/static/vendor/metisMenu/metisMenu.min.js"></script>
+<script type="text/javascript" src="/static/js/metisMenu.min.js"></script>
 
 <!-- DataTables JavaScript -->
-<script type="text/javascript" src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/static/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="/static/vendor/datatables-responsive/dataTables.responsive.js"></script>
+<script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/dataTables.responsive.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script type="text/javascript" src="/static/dist/js/sb-admin-2.js"></script>
+<script type="text/javascript" src="/static/js/sb-admin-2.js"></script>
 
 <!-- Funções do sistema da API -->
 <script type="text/javascript" src="/static/dist/js/periodos.js"></script>
@@ -168,26 +182,6 @@ function showCustomer(periodoNome) {
   xhttp.send();
 }
 </script>
-<script>
-    $(document).ready(function() {
-        
-    $('#datetimepicker10').datetimepicker({
-            locale: 'pt-br',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-
-    $('#myTable').DataTable();
-
-    });
-</script>
-<script type="text/javascript">
-      $(function () {
-          $('#datetimepicker10').datetimepicker({
-              viewMode: 'years',
-              format: 'MM/YYYY'
-          });
-      });
-   </script>
 
     <footer>
         <div class="container">

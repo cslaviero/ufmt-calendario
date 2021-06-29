@@ -12,8 +12,8 @@
 
 	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 
-	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/v3.3.7.bootstrap.min.css') }}" rel="stylesheet">
 	<!-- MetisMenu CSS -->
 	<link href="{{ url_for('static', filename='css/metisMenu.min.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
@@ -22,6 +22,7 @@
 </head>
 <body>
 	<div class="container">
+	<a class="btn btn-primary btn-sm d-inline float-left" role="button" href="javascript:history.back();" style="margin-right:10px;margin-left:10px;margin-top:10px;">&lt; Voltar</a>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 				<div class="login-panel panel panel-default">
@@ -45,19 +46,6 @@
 									<!-- botão do formulário -->
 									{{ form.submit(class='btn btn-lg btn-success btn-block') }}
 								</div>
-								<div class="checkbox">
-									{{ form.date(class='form-control', placeholder='Lembrar-me') }}
-								</div>
-{% block scripts %}
-  
-  {{ datepicker.loader() }} {# to load jQuery-ui #}
-  {{ datepicker.picker(id=".dp") }}
-{% endblock %}
-{% block content %}
-  <form class="verticalform">
-    <input type="text" class="form-control dp" />
-  </form>
-{% endblock %}
 							</fieldset>
 						</form>
 					</div>

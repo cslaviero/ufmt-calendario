@@ -8,7 +8,6 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login_manager
 
-
 class Usuario(UserMixin, db.Model):
     
     __tablename__ = 'tbl_usuarios'
@@ -135,3 +134,24 @@ class Evento(db.Model):
 
     def __repr__(self):
         return '<Evento: {}>'.format(self.eve_nome)
+
+class Comentario(db.Model):
+    
+    __tablename__ = 'tbl_comentarios'
+
+    com_id = db.Column(db.Integer, primary_key=True)
+    com_nome = db.Column(db.String(40), nullable=False)
+    com_email = db.Column(db.String(40), nullable=True)
+    com_curso = db.Column(db.String(40), nullable=True)
+    com_texto = db.Column(db.Text, nullable=False)
+    com_nota = db.Column(db.String(2), nullable=False)
+
+    def __init__(self, com_nome, com_email, com_curso, com_texto, com_nota):
+        self.com_nome = com_nome
+        self.com_email = com_email
+        self.com_curso = com_curso
+        self.com_texto = com_texto
+        self.com_nota = com_nota
+
+    def __repr__(self):
+        return '<Comentário: {}>'.format(self.com_id)

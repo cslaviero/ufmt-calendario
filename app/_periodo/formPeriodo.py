@@ -14,8 +14,8 @@ class PeriodoForm(FlaskForm):
     Form com inputs do periodo
     """
     nome = PasswordField('Senha', validators=[DataRequired(message='Campo obrigatório.')])
-    data_ini = DateField(format='%Y/%m/%d')
-    data_ini = DateField(format='%Y/%m/%d')
+    #data_ini = DateField(format='%Y/%m/%d')
+    #data_ini = DateField(format='%Y/%m/%d')
     url = StringField('Email', [Email(message='Email inválido!')])
     importar = BooleanField()
     enviarNotificacao = BooleanField()

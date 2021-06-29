@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flaskext.mysql import MySQL
 from flask_bootstrap import Bootstrap
-from flask_datepicker import datepicker
 from config import app_config
 from flask_migrate import Migrate
 from flask_fontawesome import FontAwesome
@@ -22,7 +21,6 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
     
     bootstrap = Bootstrap(app)
-    datepicker(app)
     fa = FontAwesome(app)
     db.init_app(app)
     mysql.init_app(app)

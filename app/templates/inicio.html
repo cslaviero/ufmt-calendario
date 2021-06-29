@@ -13,36 +13,30 @@
     <title>{% block title %}{{title}}{% endblock %} | Calendário UFR</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/v3.3.7.bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Colorpicker Core CSS -->
-    <link href="{{ url_for('static', filename='vendor/pick-a-color-master/build/1.2.3/css/pick-a-color-1.2.3.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/pick-a-color-1.2.3.min.css') }}" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="{{ url_for('static', filename='vendor/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/metisMenu.min.css') }}" rel="stylesheet">
 
     <!-- DataTables CSS -->
-    <link href="{{ url_for('static', filename='vendor/datatables-plugins/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
-    <link href="{{ url_for('static', filename='vendor/datatables-responsive/dataTables.responsive.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dataTables.responsive.css') }}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='dist/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <!-- tempusdominus-bootstrap-4 -->
-    <link href="{{ url_for('static', filename='vendor/bootstrap/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" type="text/css">
 
-    <link href="{{ url_for('static', filename='dist/css/jquery.datetimepicker.css') }}" rel="stylesheet" type="text/css">
+    <!--<link href="{{ url_for('static', filename='dist/css/jquery.datetimepicker.css') }}" rel="stylesheet" type="text/css">-->
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 {% endblock %}
 </head>
 
@@ -52,15 +46,27 @@
 <div id="wrapper">
 
     {% include 'navegacao.html' %} <!-- Nav com topo e menu lateral -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5">
-                <h5 class="text-center">{{ utils.flashed_messages() }}</h5>
-            </div>
-        </div>
-    </div>
+
     <div id="page-wrapper">
         <div class="row">
+            <div id="msg" class="center-block" style="width: 500px">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {%- for category, msg in messages %}
+                            {% if category == 'success' %}
+                            <div class="alert alert-success">
+                                <p class="small text-center">{{ msg }}</p>
+                            </div>
+                            {% endif %}
+                            {% if category == 'error' %}
+                            <div class="alert alert-danger">
+                                <p class="small text-center">{{ msg }}</p>
+                            </div>
+                            {% endif %}
+                        {% endfor -%}
+                    {% endif %}
+                {% endwith %}
+            </div>
             <div class="col-lg-12">
                 <h1 class="page-header">Painel de Controle</h1>
             </div>
@@ -79,7 +85,7 @@
                             <thead>
                             <tr>
                                 <th>Período</th>
-                                <th>Eventos</th>
+                                <th style="min-width: 80px;">Eventos</th>
                                 <th>Início</th>
                                 <th>Fim</th>
                                 <th>Ações</th>
@@ -89,12 +95,20 @@
                             {% for row in periodos %}
                             <tr class="gradeX">
                                 <td>{{row.1}}</td>
-                                <td>{{row.2}}</td>
+                                <td style="min-width: 80px;">{{row.2}}</td>
                                 <td>{{row.3}}</td>
                                 <td>{{row.4}}</td>
                                 <td class="center">
-                                    <a role="button" data-toggle="modal" data-target="#ins_evento{{row.0}}" class="btn btn-primary btn-xs" onclick="setor('');">Inserir evento</a>
-                                    <a role="button" class="btn btn-warning btn-xs" href="notification.php">Enviar notificações</a>
+                                    {% if  prmEvento.prm_inserir == 1 %}
+                                        <a role="button" data-toggle="modal" data-target="#ins_evento{{row.0}}" class="btn btn-primary btn-xs" onclick="setor('');">Inserir evento</a>
+                                        <a role="button" class="btn btn-warning btn-xs" href="#">Enviar notificações</a>
+                                    {% else %}
+                                        <i class="fa fa-lock"></i>
+                                        <a role="button" class="btn btn-primary btn-xs" disabled="true">Inserir evento</a>
+                                        <i class="fa fa-lock"></i>
+                                        <a role="button" class="btn btn-warning btn-xs" disabled="true">Enviar notificações</a>
+                                    {% endif%}
+                                    
                                 </td>
                             </tr>
                             {% include 'form_eventos_inicio.html' %}
@@ -118,39 +132,39 @@
  <!-- Modal de cadastro de evento -->
 
 <!-- jQuery -->
-<script type="text/javascript" src="/static/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 
 <!-- Moment.js -->
-<script type="text/javascript" src="/static/vendor/moment/moment/moment.js"></script>
+<script type="text/javascript" src="/static/js/moment.js"></script>
 
 <!-- tempusdominus-bootstrap-4 -->
-<script type="text/javascript" src="/static/vendor/bootstrap/js/tempusdominus-bootstrap-4.min.js"></script>
+<script type="text/javascript" src="/static/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script type="text/javascript" src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script type="text/javascript" src="/static/vendor/metisMenu/metisMenu.min.js"></script>
+<script type="text/javascript" src="/static/js/metisMenu.min.js"></script>
 
 <!-- DataTables JavaScript -->
-<script type="text/javascript" src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/static/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="/static/vendor/datatables-responsive/dataTables.responsive.js"></script>
+<script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/dataTables.responsive.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script type="text/javascript" src="/static/dist/js/sb-admin-2.js"></script>
+<script type="text/javascript" src="/static/js/sb-admin-2.js"></script>
 
-<script type="text/javascript" src="/static/vendor/jquery/jquery.datetimepicker.full.min.js
-"></script>
+<!--<script type="text/javascript" src="/static/vendor/jquery/jquery.datetimepicker.full.min.js
+"></script>-->
 
 <!-- Funções do sistema da API -->
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
     $(document).ready(function() {
-        //$('#dataTables-example').DataTable({
-         //   responsive: true
-        //});
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
 
         $('#datetimepicker1').datetimepicker({
             locale: 'pt-br',

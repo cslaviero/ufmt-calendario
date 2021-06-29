@@ -1,14 +1,14 @@
 # app/_periodo/viewsPeriodo.py
 from flask import flash, redirect, render_template, url_for, request
 from markupsafe import Markup, escape
-from flask_login import login_required
+from flask_login import login_required, current_user
 from datetime import datetime
 from . import periodo
 from wtforms import Form, BooleanField, StringField, PasswordField, SelectField, validators
 from .. _periodo.formPeriodo import PeriodoForm
 from .. import db
 from .. import mysql
-from .. models.models import Periodo, Evento
+from .. models.models import Periodo, Evento, Permissoes
 
 @periodo.route('/periodos', methods=['GET', 'POST'])
 def periodos():
@@ -21,7 +21,13 @@ def periodos():
 	cur.execute(sql, (data1, data2))
 	rows = cur.fetchall()
 	cur.close()
-	return render_template('periodos.html', form= form, periodos= rows, title= "Períodos")
+	auxId = current_user.get_id()
+	prmEvento = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 1).first ()
+	prmCategoria = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 2).first ()
+	prmPeriodo = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 3).first ()
+	prmUsuario = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 4).first ()
+
+	return render_template('periodos.html', form= form, periodos= rows, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Períodos")
 
 @periodo.route('/insertPeriodo', methods=['POST'])
 def insertPeriodo():
@@ -88,17 +94,18 @@ def updatePeriodo(prd_id):
 
 			cat_date = request.form['dataini']
 			periodo.prd_data_ini = datetime(int(cat_date[6:10]), int(cat_date[3:5]), int(cat_date[0:2]), int(cat_date[11:13]), int(cat_date[14:16]), int(cat_date[17:19]))
-			#print('===========================data início===========:',periodo.prd_data_ini)
+			print('===========================data início===========:',periodo.prd_data_ini)
 			cat_date = request.form['datafim']
 			periodo.prd_data_fim = datetime(int(cat_date[6:10]), int(cat_date[3:5]), int(cat_date[0:2]), int(cat_date[11:13]), int(cat_date[14:16]), int(cat_date[17:19]))
-			#print('===========================data fim===========:',periodo.prd_data_fim)
+			print('===========================data fim===========:',periodo.prd_data_fim)
 			periodo.prd_url = request.form['url']
 			db.session.add(periodo)
 			#adiciona o periodo no db
 			db.session.commit()
-			flash('Alteração do período realizado com sucesso', 'success')
+			flash('Alteração do período realizada com sucesso', 'success')
 		except Exception as e:
-			flash('Alteração do período não realizado', 'error')
+			print('+++++', e)
+			flash('Alteração do período não realizada', 'error')
 		finally:
 			# redireciona para a página de períodos
 			return redirect(url_for('periodo.periodos'))

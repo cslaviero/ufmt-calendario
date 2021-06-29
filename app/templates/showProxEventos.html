@@ -1,0 +1,23 @@
+<h5>Próximos eventos</h5>
+<hr style="margin:0px;margin-bottom:16px;">
+{% if eventos %}
+    <div class="media">
+    {% for row in eventos %}
+        <img src="static/assets/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:#e10e0e;">
+        <div class="media-body">
+            <h5><a href="{{ url_for( 'home.showEvento' , idEvento= row.eve_id) }}">{{row.eve_nome}}</a></h5>
+                <p>
+                    {% if row.eve_data_ini.strftime('%d/%m%Y') == row.eve_data_fim.strftime('%d/%m%Y') %}
+                        <span id="data">{{row.eve_data_ini.strftime('%d/%m de %Hh%M')}} {{row.eve_data_fim.strftime('às %Hh%M')}}</span>
+                    {% else %}
+                        <span id="data">{{row.eve_data_ini.strftime('%d/%m às %Hh%M')}} à {{row.eve_data_fim.strftime('%d/%m às %Hh%M')}}</span>
+                    {% endif %}
+                </p>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>Não há eventos</p>
+    </div>
+{% endif %}
+
