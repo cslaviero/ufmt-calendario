@@ -1,32 +1,28 @@
 # calendarioufr
 Reprojeto do calendário acadêmico da Universidade Federal de Rondonópolis
 ###
-<span class="pln">venv\Scripts\activate</span>
-
 Start projeto
-
-use os comandos abaixo:
 usando o clone do projeto com a instalação do ambiente virtual
 acesse o diretório do projeto:
 exemplo: 
-"""
+#
 	cd c:/calendarioufr
-"""
-ativar ambiente virtual
-"""
+#
+Ativar ambiente virtual:
+#
 	venv\Scripts\activate
-"""
-start projeto:
+#
+Dependências: 
 #
 	pip install -r requirements.txt
 #
 Windows cmd:
 # 
-set FLASK_CONFIG=development
-set FLASK_APP=run.py
-set FLASK_ENV=development
-set FLASK_DEBUG=True 
-flask run
+	set FLASK_CONFIG=development
+	set FLASK_APP=run.py
+	set FLASK_ENV=development
+	set FLASK_DEBUG=True 
+	flask run
 #
 Linux and Mac:
 # 
@@ -36,10 +32,10 @@ Linux and Mac:
 	export FLASK_DEBUG=True
 	flask run
 #
-
 configurar start projeto-> link
+#
 	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
-----------------
+#
 Banco migração:
 #
 	flask db init
@@ -51,32 +47,10 @@ se já iniciado:
 	flask db migrate
 	flask db upgrade
 #
-start projeto sem a instalação do ambiente virtual
-Installar o python
-acesse o diretório do projeto:
-exemplo: 
-#
-	cd c:/calendarioufr
-#
-instalação ambiente virtual:
-#
-	py -3 -m venv venv
-#
-start ambiente virtual:
-#
-	venv\Scripts\activate
-#
----------------- 
-instalações:
-#
-	pip install -r requirements.txt
-#
-----------------
-após execute os comados de start projeto: acima listados
-----------------
-
 referência estrutura:
+#
 	https://explore-flask.readthedocs.io/en/latest/organizing.html
+#
 estrutura:
 
 	config.py
