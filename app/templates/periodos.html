@@ -35,25 +35,26 @@
     {% include 'navegacao.html' %}<!-- Nav com topo e menu lateral -->
     <div id="page-wrapper">
         <div class="row">
+            <div id="msg" class="center-block" style="width: 500px">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <hr>
+                        {%- for category, msg in messages %}
+                            {% if category == 'success' %}
+                            <div class="alert alert-success">
+                                <p class="small text-center">{{ msg }}</p>
+                            </div>
+                            {% endif %}
+                            {% if category == 'error' %}
+                            <div class="alert alert-danger">
+                                <p class="small text-center">{{ msg }}</p>
+                            </div>
+                            {% endif %}
+                        {% endfor -%}
+                    {% endif %}
+                {% endwith %}
+            </div>
             <div class="col-lg-12">
-                <div id="msg" class="center-block" style="width: 500px">
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {%- for category, msg in messages %}
-                                {% if category == 'success' %}
-                                <div class="alert alert-success">
-                                    <p class="small text-center">{{ msg }}</p>
-                                </div>
-                                {% endif %}
-                                {% if category == 'error' %}
-                                <div class="alert alert-danger">
-                                    <p class="small text-center">{{ msg }}</p>
-                                </div>
-                                {% endif %}
-                            {% endfor -%}
-                        {% endif %}
-                    {% endwith %}
-                </div>
                 <h1 class="page-header">Períodos
                 {% if  prmPeriodo.prm_inserir == 1 %}
                     <a role="button" data-toggle="modal" data-target="#ins_periodo" class="btn btn-primary" style="float: right;">Inserir período</a>
@@ -92,7 +93,7 @@
                                 <td>{{row.3}}</td>
                                 <td class="center" style="min-width: 70px;">
                                 {% if  prmPeriodo.prm_alterar == 1 %}
-                                    <a role="button" title="Editar" data-toggle="modal" data-target="#alt_periodo{{row.0}}" class="btn btn-info btn-circle" onclick="setDatepickerFim('{{row.0}}')"><i class="fa fa-pencil"></i>
+                                    <a role="button" title="Editar" data-toggle="modal" data-target="#alt_periodo{{row.0}}" class="btn btn-info btn-circle" onclick="setDatepicker('{{row.0}}')"><i class="fa fa-pencil"></i>
                                     </a>
                                 {% else %}
                                     <i class="fa fa-lock"></i>

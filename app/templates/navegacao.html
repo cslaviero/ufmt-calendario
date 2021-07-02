@@ -17,9 +17,9 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu">
-                <li><a clas="dropdown-menu" href="usuarios.php?perfil"><i class="fa fa-user fa-fw"></i> Perfil do usuário</a></li>
+                <li><a href="{{ url_for('usuario.usuarios', l='?') }}" clas="dropdown-menu"><i class="fa fa-user fa-fw"></i> Perfil do usuário</a></li>
                 <div class="divider"></div>
-                <li><a clas="dropdown-menu" href="{{ url_for('usuario.logout') }}" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Sair</a></li>
+                <li><a clas="dropdown-menu" href="{{ url_for('usuario.logout') }}"><i class="fa fa-sign-out fa-fw"></i> Sair</a></li>
             </ul>
             <!-- /.dropdown-user -->
         </li>
@@ -41,7 +41,7 @@
                         </li>
                         <li>
                             {% if prmEvento.prm_inserir == 1 %}
-                                <a data-toggle="modal" href="#ins_evento">Inserir</a>
+                                <a href="{{ url_for('evento.eventos', l='?') }}">Inserir</a>
                             {% else %}
                                 <a><i class="fa fa-lock"></i> Inserir</a>
                             {% endif %}
@@ -58,7 +58,7 @@
                         </li>
                         <li>
                             {% if prmCategoria.prm_inserir == 1 %}
-                                <a href="categorias">Inserir</a>
+                                <a href="{{ url_for('categoria.categorias', l='?') }}">Inserir</a>
                             {% else %}
                                 <a><i class="fa fa-lock"></i> Inserir</a>
                             {% endif %}
@@ -75,7 +75,7 @@
                         </li>
                         <li>
                             {% if prmPeriodo.prm_inserir == 1 %}
-                                <a href="periodos" >Inserir</a>
+                                <a href="{{ url_for('periodo.periodos', l='?') }}">Inserir</a>
                             {% else %}
                                 <a><i class="fa fa-lock"></i> Inserir</a>
                             {% endif %}
@@ -91,7 +91,7 @@
                         </li>
                         <li>
                             {% if prmUsuario.prm_inserir == 1 %}
-                                <a href="usuarios">Inserir</a>
+                                <a href="{{ url_for('usuario.usuarios', l='?') }}">Inserir</a>
                             {% else %}
                                 <a><i class="fa fa-lock"></i> Inserir</a>
                             {% endif %}

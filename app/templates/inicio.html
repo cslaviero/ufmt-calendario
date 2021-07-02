@@ -14,27 +14,20 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='css/v3.3.7.bootstrap.min.css') }}" rel="stylesheet">
-
     <!-- Colorpicker Core CSS -->
     <link href="{{ url_for('static', filename='css/pick-a-color-1.2.3.min.css') }}" rel="stylesheet">
-
     <!-- MetisMenu CSS -->
     <link href="{{ url_for('static', filename='css/metisMenu.min.css') }}" rel="stylesheet">
-
     <!-- DataTables CSS -->
     <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
-
     <!-- DataTables Responsive CSS -->
     <link href="{{ url_for('static', filename='css/dataTables.responsive.css') }}" rel="stylesheet">
-
     <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <!-- tempusdominus-bootstrap-4 -->
     <link href="{{ url_for('static', filename='css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" type="text/css">
-
     <!--<link href="{{ url_for('static', filename='dist/css/jquery.datetimepicker.css') }}" rel="stylesheet" type="text/css">-->
 
 {% endblock %}
@@ -52,6 +45,7 @@
             <div id="msg" class="center-block" style="width: 500px">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
+                        <br>
                         {%- for category, msg in messages %}
                             {% if category == 'success' %}
                             <div class="alert alert-success">
@@ -100,7 +94,7 @@
                                 <td>{{row.4}}</td>
                                 <td class="center">
                                     {% if  prmEvento.prm_inserir == 1 %}
-                                        <a role="button" data-toggle="modal" data-target="#ins_evento{{row.0}}" class="btn btn-primary btn-xs" onclick="setor('');">Inserir evento</a>
+                                        <a role="button" data-toggle="modal" data-target="#ins_evento{{row.0}}" class="btn btn-primary btn-xs" onclick="setDatepicker('{{row.0}}')">Inserir evento</a>
                                         <a role="button" class="btn btn-warning btn-xs" href="#">Enviar notificações</a>
                                     {% else %}
                                         <i class="fa fa-lock"></i>
@@ -133,48 +127,39 @@
 
 <!-- jQuery -->
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-
 <!-- Moment.js -->
 <script type="text/javascript" src="/static/js/moment.js"></script>
-
 <!-- tempusdominus-bootstrap-4 -->
 <script type="text/javascript" src="/static/js/tempusdominus-bootstrap-4.min.js"></script>
-
 <!-- Bootstrap Core JavaScript -->
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-
 <!-- Metis Menu Plugin JavaScript -->
 <script type="text/javascript" src="/static/js/metisMenu.min.js"></script>
-
 <!-- DataTables JavaScript -->
 <script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/dataTables.responsive.js"></script>
-
 <!-- Custom Theme JavaScript -->
 <script type="text/javascript" src="/static/js/sb-admin-2.js"></script>
 
-<!--<script type="text/javascript" src="/static/vendor/jquery/jquery.datetimepicker.full.min.js
-"></script>-->
-
-<!-- Funções do sistema da API -->
-
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
             responsive: true
         });
 
-        $('#datetimepicker1').datetimepicker({
-            locale: 'pt-br',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-        $('#datetimepicker2').datetimepicker({
-            locale: 'pt-br',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
     });
+    function setDatepicker(idpicker){
+        //alert(idpicker)
+        $('#datetimepicker1'+idpicker).datetimepicker({
+            language: 'pt-BR',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+        $('#datetimepicker2'+idpicker).datetimepicker({
+            language: 'pt-BR',
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+    }
 </script>
 
     <footer>

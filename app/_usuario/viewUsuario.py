@@ -7,7 +7,7 @@ from .. import db
 from .. models.models import Usuario, Permissoes, Comentario
 from .. import mysql
 
-@usuario.route('/usuarios', methods=['GET', 'POST'])
+@usuario.route('/usuarios')
 def usuarios():
 
     form = RegistrationForm()
@@ -16,37 +16,87 @@ def usuarios():
     cur.execute(sql)
     rows = cur.fetchall()
     cur.close()
+
+    permissoes = Permissoes.query.all()
+
     auxId = current_user.get_id()
     prmEvento = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 1).first ()
     prmCategoria = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 2).first ()
     prmPeriodo = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 3).first ()
     prmUsuario = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 4).first ()
 
-    return render_template('user.html', form= form, usuarios= rows, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Usuários")
+    return render_template('user.html', form= form, usuarios= rows, permissoes= permissoes, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Usuários")
 
 @usuario.route('/insertUser', methods=['GET', 'POST'])
 def insertUser():
 
     form = RegistrationForm()
     try:
-        if form.validate_on_submit():
-            usuario = Usuario ( usu_nome=form.name.data, 
-                usu_email=form.email.data,
-                usu_usuario=form.tipo.data, 
-                password=form.password.data)
-            #password com segurança werkzeug.security
-            db.session.add(usuario)
-            #https://docs.sqlalchemy.org/en/14/orm/declarative_tables.html#declarative-table-configuration
-            #add user to the database
-            db.session.commit()
-            flash('Cadastro do usuário realizado com sucesso', 'success')
-        else:
-            flash('Preencha corretamente', 'error')
-            flash('Nome inserido: '+form.name.data+' ou ', 'error')
-            flash('Email inserido: '+form.email.data, 'error')
-            flash('Cadastro do usuário não realizado: '+form.email.data, 'error')
+        usuario = Usuario ( usu_nome=form.name.data,
+            usu_email=form.email.data,
+            usu_usuario=form.tipo.data,
+            password=form.password.data)
+        #password com segurança werkzeug.security
+        db.session.add(usuario)
+        db.session.commit()
+
+        usu = Usuario.query.filter_by(usu_nome = form.name.data).first()
+        usu.usu_id
+        inserir=0
+        alterar=0
+        deletar=0
+        if form.inscat.data:#verifica o checkbok marcado
+            inserir=1
+        if form.altcat.data:#verifica o checkbok marcado
+            alterar=1
+        if form.delcat.data:#verifica o checkbok marcado
+            deletar=1
+        permissoes = Permissoes(usu.usu_id, 1, inserir, alterar, deletar)
+        db.session.add(permissoes)
+        db.session.commit()
+
+        inserir=0
+        alterar=0
+        deletar=0
+        if form.inseve.data:#verifica o checkbok marcado
+            inserir=1
+        if form.alteve.data:#verifica o checkbok marcado
+            alterar=1
+        if form.deleve.data:#verifica o checkbok marcado
+            deletar=1
+        permissoes = Permissoes(usu.usu_id, 2, inserir, alterar, deletar)
+        db.session.add(permissoes)
+        db.session.commit()
+
+        inserir=0
+        alterar=0
+        deletar=0
+        if form.insprd.data:#verifica o checkbok marcado
+            inserir=1
+        if form.altprd.data:#verifica o checkbok marcado
+            alterar=1
+        if form.delprd.data:#verifica o checkbok marcado
+            deletar=1
+        permissoes = Permissoes(usu.usu_id, 3, inserir, alterar, deletar)
+        db.session.add(permissoes)
+        db.session.commit()
+
+        inserir=0
+        alterar=0
+        deletar=0
+        if form.insusu.data:#verifica o checkbok marcado
+            inserir=1
+        if form.altusu.data:#verifica o checkbok marcado
+            alterar=1
+        if form.delusu.data:#verifica o checkbok marcado
+                deletar=1
+        permissoes = Permissoes(usu.usu_id, 4, inserir, alterar, deletar)
+        db.session.add(permissoes)
+        db.session.commit()
+
+        flash('Cadastro do usuário realizado com sucesso', 'success')
     except Exception as e:
-        flash('Cadastro do usuário não realizado: '+form.email.data, 'error')
+        flash('Cadastro do usuário não realizado' 'error')
     finally:
         return redirect(url_for('usuario.usuarios'))
 
@@ -72,7 +122,6 @@ def login():
     return render_template('login.html', form=form, title='Login')#renderiza a página login
 
 @usuario.route('/logout')
-@login_required
 def logout():
 
     logout_user() #retira o usuário da session 
@@ -80,7 +129,106 @@ def logout():
     # redireciona para a página login
     return redirect(url_for('usuario.login'))
 
-@usuario.route('/comentarios', methods=['GET', 'POST'])
+@usuario.route('/updateUsuario/<int:idUsu>', methods=['POST'])
+def updateUsuario(idUsu):
+
+    form = RegistrationForm()
+    if request.method == 'POST':
+        try:
+            usuario = Usuario.query.filter_by(usu_id = idUsu).first()
+            usuario.usu_nome = request.form['nome']
+            usuario.usu_email = request.form['email']
+            usuario.usu_usuario = request.form['usuario']
+            if request.form['senha'] != '5xxxxx':
+                usuario.password = request.form['senha']
+            db.session.commit()
+
+            inserir=0
+            alterar=0
+            deletar=0
+            if form.inscat.data:#verifica o checkbok marcado
+                inserir=1
+            if form.altcat.data:#verifica o checkbok marcado
+                alterar=1
+            if form.delcat.data:#verifica o checkbok marcado
+                deletar=1
+            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 1).first()
+            permissoes.prm_inserir = inserir
+            permissoes.prm_alterar = alterar
+            permissoes.prm_deletar = deletar
+            db.session.commit()
+
+            inserir=0
+            alterar=0
+            deletar=0
+            if form.inseve.data:#verifica o checkbok marcado
+                inserir=1
+            if form.alteve.data:#verifica o checkbok marcado
+                alterar=1
+            if form.deleve.data:#verifica o checkbok marcado
+                deletar=1
+            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 2).first()
+            permissoes.prm_inserir = inserir
+            permissoes.prm_alterar = alterar
+            permissoes.prm_deletar = deletar
+            db.session.commit()
+
+            inserir=0
+            alterar=0
+            deletar=0
+            if form.insprd.data:#verifica o checkbok marcado
+                inserir=1
+            if form.altprd.data:#verifica o checkbok marcado
+                alterar=1
+            if form.delprd.data:#verifica o checkbok marcado
+                deletar=1
+            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 3).first()
+            permissoes.prm_inserir = inserir
+            permissoes.prm_alterar = alterar
+            permissoes.prm_deletar = deletar
+            db.session.commit()
+
+            inserir=0
+            alterar=0
+            deletar=0
+            if form.insusu.data:#verifica o checkbok marcado
+                inserir=1
+            if form.altusu.data:#verifica o checkbok marcado
+                alterar=1
+            if form.delusu.data:#verifica o checkbok marcado
+                deletar=1
+            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 4).first()
+            permissoes.prm_inserir = inserir
+            permissoes.prm_alterar = alterar
+            permissoes.prm_deletar = deletar
+            db.session.commit()
+            flash('Alteração do usuário realizada com sucesso', 'success')
+        except Exception as e:
+            flash('Alteração do usuário não realizada', 'error')
+            print('******** : ', e)
+        finally:
+            # redireciona para a página de períodos
+            return redirect(url_for('usuario.usuarios'))
+
+@usuario.route('/deleteUsuario/<int:idUsu>', methods=['POST'])
+def deleteUsuario(idUsu):
+
+    if request.method == 'POST':
+        try:
+            #deleta todas permissões do usuário selecionado
+            Permissoes.query.filter_by(prm_usuario = idUsu).delete()
+            db.session.commit()
+            #deleta o usuário já sem permissões
+            Usuario.query.filter_by(usu_id = idUsu).delete()
+            db.session.commit()
+            flash('Usuário deletado com sucesso', 'success')
+        except Exception as e:
+            flash('Usuário não deletado', 'error')
+        finally:
+            # redireciona para a página de períodos
+            return redirect(url_for('usuario.usuarios'))
+
+@usuario.route('/comentarios')
 def comentarios():
 
     coment = Comentario.query.all()

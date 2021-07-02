@@ -33,16 +33,16 @@
     {% endblock %}
 </head>
 
-<body>
+<body onload="modalUser(1)" >
 {% block content %}
     {% import "bootstrap/utils.html" as utils %}
     {% import "bootstrap/wtf.html" as wtf %}
 <div id="wrapper">
 
     {% include 'navegacao.html' %} <!-- Nav com topo e menu lateral -->
-
     <div id="page-wrapper">
         <div class="row">
+            <a href="_"  data-toggle='modal' data-target='#perfil'><p>{{title}}aqui ok</p></a>
             <div class="col-lg-12">
                 <div id="msg" class="center-block" style="width: 500px">
                     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -129,6 +129,8 @@
 
 </div>
 <!-- /#wrapper -->
+<!-- Modal Perfil usuario -->
+{% include 'form_perfil_user.html' %}
 <!-- jQuery -->
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 
@@ -155,6 +157,15 @@
             responsive: true
         });
     });
+    //$('#perfil').modal('show');
+    //function modalUser(sim){
+        //alert(title)
+        if(document.URL != 'http://127.0.0.1:5000/usuarios'){
+            $('#perfil').modal('show');
+        }
+   // }
+   //var url  = document.URL;
+   //alert(url);
 </script>
 
     <footer>

@@ -37,11 +37,11 @@ class RegistrationForm(FlaskForm):
 
     def validate_email(self, field):
         if Usuario.query.filter_by(usu_email=field.data).first():
-            raise ValidationError('Email is already in use.')
+            raise ValidationError('Esse email já está sendo usado.')
 
     def validate_username(self, field):
         if Usuario.query.filter_by(usu_nome=field.data).first():
-            raise ValidationError('Username is already in use.')
+            raise ValidationError('O nome de usuário já está em uso.')
 
 class LoginForm(FlaskForm):  
     """
@@ -53,5 +53,3 @@ class LoginForm(FlaskForm):
     hora = TimeField(format='%H:%M')
     date = DateField()
     submit = SubmitField('Login')
-    #date = DateTimeField('Which date favorite', format='%Y/%m/%d %H:%M:%S')
-    #date = TimeField('Which date favorite', format='%H:%M')

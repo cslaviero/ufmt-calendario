@@ -24,22 +24,22 @@ class Usuario(UserMixin, db.Model):
 
     @property
     def password(self):
-        #Prevent pasword from being accessed
-        raise AttributeError('password is not a readable attribute.')
+        #Impedir que a senha seja acessada
+        raise AttributeError('A senha não é um atributo legível.')
 
     @password.setter
     def password(self, password):
-        #Set password to a hashed password
+        #Definir senha para uma senha com criptografada
         self.usu_senha = generate_password_hash(password)
 
     def verify_password(self, password):
-        #Check if hashed password matches actual password
+        #Verifique se a senha com criptografada corresponde à senha real
         return check_password_hash(self.usu_senha, password)
    
     def __repr__(self):
         return '<Usuário: {}>'.format(self.usu_nome)
 
-# Set up user_loader
+# Seta Configuração do user_loader
 @login_manager.user_loader
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
@@ -65,6 +65,14 @@ class Permissoes(db.Model):
     prm_inserir = db.Column(db.SmallInteger)
     prm_alterar = db.Column(db.SmallInteger)
     prm_deletar = db.Column(db.SmallInteger)
+
+    def __init__(self, prm_usuario, prm_item_permitido, prm_inserir, prm_alterar, prm_deletar):
+
+        self.prm_usuario = prm_usuario
+        self.prm_item_permitido = prm_item_permitido
+        self.prm_inserir = prm_inserir
+        self.prm_alterar = prm_alterar
+        self.prm_deletar = prm_deletar
 
     def __repr__(self):
         return '<Permissão: {}>'.format(self.prm_id)

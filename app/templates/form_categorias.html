@@ -25,9 +25,6 @@
                                         <input type="hidden" id="cor2" name="cor2" value="008000">
                                         <input type="text" value="008000" id="cor" name="cor" class="pick-a-color form-control">
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label></label>
-                                    </div>
                                 </div>
                             </div>
                             <!-- /.row (nested) -->
@@ -74,9 +71,6 @@
                                         <input  type="color" id="cor" name="cor" value="#{{row.cat_cor}}" required="required" class="pick-a-color form-control">
                                         <p>{{row.2}}</p>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label></label>
-                                    </div>
                                 </div>
                             </div>
                             <!-- /.row (nested) -->
@@ -105,13 +99,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    Tem certeza que deseja excluir?
-                    Categoria: {{row.cat_nome}}
+                    Atenção!<br/>
+                    <p>Excluir categoria: ( {{row.cat_nome}} ) ?</p>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="id" id="cod_categoria">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Sim</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-danger">Sim</button>
                 </div>
             </form>
         </div>
