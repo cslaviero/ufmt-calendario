@@ -11,7 +11,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}{{title}}{% endblock %} | Calendário UFR</title>
-<!-- Bootstrap Core CSS -->
+    <link href="{{ url_for('static', filename='img/calendar.ico') }}" rel="shortcut icon">
+    <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='css/v3.3.7.bootstrap.min.css') }}" rel="stylesheet">
     <!-- MetisMenu CSS -->
     <link href="{{ url_for('static', filename='css/metisMenu.min.css') }}" rel="stylesheet">
@@ -40,7 +41,7 @@
             <div id="msg" class="center-block" style="width: 500px">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
-                        <hr>
+                        <br>
                         {%- for category, msg in messages %}
                             {% if category == 'success' %}
                             <div class="alert alert-success">
@@ -106,7 +107,7 @@
                                     <i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if  prmEvento.prm_deletar == 1 %}
-                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_evento{{row.0}}" class="btn btn-danger btn-circle" onclick="deleta('');"><i class="fa fa-times"></i></a>
+                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_evento{{row.0}}" class="btn btn-danger btn-circle"><i class="fa fa-times"></i></a>
                                 {% else %}
                                     <i class="fa fa-lock"></i>
                                     <a role="button" title="Excluir" class="btn btn-danger btn-circle" disabled="true">
@@ -159,35 +160,9 @@
 <script type="text/javascript" src="/static/js/sb-admin-2.js"></script>
 
 <!-- Funções do sistema da API -->
-<script type="text/javascript" src="/static/dist/js/eventos.js"></script>
+<script type="text/javascript" src="/static/dist/eventos.js"></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-    $('#datetimepicker1').datetimepicker({
-            locale: 'pt-br',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-        $('#datetimepicker2').datetimepicker({
-            locale: 'pt-br',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-    function setDatepicker(idpicker){
-        //alert(idpicker)
-        $('#datetimepicker3'+idpicker).datetimepicker({
-            language: 'pt-BR',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-        $('#datetimepicker4'+idpicker).datetimepicker({
-            language: 'pt-BR',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-    }
-</script>
 
 <footer>
         <div class="container">

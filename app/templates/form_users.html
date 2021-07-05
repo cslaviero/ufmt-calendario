@@ -1,4 +1,5 @@
 <!-- /#modal inserir usuário -->
+{% if (current_user.usu_id == prmUsuario.prm_usuario) and (prmUsuario.prm_inserir == 1) %}
 <div class="modal fade" id="ins_usuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -146,6 +147,9 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+{% else %}
+    <p>Não permitido</p>
+{% endif %}
 <!-- /#modal inserir usuário -->
 
 <!-- /#modal alterar usuário -->

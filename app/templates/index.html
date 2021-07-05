@@ -4,31 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link href="{{ url_for('static', filename='img/calendar.ico') }}" rel="shortcut icon">
     <link href="{{ url_for('static', filename='css/v4.1.3.bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/fonts/fontawesome-all.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/fonts/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/fonts/simple-line-icons.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/fonts/typicons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='font-awesome/fonts/fontawesome-all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='font-awesome/fonts/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='font-awesome/fonts/simple-line-icons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='font-awesome/fonts/typicons.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
-
-    <link href="{{ url_for('static', filename='assets/css/Brands.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/Header-Blue.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/Navigation-Clean.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/css/Newsletter-Subscription-Form.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/Brands.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/Header-Blue.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/Navigation-Clean.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/Newsletter-Subscription-Form.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
-
     <!-- jQuery -->
     <script type="text/javascript" src="/static/js/v3.3.1.jquery.min.js"></script>
     <!-- Efeitos do Bootstrap -->
     <script type="text/javascript" src="/static/js/v4.1.3.bootstrap.min.js"></script>
-
     <title>{% block title %}{{title}}{% endblock %} | Calendário UFR</title>
-
-
 
     <!---->
 </head>
-<body style="margin:0px 2%;" onload="pes.setIdPeriodoAtual('{{periodos.0.0}}');pes.setPeriodoAtual('{{periodos.0.1}}'); pes.setBusca('{{strBusca}}'); pes.pesquisar('{{periodos.0.0}}', '{{periodos.0.1}}')">
+<body style="margin:0px 2%;" onload="pes.setIdPeriodoAtual('{{periodos.0.0}}');pes.setPeriodoAtual('{{periodos.0.1}}'); pes.setBusca('{{strBusca}}'); pes.pesquisar('{{periodos.0.0}}', '{{periodos.0.1}}'); pes.setUrlPdf('{{periodos.0.5}}'); pes.setUrlPdfAtual('{{periodos.0.5}}')">
     <div>
         <!-- Topo -->
         <nav class="navbar navbar-expand-sm justify-content-end">
@@ -37,9 +33,9 @@
         </nav>
         <nav class="navbar navbar-light navbar-expand-md">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="https://ufr.edu.br/" target="_blank">
                     <div class="card border-white">
-                        <img class="img-fluid card-img-top w-100 d-block" src="static/img/ufmt-logo1.png" style="max-width: 170px;margin-right: auto;margin-left: auto;max-height: auto;">
+                        <img class="img-fluid card-img-top w-100 d-block" src="static/img/ufr-logo1.png" style="max-width: 170px;margin-right: auto;margin-left: auto;max-height: auto;">
                     </div>
                 </a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2">
@@ -56,7 +52,7 @@
                                         <a class="dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(0,0,0);font-size: 20px; text-transform: uppercase;">{{periodos.0.1}}</a>
                                         <div class="dropdown-menu" role="menu">
                                             {% for row in periodos %}
-                                                <a class="dropdown-item" role="presentation" onclick="pes.pesquisar('{{row.0}}','{{row.1}}');pes.setIdPeriodo('{{row.0}}'); pes.setPeriodo('{{row.1}}')" href="#void" style="font-size: 12px; text-transform: uppercase">{{row.1}}</a>
+                                                <a class="dropdown-item" role="presentation" onclick="pes.pesquisar('{{row.0}}','{{row.1}}');pes.setIdPeriodo('{{row.0}}'); pes.setPeriodo('{{row.1}}'); pes.setUrlPdf('{{row.5}}')" href="#void" style="font-size: 18px; text-transform: uppercase">{{row.1}}</a>
                                             {% endfor %}
                                         </div>
                                     </li>
@@ -74,7 +70,7 @@
         <div class="container" style="margin-bottom:6px;">
             <form class="form-inline" id="form-busca">
                 <div class="form-group">
-                    <input class="form-control" type="search" name="busca" id="busca" required="" placeholder="Pesquise por eventos">
+                    <input class="form-control" type="search" name="busca" id="busca" placeholder="Pesquise por eventos">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit" onclick="pes.setBusca('')">Buscar</button>
@@ -126,7 +122,7 @@
             Calendário em formato PDF
         </h5>
         <p class="text-center" id="bot-visualizar" style="margin-top:16px;">
-            <a class="btn btn-danger btn-lg" role="button" href="#" target="_blank" style="margin:0px;margin-top:0px;margin-bottom:0px;font-size:16px;">
+            <a class="btn btn-danger btn-lg" role="button" href="#void" onclick="pes.abrirPdf()"  style="margin:0px;margin-top:0px;margin-bottom:0px;font-size:16px;">
                 <i class="fa fa-file-pdf-o" style="font-size:20px;margin-right:8px;"></i>
                 Visualize a versão em PDF
             </a>
@@ -134,12 +130,14 @@
     </footer>
     <div style="background-color: #3f26d7;padding: 10px;padding-top: 16px;">
         <p class="text-center">
-            <img src="static/img/ufmt-logo2.png" style="margin: 0px;">
+            <a href="https://ufr.edu.br/" target="_blank">
+                <img src="static/img/ufr-logo2.png" style="margin: 0px; max-width: 300px;max-height: auto;">
+            </a>
         </p>
-        <p class="text-center" style="color: rgb(255,255,255);font-size: 14px;">© Copyright 2018 - UFMT - Todos os direitos reservados.<br></p>
+        <p class="text-center" style="color: rgb(255,255,255);font-size: 14px;">© Copyright 2021 - UFR - Todos os direitos reservados.<br></p>
     </div>
 
-    <script type="text/javascript" src="{{url_for('static', filename='dist/js/main.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='dist/main.js') }}"></script>
 
 </body>
 </html>

@@ -11,6 +11,7 @@ from .. import mysql
 from .. models.models import Periodo, Evento, Permissoes
 
 @inicio.route('/listaInicio')
+@login_required
 def listaInicio():
 
 	form = EventoForm()
@@ -34,6 +35,7 @@ def listaInicio():
 	return render_template('inicio.html', form= form, periodos= rows, categorias= rowsCategoria, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= 'Painel de Controle')
 
 @inicio.route('/insertEventoInicio/<int:idPrd>', methods=['POST'])
+@login_required
 def insertEventoInicio(idPrd):
 
 	form = EventoForm()

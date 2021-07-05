@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}{{title}}{% endblock %} | Calendário UFR</title>
-
+    <link href="{{ url_for('static', filename='img/calendar.ico') }}" rel="shortcut icon">
     <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='css/v3.3.7.bootstrap.min.css') }}" rel="stylesheet">
     <!-- Colorpicker Core CSS -->
@@ -141,26 +141,8 @@
 <script type="text/javascript" src="/static/js/dataTables.responsive.js"></script>
 <!-- Custom Theme JavaScript -->
 <script type="text/javascript" src="/static/js/sb-admin-2.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-
-    });
-    function setDatepicker(idpicker){
-        //alert(idpicker)
-        $('#datetimepicker1'+idpicker).datetimepicker({
-            language: 'pt-BR',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-        $('#datetimepicker2'+idpicker).datetimepicker({
-            language: 'pt-BR',
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-    }
-</script>
+<!-- Funções do sistema da API -->
+<script type="text/javascript" src="/static/dist/inicio.js"></script>
 
     <footer>
         <div class="container">

@@ -17,7 +17,7 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="{{ url_for('usuario.usuarios', l='?') }}" clas="dropdown-menu"><i class="fa fa-user fa-fw"></i> Perfil do usuário</a></li>
+                <li><a href="{{ url_for('usuario.usuarios', l='1') }}" clas="dropdown-menu"><i class="fa fa-user fa-fw"></i> Perfil do usuário</a></li>
                 <div class="divider"></div>
                 <li><a clas="dropdown-menu" href="{{ url_for('usuario.logout') }}"><i class="fa fa-sign-out fa-fw"></i> Sair</a></li>
             </ul>
@@ -99,7 +99,7 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-            {% if current_user.usu_id == 1 %}
+                {% if current_user.usu_id == 1 %}
                 <li>
                     <a href="#"><i class="fa fa-comment"></i> Comentários<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -109,7 +109,8 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-            {% endif %}
+                {% endif %}
+            </ul>
         </div>
         <!-- /.sidebar-collapse -->
     </div>

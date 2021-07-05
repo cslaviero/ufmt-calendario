@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}{{title}}{% endblock %} | Calendário UFR</title>
-
+    <link href="{{ url_for('static', filename='img/calendar.ico') }}" rel="shortcut icon">
     <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='css/v3.3.7.bootstrap.min.css') }}" rel="stylesheet">
     <!-- Colorpicker Core CSS -->
@@ -41,6 +41,7 @@
             <div id="msg" class="center-block" style="width: 500px">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
+                        <br>
                         {%- for category, msg in messages %}
                             {% if category == 'success' %}
                             <div class="alert alert-success">
@@ -104,7 +105,7 @@
                                     <i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if  prmCategoria.prm_deletar == 1 %}
-                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_categoria{{row.cat_id}}" class="btn btn-danger btn-circle" onclick="deleta('');"><i class="fa fa-times"></i>
+                                    <a role="button" title="Excluir" data-toggle="modal" data-target="#del_categoria{{row.cat_id}}" class="btn btn-danger btn-circle"><i class="fa fa-times"></i>
                                     </a>
                                 {% else %}
                                     <i class="fa fa-lock"></i>
@@ -150,26 +151,13 @@
 <script type="text/javascript" src="/static/js/sb-admin-2.js"></script>
 
 <!-- Funções do sistema da API -->
-<!--<script type="text/javascript" src="/dist/js/categorias.js"></script>-->
+<script type="text/javascript" src="static/dist/categorias.js"></script>
 
 <!-- Colorpicker JavaScript -->
 <script type="text/javascript" src="/static/js/tinycolor-0.9.15.min.js"></script>
 <script type="text/javascript" src="/static/js/pick-a-color-1.2.3.min.js"></script>
 
 <!-- Scripts-->
-<script type="text/javascript">
-
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-    $("#cor").pickAColor();
-    $("#cor input").on("change", function () {
-        $("#cor2").val($(this).val());
-    });
-
-</script>
 
     <footer>
         <div class="container">

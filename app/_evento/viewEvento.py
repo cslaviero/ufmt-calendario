@@ -10,6 +10,7 @@ from .. import mysql
 from .. models.models import Evento, Permissoes
 
 @evento.route('/eventos')
+@login_required
 def eventos():
 
 	form = EventoForm()
@@ -39,6 +40,7 @@ def eventos():
 	return render_template('eventos.html', form= form, eventos= rows, periodos= rowsPeriodo, categorias= rowsCategoria, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Eventos")
 
 @evento.route('/insertEvento', methods=['POST'])
+@login_required
 def insertEvento():
 
 	form = EventoForm()
@@ -69,6 +71,7 @@ def insertEvento():
 			return redirect(url_for('evento.eventos'))
 
 @evento.route('/updateEvento/<int:idEve>', methods=['POST'])
+@login_required
 def updateEvento(idEve):
 
 	form = EventoForm()
@@ -100,6 +103,7 @@ def updateEvento(idEve):
 	return render_template('eventos.html', eventos= rows, title= "Eventos")
 
 @evento.route('/deleteEvento/<int:idEve>', methods=['POST'])
+@login_required
 def deleteEvento(idEve):
 
 	try:

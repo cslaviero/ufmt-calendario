@@ -1,19 +1,19 @@
 $(function () {
-    setTimeout(function () {
-        $('#msg').fadeToggle(2800);//elemento de msg
-    }, 2000);
+
 });
+
+setTimeout(function () {
+    $('#msg').fadeToggle(3300);//elemento de msg
+}, 2000);
 
 // ativar select de importação dos periodos
 function ativa_imp() {
     if ($('#importar').is(':checked')) {
         $('#periodo').attr("disabled", false);
-        //alert($('#importar').is(':checked'));
         $('#periodo').val('1');
     }else{
         $('#periodo').attr("disabled", true);
         $('#periodo').val('0');
-        //alert($('#importar').is(':checked'));
     }
 }
 
@@ -41,4 +41,11 @@ function setDatepicker(idpicker){
         format: 'DD/MM/YYYY HH:mm:ss'
     });
 
+}
+
+var url = document.URL;
+var n = url.length;
+
+if (url[n-1] == 'F') {
+    $('#ins_periodo').modal('show');
 }

@@ -13,7 +13,7 @@ from datetime import datetime
 def homepage():
 
 	cur = mysql.get_db().cursor()
-	sql='SELECT tbp.prd_id, tbp.prd_nome, COUNT(tbe.eve_id) as eventos, date_format(tbp.prd_data_ini, %s) as inicio, date_format(tbp.prd_data_fim, %s) as fim FROM tbl_periodos as tbp, tbl_eventos as tbe WHERE tbe.eve_periodo = tbp.prd_id GROUP BY tbe.eve_periodo DESC ORDER BY tbp.prd_data_fim DESC LIMIT 4'
+	sql='SELECT tbp.prd_id, tbp.prd_nome, COUNT(tbe.eve_id) as eventos, date_format(tbp.prd_data_ini, %s) as inicio, date_format(tbp.prd_data_fim, %s) as fim, tbp.prd_url FROM tbl_periodos as tbp, tbl_eventos as tbe WHERE tbe.eve_periodo = tbp.prd_id GROUP BY tbe.eve_periodo DESC ORDER BY tbp.prd_data_fim DESC LIMIT 4'
 	data1 = ('%d/%m/%Y %H:%i:%s')
 	data2 = ('%d/%m/%Y %H:%i:%s')
 	cur.execute(sql, (data1, data2))
@@ -24,7 +24,7 @@ def homepage():
 	cats = cur.fetchall()
 
 	cur.close()
-	return render_template('index.html', periodos=rows, categorias= cats, title='Home')
+	return render_template('index.html', periodos=rows, categorias= cats)
 
 @home.route('/coment', methods=['POST'])
 def coment():
@@ -37,19 +37,16 @@ def coment():
 			texto = request.form['texto']
 			nota = request.form['fb']
 			comentario = Comentario(name, email, curso, texto, nota)
-			print('======== comentário: ', comentario)
+
 			db.session.add(comentario)#adiciona o comentário no db
 			db.session.commit()
 		except Exception as e:
-			print(e)
+			pass
 		finally:
 			return redirect(url_for('home.homepage'))
 
 @home.route('/add/<string:idPeriodo>/<string:idCat>/<string:strBusca>', methods=['GET', 'POST'])
 def add(idPeriodo, idCat, strBusca):
-	print('idPeriodo: ', idPeriodo)
-	print('idCat: ', idCat)
-	print('strBusca: ', strBusca)
 
 	cur = mysql.get_db().cursor()
 	sql = 'SELECT tbp.prd_id, tbp.prd_nome as nome , date_format(tbp.prd_data_ini, %s) as  date_inicio , date_format(tbp.prd_data_fim, %s) as date_fim, tbp.prd_url FROM tbl_periodos as tbp ORDER BY date_fim DESC LIMIT 3'
@@ -88,21 +85,15 @@ def add(idPeriodo, idCat, strBusca):
 	# busca todos eventos do período pelo id do período
 	evento='';
 	if idCat == 'None' and strBusca == 'None':
-		print('2 nulas---------------------')
 		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).order_by(Evento.eve_data_ini.asc()).all()
 	elif idCat != 'None' and strBusca == 'None':
 		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).filter_by(eve_categoria = int(idCat)).order_by(Evento.eve_data_ini.asc()).all()
-		print('Str nula---------------------')
 	elif idCat == 'None' and strBusca != 'None':
 		strBusca = '%'+strBusca+'%'
-		print('Cat nula---------------------print strBusca: ', strBusca)
 		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).filter(Evento.eve_nome.like(strBusca)).all()
-		print('Cat nula---------------------print evento: ', evento)
 	else:
 		strBusca = '%'+strBusca+'%'
 		evento = Evento.query.filter_by(eve_periodo = int(idPeriodo)).filter_by(eve_categoria = int(idCat)).filter(Evento.eve_nome.like(strBusca)).all()
-		print('Cat nula---------------------print evento: ', evento)
-		print('Cat nula---------------------print strBusca: ', strBusca)
 
 	mesFim = '' # variavel para esvrever abreviação do mês final do evento
 	for row in evento: # inseri um objeto por vez a lista
@@ -178,7 +169,7 @@ def showEvento(idEvento):
 	eve = Evento.query.filter_by(eve_id = int(idEvento)).first()
 	if eve is None:
 		cat= None
-		flash('Erro na identificação do Evento!', 'error')
+		return redirect(url_for('home.homepage'))
 	else:
 		cat = Categoria.query.filter_by(cat_id = eve.eve_categoria).first()
 

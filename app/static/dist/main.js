@@ -1,5 +1,5 @@
 class Pesquisa{
-	constructor(idPeriodoAtual, periodoAtual, idPeriodo, idCat, nome_prd, nome_cat, nome_b) {
+	constructor(idPeriodoAtual, periodoAtual, idPeriodo, idCat, nome_prd, nome_cat, nome_b, urlPdfAtual, urlPdf) {
 		this.idPeriodoAtual = idPeriodoAtual;
 		this.periodoAtual = periodoAtual;
 		this.idPeriodo = idPeriodo;
@@ -7,6 +7,8 @@ class Pesquisa{
 		this.nome_prd = nome_prd;
 		this.nome_cat = nome_cat;
 		this.nome_b = nome_b;
+		this.urlPdfAtual = urlPdfAtual;
+		this.urlPdf = urlPdf;
 	}
 
 	getIdPeriodoAtual(){
@@ -59,7 +61,20 @@ class Pesquisa{
 		document.getElementById("busca").value = '';
 		this.bread(this.getPeriodo(), this.getCategoria(), this.getBusca());
 		this.pesquisar(this.getIdPeriodo(), this.getPeriodo());
-		//this.showteste();
+	}
+
+	getUrlPdfAtual(){
+		return this.urlPdfAtual;
+	}
+	setUrlPdfAtual(url){
+		this.urlPdfAtual = url;
+	}
+
+	getUrlPdf(){
+		return this.urlPdf;
+	}
+	setUrlPdf(url){
+		this.urlPdf = url;
 	}
 
 	pesquisar(idPeriodo, nomePeriodo) {
@@ -99,7 +114,7 @@ class Pesquisa{
 		xhttp.open("POST", "add/"+idPeriodo+"/"+idCategoria+"/"+strBusca, true);
 		//adicionar na caixa com os dados do periodo
 		xhttp.send();
-		this.showteste();
+		this.showProxEve();
 	}
 
 	// função para preencher os ítens pesquisados
@@ -126,6 +141,7 @@ class Pesquisa{
 		switch (metodo){
 			case 'periodo':
 				this.pesquisar(this.getIdPeriodoAtual(), this.getPeriodoAtual());
+				this.setUrlPdf(this.getUrlPdfAtual());
 				this.setPeriodo('');
 				this.setIdPeriodo('');
 
@@ -144,7 +160,7 @@ class Pesquisa{
 		}
 		this.bread(this.getPeriodo(), this.getCategoria(), this.getBusca());
 	}
-	showteste(){
+	showProxEve(){
 		if ( (this.getCategoria() == '') && (this.getBusca() == '') 
 			&& ((this.getPeriodo() == '') || (this.getPeriodo() == this.getPeriodoAtual())) ) {
 			var p;
@@ -158,10 +174,14 @@ class Pesquisa{
 			document.getElementById("showProxEventos").innerHTML = '';
 		}
 	}
-}
-let pes = new Pesquisa('', '', '', '', '', '', '');
 
-function myFunction() {
+	abrirPdf() {
+		open(this.getUrlPdf(), "_blank", "toolbar=yes,scrollbars=no,resizable=no,top=200,left=200,width=1000,height=450");
+	}
+}
+let pes = new Pesquisa('', '', '', '', '', '', '', '', '');
+
+function setTexto() {
 	var fb = document.forms[1];
 	var txt = "";
 	var i;
@@ -170,7 +190,6 @@ function myFunction() {
 			txt = txt + fb[i].value;
 		}
 	}
-
 	if (txt == '1') {
 		document.getElementById("order").innerHTML = 'Não foi útil';
 	}else if (txt == '2') {
@@ -185,6 +204,6 @@ function myFunction() {
 }
 
 function validar() {
-	document.getElementById("myBtn").disabled = false; 
+	document.getElementById("btnSubmit").disabled = false; 
 }
 

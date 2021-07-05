@@ -8,6 +8,7 @@ from .. models.models import Usuario, Permissoes, Comentario
 from .. import mysql
 
 @usuario.route('/usuarios')
+@login_required
 def usuarios():
 
     form = RegistrationForm()
@@ -28,6 +29,7 @@ def usuarios():
     return render_template('user.html', form= form, usuarios= rows, permissoes= permissoes, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Usuários")
 
 @usuario.route('/insertUser', methods=['GET', 'POST'])
+@login_required
 def insertUser():
 
     form = RegistrationForm()
@@ -130,6 +132,7 @@ def logout():
     return redirect(url_for('usuario.login'))
 
 @usuario.route('/updateUsuario/<int:idUsu>', methods=['POST'])
+@login_required
 def updateUsuario(idUsu):
 
     form = RegistrationForm()
@@ -143,74 +146,78 @@ def updateUsuario(idUsu):
                 usuario.password = request.form['senha']
             db.session.commit()
 
-            inserir=0
-            alterar=0
-            deletar=0
-            if form.inscat.data:#verifica o checkbok marcado
-                inserir=1
-            if form.altcat.data:#verifica o checkbok marcado
-                alterar=1
-            if form.delcat.data:#verifica o checkbok marcado
-                deletar=1
-            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 1).first()
-            permissoes.prm_inserir = inserir
-            permissoes.prm_alterar = alterar
-            permissoes.prm_deletar = deletar
-            db.session.commit()
+            auxId = current_user.get_id()
+            alterarUser = Permissoes.query.filter_by(prm_usuario = auxId).filter_by(prm_item_permitido = 4).first ()
 
-            inserir=0
-            alterar=0
-            deletar=0
-            if form.inseve.data:#verifica o checkbok marcado
-                inserir=1
-            if form.alteve.data:#verifica o checkbok marcado
-                alterar=1
-            if form.deleve.data:#verifica o checkbok marcado
-                deletar=1
-            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 2).first()
-            permissoes.prm_inserir = inserir
-            permissoes.prm_alterar = alterar
-            permissoes.prm_deletar = deletar
-            db.session.commit()
+            if alterarUser.prm_alterar == 1:
+                inserir=0
+                alterar=0
+                deletar=0
+                if form.inscat.data:#verifica o checkbok marcado
+                    inserir=1
+                if form.altcat.data:#verifica o checkbok marcado
+                    alterar=1
+                if form.delcat.data:#verifica o checkbok marcado
+                    deletar=1
+                permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 1).first()
+                permissoes.prm_inserir = inserir
+                permissoes.prm_alterar = alterar
+                permissoes.prm_deletar = deletar
+                db.session.commit()
 
-            inserir=0
-            alterar=0
-            deletar=0
-            if form.insprd.data:#verifica o checkbok marcado
-                inserir=1
-            if form.altprd.data:#verifica o checkbok marcado
-                alterar=1
-            if form.delprd.data:#verifica o checkbok marcado
-                deletar=1
-            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 3).first()
-            permissoes.prm_inserir = inserir
-            permissoes.prm_alterar = alterar
-            permissoes.prm_deletar = deletar
-            db.session.commit()
+                inserir=0
+                alterar=0
+                deletar=0
+                if form.inseve.data:#verifica o checkbok marcado
+                    inserir=1
+                if form.alteve.data:#verifica o checkbok marcado
+                    alterar=1
+                if form.deleve.data:#verifica o checkbok marcado
+                    deletar=1
+                permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 2).first()
+                permissoes.prm_inserir = inserir
+                permissoes.prm_alterar = alterar
+                permissoes.prm_deletar = deletar
+                db.session.commit()
 
-            inserir=0
-            alterar=0
-            deletar=0
-            if form.insusu.data:#verifica o checkbok marcado
-                inserir=1
-            if form.altusu.data:#verifica o checkbok marcado
-                alterar=1
-            if form.delusu.data:#verifica o checkbok marcado
-                deletar=1
-            permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 4).first()
-            permissoes.prm_inserir = inserir
-            permissoes.prm_alterar = alterar
-            permissoes.prm_deletar = deletar
-            db.session.commit()
+                inserir=0
+                alterar=0
+                deletar=0
+                if form.insprd.data:#verifica o checkbok marcado
+                    inserir=1
+                if form.altprd.data:#verifica o checkbok marcado
+                    alterar=1
+                if form.delprd.data:#verifica o checkbok marcado
+                    deletar=1
+                permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 3).first()
+                permissoes.prm_inserir = inserir
+                permissoes.prm_alterar = alterar
+                permissoes.prm_deletar = deletar
+                db.session.commit()
+
+                inserir=0
+                alterar=0
+                deletar=0
+                if form.insusu.data:#verifica o checkbok marcado
+                    inserir=1
+                if form.altusu.data:#verifica o checkbok marcado
+                    alterar=1
+                if form.delusu.data:#verifica o checkbok marcado
+                    deletar=1
+                permissoes = Permissoes.query.filter_by(prm_usuario = idUsu).filter_by(prm_item_permitido = 4).first()
+                permissoes.prm_inserir = inserir
+                permissoes.prm_alterar = alterar
+                permissoes.prm_deletar = deletar
+                db.session.commit()
             flash('Alteração do usuário realizada com sucesso', 'success')
         except Exception as e:
             flash('Alteração do usuário não realizada', 'error')
-            print('******** : ', e)
         finally:
             # redireciona para a página de períodos
             return redirect(url_for('usuario.usuarios'))
 
 @usuario.route('/deleteUsuario/<int:idUsu>', methods=['POST'])
+@login_required
 def deleteUsuario(idUsu):
 
     if request.method == 'POST':
@@ -229,6 +236,7 @@ def deleteUsuario(idUsu):
             return redirect(url_for('usuario.usuarios'))
 
 @usuario.route('/comentarios')
+@login_required
 def comentarios():
 
     coment = Comentario.query.all()

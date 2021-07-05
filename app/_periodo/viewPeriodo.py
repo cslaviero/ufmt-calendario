@@ -11,6 +11,7 @@ from .. import mysql
 from .. models.models import Periodo, Evento, Permissoes
 
 @periodo.route('/periodos')
+@login_required
 def periodos():
 
 	form = PeriodoForm()# usado no modal
@@ -30,6 +31,7 @@ def periodos():
 	return render_template('periodos.html', form= form, periodos= rows, prmEvento= prmEvento, prmCategoria= prmCategoria, prmPeriodo= prmPeriodo, prmUsuario= prmUsuario, title= "Períodos")
 
 @periodo.route('/insertPeriodo', methods=['POST'])
+@login_required
 def insertPeriodo():
 
 	form = PeriodoForm()
@@ -65,6 +67,7 @@ def insertPeriodo():
 			return redirect(url_for('periodo.periodos'))
 
 @periodo.route('/updatePeriodo/<int:prd_id>', methods=['POST'])
+@login_required
 def updatePeriodo(prd_id):
 
 	if request.method == 'POST':
@@ -86,6 +89,7 @@ def updatePeriodo(prd_id):
 			return redirect(url_for('periodo.periodos'))
 
 @periodo.route('/deletePeriodo/<int:prd_id>', methods=['POST'])
+@login_required
 def deletePeriodo(prd_id):
 
 	if request.method == 'POST':
