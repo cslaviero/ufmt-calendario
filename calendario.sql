@@ -113,8 +113,8 @@ CREATE TABLE `tbl_item_permissao` (
 --
 
 INSERT INTO `tbl_item_permissao` (`pri_id`, `pri_nome_menu`) VALUES
-(2, 'Categorias'),
 (1, 'Eventos'),
+(2, 'Categorias'),
 (3, 'Períodos'),
 (4, 'Usuários');
 
