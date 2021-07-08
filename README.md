@@ -44,15 +44,14 @@ Criar o banco de dados MySql: Calendario
 Configurar o USER e PASSWORD no arquivo 'config.py', diretório 'C:\calendarioufr\instance'
 Realizar a importação da base de dados 'calendario.sql'
 
-Na importação serão inseridos:
-Um usuário com o Login: admin e senha: 123
-Um período teste
-Um evento teste
-Os itens permitidos ao acesso do usuário
-Permissões do usuário
-Categorias
-
-Note: a importação é necessária para popular a base de dados para rodar a aplicação.
+	Na importação serão inseridos:
+	Um usuário com o Login: admin e senha: 123
+	Um período teste
+	Um evento teste
+	Os itens permitidos ao acesso do usuário
+	Permissões do usuário
+	Categorias
+	Note: a importação é necessária para popular a base de dados para rodar a aplicação.
 
 Banco migração:
 #
@@ -71,32 +70,67 @@ referência estrutura:
 #
 estrutura do projeto em diretórios:
 #
-	*calendarioufr
-		*app
-			*_categoria
+	calendarioufr
+		app
+			__init__.py
+			_categoria
 				viewCategoria.py
-			*_evento
+			_evento
 				formEvento.py
 				viewEvento.py
-			*_home
+			_home
 				viewHome.py
-			*_inicio
+			_inicio
 				viewInicio.py
-			*_periodo
+			_periodo
 				formPeriodo.py
 				viewPeriodo.py
-			*_usuario
+			_usuario
 				formUsuario.py
 				viewUsuario.py
-			*models
+			models
 				models.py
-			*static
-				*css
-				*dist
-				*font-awesome
-				*img
-				*js
-			*templates
-		*instance
-		*migrations
+			static
+				css
+				dist
+					calendar.js
+					categoria.js
+					eventos.js
+					inicio.js
+					main.js
+					periosos.js
+					usuarios.js
+				font-awesome
+				img
+				js
+			templates
+				categorias.html
+				comentarios.html
+				dadosPeriodo.html
+				eventos.html
+				eventoShow.html
+				form_categorias.html
+				form_comentario.html
+				form_eventos.html
+				form_perfil.html
+				form_eventos.html
+				form_perfil_ùser.html
+				form_periodos.html
+				form_users.html
+				index.html
+				inicio.html
+				login.hrml
+				navegacao.html
+				showProxEventos.html
+				user.html
+		instance
+			config.py
+		migrations
+			alembic.ini
+			env.py
+	calendario.sql
+	config.py
+	README.md
+	requirements.txt
+	run.py
 #
