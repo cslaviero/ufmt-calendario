@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 08-Jul-2021 às 03:26
+-- Generation Time: 08-Jul-2021 às 06:06
 -- Versão do servidor: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -97,6 +97,13 @@ CREATE TABLE `tbl_eventos` (
   `eve_url` varchar(255) COLLATE utf8_swedish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Extraindo dados da tabela `tbl_eventos`
+--
+
+INSERT INTO `tbl_eventos` (`eve_id`, `eve_periodo`, `eve_categoria`, `eve_nome`, `eve_local`, `eve_data_ini`, `eve_data_fim`, `eve_descricao`, `eve_url`) VALUES
+(1, 1, 1, 'Evento1 editar', 'Local evento1 editar', '2021-06-16 00:00:00', '2021-06-16 23:59:59', 'Texto evento1 editar', 'Url evento1 editar');
+
 -- --------------------------------------------------------
 
 --
@@ -113,8 +120,8 @@ CREATE TABLE `tbl_item_permissao` (
 --
 
 INSERT INTO `tbl_item_permissao` (`pri_id`, `pri_nome_menu`) VALUES
-(2, 'Categorias'),
 (1, 'Eventos'),
+(2, 'Categorias'),
 (3, 'Períodos'),
 (4, 'Usuários');
 
@@ -131,6 +138,13 @@ CREATE TABLE `tbl_periodos` (
   `prd_data_fim` datetime NOT NULL,
   `prd_url` text COLLATE utf8_swedish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+--
+-- Extraindo dados da tabela `tbl_periodos`
+--
+
+INSERT INTO `tbl_periodos` (`prd_id`, `prd_nome`, `prd_data_ini`, `prd_data_fim`, `prd_url`) VALUES
+(1, 'Calendário1 editar', '2021-06-15 00:00:00', '2021-06-15 23:59:59', 'https://ufr.edu.br/');
 
 -- --------------------------------------------------------
 
@@ -263,7 +277,7 @@ ALTER TABLE `tbl_comentarios`
 -- AUTO_INCREMENT for table `tbl_eventos`
 --
 ALTER TABLE `tbl_eventos`
-  MODIFY `eve_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `eve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_item_permissao`
@@ -275,7 +289,7 @@ ALTER TABLE `tbl_item_permissao`
 -- AUTO_INCREMENT for table `tbl_periodos`
 --
 ALTER TABLE `tbl_periodos`
-  MODIFY `prd_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `prd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_permissoes`

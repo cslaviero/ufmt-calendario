@@ -41,7 +41,18 @@ configurar start projeto-> link (caso algo dê errado)
 #
 
 Criar o banco de dados MySql: Calendario
-Configurar o nome e senha no arquivo 'config.py', diretório 'C:\calendarioufr\instance' 
+Configurar o USER e PASSWORD no arquivo 'config.py', diretório 'C:\calendarioufr\instance'
+Realizar a importação da base de dados 'calendario.sql'
+
+Na importação serão inseridos:
+Um usuário com o Login: admin e senha: 123
+Um período teste
+Um evento teste
+Os itens permitidos ao acesso do usuário
+Permissões do usuário
+Categorias
+
+Note: a importação é necessária para popular a base de dados para rodar a aplicação.
 
 Banco migração:
 #
@@ -60,39 +71,32 @@ referência estrutura:
 #
 estrutura do projeto em diretórios:
 #
-├───calendarioufr
-│   ├───app
-│   │   ├───models
-│   │   │   └───__pycache__
-│   │   ├───static
-│   │   │   ├───css
-│   │   │   ├───dist
-│   │   │   ├───font-awesome
-│   │   │   │   ├───css
-│   │   │   │   ├───fonts
-│   │   │   │   ├───less
-│   │   │   │   └───scss
-│   │   │   ├───img
-│   │   │   └───js
-│   │   ├───templates
-│   │   ├───_categoria
-│   │   │   └───__pycache__
-│   │   ├───_evento
-│   │   │   └───__pycache__
-│   │   ├───_home
-│   │   │   └───__pycache__
-│   │   ├───_inicio
-│   │   │   └───__pycache__
-│   │   ├───_periodo
-│   │   │   └───__pycache__
-│   │   ├───_usuario
-│   │   │   └───__pycache__
-│   │   └───__pycache__
-│   ├───instance
-│   ├───migrations
-│   │   ├───versions
-│   │   │   └───__pycache__
-│   │   └───__pycache__
-│   └───__pycache__
-----------------
+	*calendarioufr
+		*app
+			*_categoria
+				viewCategoria.py
+			*_evento
+				formEvento.py
+				viewEvento.py
+			*_home
+				viewHome.py
+			*_inicio
+				viewInicio.py
+			*_periodo
+				formPeriodo.py
+				viewPeriodo.py
+			*_usuario
+				formUsuario.py
+				viewUsuario.py
+			*models
+				models.py
+			*static
+				*css
+				*dist
+				*font-awesome
+				*img
+				*js
+			*templates
+		*instance
+		*migrations
 #
