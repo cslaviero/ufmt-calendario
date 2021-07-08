@@ -59,7 +59,7 @@ referência estrutura:
 	https://explore-flask.readthedocs.io/en/latest/organizing.html
 #
 estrutura do projeto em diretórios:
-
+#
 ├───calendarioufr
 │   ├───app
 │   │   ├───models
@@ -95,3 +95,4 @@ estrutura do projeto em diretórios:
 │   │   └───__pycache__
 │   └───__pycache__
 ----------------
+#

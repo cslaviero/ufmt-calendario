@@ -1,8 +1,10 @@
 <h5>Próximos eventos</h5>
 <hr style="margin:0px;margin-bottom:16px;">
+
 {% if eventos %}
-    <div class="media">
+    
     {% for row in eventos %}
+    <div class="media">
         <a href="{{ url_for( 'home.showEvento' , idEvento= row.eve_id) }}">
             <img src="static/img/icon-calendar.png" class="mr-3" style="width:64px;height:64px;background-color:#e10e0e;">
         </a>
@@ -18,10 +20,12 @@
                     </a>
                 </p>
         </div>
+    </div>
     {% endfor %}
-    </div>
+
 {% else %}
+
     <p>Não há eventos</p>
-    </div>
+
 {% endif %}
 

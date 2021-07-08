@@ -107,9 +107,9 @@ def login():
 
     form = LoginForm()#metodo com os inputs do formulário
     if form.validate_on_submit():#condição de validação dos inputs
-        user = Usuario.query.filter_by(usu_email=form.email.data).first()# busca o usuário no banco de dados
+        user = Usuario.query.filter_by(usu_usuario=form.tipo.data).first()# busca o usuário no banco de dados
         if user is None:#verifica se o usuário existe no banco de dados
-            flash('Email não encontrado!')# usuário não existe, então email também não.
+            flash('Usuário não encontrado!')# se usuário não existe, msg de aviso ao usuário.
             # Usuário redirecionado para a página login
         elif user is not None and user.verify_password(form.password.data):#verifica se os atributos do usuário existe no banco de dados
         #Se usúario e senha existe no mesmo objeto

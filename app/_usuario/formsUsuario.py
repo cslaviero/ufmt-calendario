@@ -47,7 +47,7 @@ class LoginForm(FlaskForm):
     """
     Form para usuário logar
     """
-    email = StringField('Email', [Email(message='Email inválido!')])
+    tipo = StringField('Usuário', validators=[DataRequired(message='Campo obrigatório.')])
     password = PasswordField('Senha', validators=[DataRequired(message='Campo obrigatório.')])
     remember = BooleanField('Lembrar-me')
     hora = TimeField(format='%H:%M')
