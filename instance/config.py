@@ -1,6 +1,7 @@
 # instance/config.py
+import os
 
-SECRET_KEY = 'p9Bv<3Eid9%$i01'
+SECRET_KEY = os.urandom(64)
 SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/calendario'
 MYSQL_DATABASE_USER = 'root'
 MYSQL_DATABASE_PASSWORD = 'root'

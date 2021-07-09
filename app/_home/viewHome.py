@@ -8,6 +8,7 @@ from .. import db
 from . import home
 from .. models.models import Evento, Categoria, Comentario
 from datetime import datetime
+import secrets
 
 @home.route('/')
 def homepage():
