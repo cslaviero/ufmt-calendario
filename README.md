@@ -1,4 +1,4 @@
-# calendarioufr
+# Calendário UFR
 Reprojeto do calendário acadêmico da Universidade Federal de Rondonópolis
 #
 Start projeto
@@ -7,9 +7,9 @@ Start projeto
 	exemplo: 
 	cd c:/calendarioufr
 #
-Instalar o python: version 3.9.5 ou superior
+Instalar o python: recomendável a version 3.9.5 ou superior
 
-	Python do projet version 3.9.5
+	Python do projeto: (version 3.9.5)
 #
 Ativar ambiente virtual:
 
@@ -40,17 +40,21 @@ configurar start projeto-> link (caso algo dê errado)
 	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
 
 #
-Criar o banco de dados MySql: Calendario
-Configurar o USER e PASSWORD no arquivo 'config.py', diretório 'C:\calendarioufr\instance'
-Realizar a importação da base de dados 'calendario.sql'
+Criar o base de dados MySql: Calendario
 
-	Na importação serão inseridos:
+	Configurar o USER e PASSWORD no arquivo 'config.py', diretório 'C:\calendarioufr\instance'
+
+	Realizar a importação da base de dados 'calendario.sql'
+
+Na importação serão inseridos:
+
 	Um usuário com o Login: admin e senha: 123
 	Um período teste
 	Um evento teste
 	Os itens permitidos ao acesso do usuário
 	Permissões do usuário
 	Categorias
+
 	Note: a importação é necessária para popular a base de dados para rodar a aplicação.
 
 Banco migração:
@@ -64,10 +68,9 @@ se já iniciado:
 	flask db migrate
 	flask db upgrade
 #
-referência estrutura:
+Referência estrutural:
 
 	https://explore-flask.readthedocs.io/en/latest/organizing.html
-#
 Estrutura do projeto:
 
 	*calendarioufr
