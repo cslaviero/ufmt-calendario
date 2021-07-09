@@ -74,7 +74,7 @@ Referência estrutural:
 Estrutura do projeto:
 
 	*calendarioufr
-	├────app
+	├──────app
 	│	├───__init__.py
 	│	├───_categoria
 	│	│	└───viewCategoria.py
