@@ -35,9 +35,13 @@ Linux and Mac:
 	export FLASK_DEBUG=True
 	flask run
 #
-Configurar start projeto: referência ou (caso algo dê errado)
+Configurar start projeto para (Development): referência ou (caso algo dê errado)
 
 	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
+
+Configurar start projeto para (Production):
+
+	https://flask.palletsprojects.com/en/2.0.x/config/
 
 #
 Criar o base de dados MySql: Calendario
