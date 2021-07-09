@@ -35,7 +35,7 @@ Linux and Mac:
 	export FLASK_DEBUG=True
 	flask run
 #
-configurar start projeto-> link (caso algo dê errado)
+Configurar start projeto: referência ou (caso algo dê errado)
 
 	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
 
@@ -74,7 +74,7 @@ Referência estrutural:
 Estrutura do projeto:
 
 	*calendarioufr
-	├───app
+	├────app
 	│	├───__init__.py
 	│	├───_categoria
 	│	│	└───viewCategoria.py
