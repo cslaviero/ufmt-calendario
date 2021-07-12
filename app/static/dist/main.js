@@ -124,7 +124,7 @@ class Pesquisa{
 		if(nome_prd != '' || nome_cat != '' || nome_b != ''){
 			breadcrumb += '<ol class="breadcrumb" style="margin: 10px 0;">';
 			if(nome_prd != ''){
-				breadcrumb += '<li class="breadcrumb-item"><a href="#retirar" title="Retirar filtro" onclick="pes.getRetira(\'periodo\')"><span style="text-transform: uppercase">'+this.getPeriodo()+'</span> <i class="typcn typcn-delete"></i></a></li>';
+				breadcrumb += '<li class="breadcrumb-item"><a href="#retirar" title="Retirar filtro" onclick="pes.getRetira(\'periodo\')"><span>'+this.getPeriodo()+'</span> <i class="typcn typcn-delete"></i></a></li>';
 			}
 			if(nome_cat != ''){
 				breadcrumb += '<li class="breadcrumb-item"><a href="#retirar" title="Retirar filtro" onclick="pes.getRetira(\'categoria\')"><span>'+this.getCategoria()+'</span> <i class="typcn typcn-delete"></i></a></li>';
