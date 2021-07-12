@@ -99,7 +99,7 @@ Estrutura do projeto:
 	│	│	└───models.py
 	│	├───static
 	│	│	├───css
-	│	│	├───dist
+	│	│	├──────dist
 	│	│	│	├───calendar.js
 	│	│	│	├───categoria.js
 	│	│	│	├───eventos.js

@@ -48,7 +48,8 @@ def updateCategoria(idCat):
 		try:
 			categoria = Categoria.query.filter_by(cat_id = idCat).first()
 			categoria.cat_nome = request.form['nome']
-			categoria.cat_cor = request.form['cor'][1:]
+			categoria.cat_cor = request.form['cor4']
+
 			db.session.commit()
 			flash('Alteração da categoria realizada com sucesso', 'success')
 		except Exception as e:
