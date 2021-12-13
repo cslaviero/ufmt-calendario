@@ -1,7 +1,0 @@
-{
-    "require": {
-        "moment/moment": "^2.22",
-        "lcobucci/jwt": "^3.2",
-        "respect/validation": "^1.1"
-    }
-}

@@ -1,0 +1,99 @@
+<!-- /#modal inserir evento -->
+<div class="modal fade" id="ins_evento{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{url_for('inicio.insertEventoInicio', idPrd = row.0)}}" method="POST">
+                {{form.hidden_tag()}}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Inserir evento</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Nome do evento</label>
+                                        <input name="nome" class="form-control" required>
+                                        <p class="help-block">Até 255 caracteres.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label>Data/Hora de Início</label>
+                                        <div class="form-group">
+                                            <div class="input-group date" id="datetimepicker1{{row.0}}" data-target-input="nearest">
+                                                <input type="text" name="dataini" placeholder="01/07/2021 00:00:00" class="form-control datetimepicker-input" data-target="#datetimepicker1{{row.0}}" required >
+                                                <div class="input-group-append" data-target="#datetimepicker1{{row.0}}" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <label>Data/Hora de Fim</label>
+                                        <div class="form-group">
+                                            <div class="input-group date" id="datetimepicker2{{row.0}}" data-target-input="nearest">
+                                                <input type="text" name="datafim" placeholder="01/07/2021 23:59:59" class="form-control datetimepicker-input" data-target="#datetimepicker2{{row.0}}" required>
+                                                <div class="input-group-append" data-target="#datetimepicker2{{row.0}}" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label>Categoria</label>
+                                        <select name="categoria" id="categoria" class="form-control" enabled="true" value='0' required>
+                                            {% for row in categorias %}
+                                                <option value ='{{ row.0 }}'>{{ row.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6" style="margin: 30px 0px;">
+                                        <label>
+                                            {{ form.enviarNotificacao ( onchange='ativa_imp()') }}
+                                             Enviar notificação
+                                        </label>
+                                        <!--<label>
+                                            <input name="notificacao" type="checkbox" value="1"> Enviar notificação
+                                        </label>-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label>Local</label>
+                                        <input name="local" class="form-control" required>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>URL</label>
+                                        <input name="url" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Descrição</label>
+                                    <textarea name="desc" class="form-control" rows="3" required></textarea>
+                                </div>
+
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /#modal inserir evento -->

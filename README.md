@@ -1,32 +1,143 @@
-# Calendario Acadêmico
+# Calendário UFR
+Reprojeto do calendário acadêmico da Universidade Federal de Rondonópolis
+#
+Start projeto
 
-Reprojeto do calendário acadêmico da Universidade Federal de Mato Grosso/ Rondonópolis
+	Usando o clone do projeto acesse o diretório do projeto:
+	exemplo: 
+	cd c:/calendarioufr
+#
+Instalar o python: recomendável a version 3.9.5 ou superior
 
-Pré Requisitos
-- PHP 5.6 ou superior
-- Apache 2.x com mod_rewrite ativado
+	Python do projeto: (version 3.9.5)
+#
+Ativar ambiente virtual:
 
-Arquivo de conexão ao Banco de Dados
-- "app\src\conecta.php"
+	venv\Scripts\activate
+#
+Dependências: 
 
-Banco de Dados em SQL para instalação
-- "calendario.sql"
+	pip install -r requirements.txt
+#
+Windows cmd:
 
-## Instalação de Servidor local para testes
+	set FLASK_CONFIG=development
+	set FLASK_APP=run.py
+	set FLASK_ENV=development
+	set FLASK_DEBUG=True 
+	flask run
+#
+Linux and Mac:
 
-Baixe o XAMPP para Windows
-- https://www.apachefriends.org/index.html
-- No setup de instalação, selecione os serviços para instalar (Apache, MySQL, PHP, Perl e phpMyAdmin).
-- Selecione uma pasta para instalar o xampp (Ex.: C:\xampp).
-- Após instalados todos os serviços, copie ou clone o projeto para a pasta /htdocs dentro da pasta raiz do Xampp.
-- Ative o mod_rewrite no arquivo httpd.conf, clicando em "config" no painel do Xampp. Dentro do arquivo php.ini descomente a linha correspondente ao comando "LoadModule rewrite_module modules/mod_rewrite.so".
+	export FLASK_CONFIG=development
+	export FLASK_APP=run.py
+	export FLASK_ENV=development
+	export FLASK_DEBUG=True
+	flask run
+#
+Configurar start projeto para (Development): referência ou (caso algo dê errado)
 
-Instalar Banco de dados
-- Inicie o Serviço phpMyAdmin usando o Browser (http://localhost/phpMyAdmin ou clique em phpMyAdmin no botão "config" do Apache no painel do Xampp) e efetue o login digitando os valores padrões de login: root, sem senha.
-- Importe o arquivo calendario.sql que consta na pasta raíz deste projeto clicando em "Importar".
+	https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
 
-Acessar o site do Calendário
-- Acesse o site através do Browser (http://localhost)
-- Para acessar a Área Administrativa (http://localhost/admin)
-  * Usuário: admin
-  * Senha: admin
+Configurar start projeto para (Production):
+
+	https://flask.palletsprojects.com/en/2.0.x/config/
+
+#
+Criar o base de dados MySql: Calendario
+
+	Configurar o USER e PASSWORD no arquivo 'config.py', diretório 'C:\calendarioufr\instance'
+
+	Realizar a importação da base de dados 'calendario.sql'
+
+Na importação serão inseridos:
+
+	Um usuário com o Login: admin e senha: 123
+	Um período teste
+	Um evento teste
+	Os itens permitidos ao acesso do usuário
+	Permissões do usuário
+	Categorias
+
+	Note: a importação é necessária para popular a base de dados para rodar a aplicação.
+
+Banco migração:
+
+	flask db init
+
+se já iniciado:
+
+	flask db stamp head
+
+	flask db migrate
+	flask db upgrade
+#
+Referência estrutural:
+
+	https://explore-flask.readthedocs.io/en/latest/organizing.html
+Estrutura do projeto:
+
+	*calendarioufr
+	├──────app
+	│	├───__init__.py
+	│	├───_categoria
+	│	│	└───viewCategoria.py
+	│	├───_evento
+	│	│	├───formEvento.py
+	│	│	└───viewEvento.py
+	│	├───_home
+	│	│	└───viewHome.py
+	│	├───_inicio
+	│	│	└───viewInicio.py
+	│	├───_periodo
+	│	│	├───formPeriodo.py
+	│	│	└───viewPeriodo.py
+	│	├───_usuario
+	│	│	├───formUsuario.py
+	│	│	└───viewUsuario.py
+	│	├───models
+	│	│	└───models.py
+	│	├───static
+	│	│	├───css
+	│	│	├──────dist
+	│	│	│	├───calendar.js
+	│	│	│	├───categoria.js
+	│	│	│	├───eventos.js
+	│	│	│	├───inicio.js
+	│	│	│	├───main.js
+	│	│	│	├───periosos.js
+	│	│	│	└───usuarios.js
+	│	│	├───font-awesome
+	│	│	├───img
+	│	│	└───js
+	│	└───templates
+	│		├───categorias.html
+	│		├───comentarios.html
+	│		├───dadosPeriodo.html
+	│		├───eventos.html
+	│		├───eventoShow.html
+	│		├───form_categorias.html
+	│		├───form_comentario.html
+	│		├───form_eventos.html
+	│		├───form_perfil.html
+	│		├───form_eventos.html
+	│		├───form_perfil_ùser.html
+	│		├───form_periodos.html
+	│		├───form_users.html
+	│		├───index.html
+	│		├───inicio.html
+	│		├───login.hrml
+	│		├───navegacao.html
+	│		├───showProxEventos.html
+	│		└───user.html
+	├───instance
+	│	└───config.py
+	├───migrations
+	│	├───alembic.ini
+	│	└───env.py
+	├───calendario.sql
+	├───config.py
+	├───README.md
+	├───requirements.txt
+	└───run.py
+#

@@ -1,3 +1,23 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: 08-Jul-2021 às 06:06
+-- Versão do servidor: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Database: `calendario`
 --
@@ -5,25 +25,19 @@
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbl_campus`
+-- Estrutura da tabela `alembic_version`
 --
 
-CREATE TABLE `tbl_campus` (
-  `cps_id` int(11) NOT NULL,
-  `cps_nome` varchar(100) COLLATE utf8mb4_swedish_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+CREATE TABLE `alembic_version` (
+  `version_num` varchar(32) COLLATE utf8_swedish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
--- Extraindo dados da tabela `tbl_campus`
+-- Extraindo dados da tabela `alembic_version`
 --
 
-INSERT INTO `tbl_campus` (`cps_id`, `cps_nome`) VALUES
-(1, 'Cuiabá'),
-(2, 'Rondonópolis'),
-(3, 'Várzea Grande'),
-(4, 'Sinop'),
-(5, 'Araguaia-Pontal'),
-(6, 'Araguaia-B. do Garças');
+INSERT INTO `alembic_version` (`version_num`) VALUES
+('b6b880adabd6');
 
 -- --------------------------------------------------------
 
@@ -35,20 +49,35 @@ CREATE TABLE `tbl_categoria` (
   `cat_id` int(11) NOT NULL,
   `cat_nome` varchar(100) COLLATE utf8_swedish_ci NOT NULL,
   `cat_cor` varchar(8) COLLATE utf8_swedish_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Extraindo dados da tabela `tbl_categoria`
 --
 
 INSERT INTO `tbl_categoria` (`cat_id`, `cat_nome`, `cat_cor`) VALUES
-(1, 'Dia Letivo', '5757ff'),
+(1, 'Dia Letivo', '0000ff'),
 (2, 'Feriado', 'ff0000'),
 (3, 'Matrícula/Rematrícula', 'ff00ea'),
 (4, 'Eventos', '008000'),
-(5, 'Recesso', 'e8d317'),
+(5, 'Recesso', 'ffff00'),
 (6, 'Semestre Letivo', 'ff6600'),
-(8, 'Solicitações', '800080');
+(7, 'Solicitações', '800080');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tbl_comentarios`
+--
+
+CREATE TABLE `tbl_comentarios` (
+  `com_id` int(11) NOT NULL,
+  `com_nome` varchar(40) COLLATE utf8_swedish_ci NOT NULL,
+  `com_email` varchar(40) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `com_curso` varchar(40) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `com_texto` text COLLATE utf8_swedish_ci NOT NULL,
+  `com_nota` varchar(2) COLLATE utf8_swedish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -59,37 +88,21 @@ INSERT INTO `tbl_categoria` (`cat_id`, `cat_nome`, `cat_cor`) VALUES
 CREATE TABLE `tbl_eventos` (
   `eve_id` int(11) NOT NULL,
   `eve_periodo` int(11) NOT NULL,
-  `eve_campus` int(11) DEFAULT '0',
   `eve_categoria` int(11) NOT NULL,
   `eve_nome` varchar(255) COLLATE utf8_swedish_ci NOT NULL,
-  `eve_local` varchar(255) COLLATE utf8_swedish_ci NOT NULL,
+  `eve_local` varchar(255) COLLATE utf8_swedish_ci DEFAULT NULL,
   `eve_data_ini` datetime NOT NULL,
   `eve_data_fim` datetime NOT NULL,
-  `eve_descricao` mediumtext COLLATE utf8_swedish_ci NOT NULL,
-  `eve_url` varchar(255) COLLATE utf8_swedish_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+  `eve_descricao` text COLLATE utf8_swedish_ci NOT NULL,
+  `eve_url` varchar(255) COLLATE utf8_swedish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Extraindo dados da tabela `tbl_eventos`
 --
 
-INSERT INTO `tbl_eventos` (`eve_id`, `eve_periodo`, `eve_campus`, `eve_categoria`, `eve_nome`, `eve_local`, `eve_data_ini`, `eve_data_fim`, `eve_descricao`, `eve_url`) VALUES
-(1, 1, 0, 6, 'Período Letivo 2018/1', 'Todos os campus', '2018-03-21 00:00:00', '2018-10-19 00:00:00', 'Período Letivo 2018/1', ''),
-(3, 1, 0, 3, 'Período de ajuste de matrícula ON-LINE pelo aluno no sistema de créditos.', 'Site da UFMT', '2018-03-21 00:00:00', '2018-09-22 23:59:59', 'Início  do  período  de  ajuste  de matrícula  ON-LINE  pelo  aluno  no sistema  de  créditos (cancelar  e/ou acrescentar  disciplinas),  conforme Resolução  Consepe  nº52/1994  para  o período letivo 2018/1, campi de Cuiabá, Rondonópolis e Várzea Grande.', 'http://www.ufmt.br'),
-(9, 1, 0, 3, 'Solicitação de Extraordinário aproveitamento de estudos', '', '2018-03-23 00:00:00', '2018-04-10 23:59:59', 'Solicitação de aproveitamento de estudos para cursos no sistema de\r\ncrédito semestral do período 2018/2 conforme art.2º da Res. CONSEPE nº83/2017.', ''),
-(10, 1, 0, 3, 'Período de inscrição dos grupos corais da UFMT', '', '2018-03-23 00:00:00', '2018-03-29 23:59:59', '', ''),
-(11, 1, 0, 1, 'Período de avaliação dos projetos de extensão pela Câmara de Extensão.', '', '2018-03-23 00:00:00', '2018-03-29 23:59:59', '', ''),
-(12, 1, 0, 3, 'Período de requerimento de ajuste de matrícula pelo aluno', 'SEI', '2018-03-26 00:00:00', '2018-03-31 23:59:59', 'Período de requerimento de ajuste de matrícula pelo aluno para análise e\r\nhomologação do coordenador de curso de graduação (semestrais e anuais), no período letivo 2018/1, pelo protocolo virtual.', ''),
-(13, 1, 0, 3, 'Prazo para solicitação de aproveitamento de estudos para cursos no sistema de crédito semestral do período 2018/2', '', '2018-03-26 00:00:00', '2018-06-04 23:59:59', 'Prazo para solicitação de aproveitamento de estudos para cursos no sistema de\r\ncrédito semestral do período 2018/2 conforme art.2º da Res. CONSEPE nº83/2017.', ''),
-(14, 1, 0, 1, 'Encerramento do 1º período para solicitação de diplomas de Pós-graduação Stricto Sensu', '', '2018-03-27 00:00:00', '2018-03-27 23:59:59', 'Encerramento do 1º período para solicitação de diplomas de Pós-graduação Stricto\r\nSensu da UFMT.', ''),
-(15, 1, 0, 2, 'Paixão de Cristo', '', '2018-03-30 00:00:00', '2018-03-30 23:59:59', '', ''),
-(16, 1, 0, 2, 'Feriado Nacional – Páscoa', '', '2018-04-01 00:00:00', '2018-04-01 23:59:59', '', ''),
-(17, 1, 0, 1, 'Período de publicação dos editais para o processo seletivo 2018/2 dos cursos de Pós-graduação Stricto Sensu', '', '2018-04-02 00:00:00', '2018-04-27 23:59:59', 'Período de publicação dos editais para o processo seletivo 2018/2 dos cursos\r\nde Pós-graduação Stricto Sensu', ''),
-(18, 1, 0, 1, 'Publicação do Edital do Programa de Apoio a Inclusão da PRAE', '', '2018-04-02 00:00:00', '2018-04-02 23:59:59', '', ''),
-(19, 1, 0, 1, 'Período de solicitação de ônibus e de auxílio discente para apresentação de trabalhos e participação em eventos', 'SEI (Sistema Eletrônico de Informação)', '2018-04-03 00:00:00', '2018-04-03 23:59:59', 'Período de solicitação de ônibus e de auxílio discente para apresentação de trabalhos e participação em eventos externos nos meses de maio, junho, julho e agosto de 2018 – PRAE.', 'http://sei.ufmt.br'),
-(20, 1, 1, 2, 'Aniversário de Cuiabá', '', '2018-04-08 00:00:00', '2018-04-08 23:59:59', '', ''),
-(21, 1, 0, 1, 'Prazo de processos solicitando à secretaria da PROPG, concessão, cancelamento ou suspensão de bolsas CAPES.', '', '2018-04-10 00:00:00', '2018-04-10 23:59:59', 'Prazo para protocolo via SEI (Sistema Eletrônico de Informação), de\r\nprocessos solicitando à secretaria da PROPG, concessão, cancelamento ou suspensão de bolsas CAPES.', 'http://sei.ufmt.br'),
-(22, 1, 0, 1, 'Período para os docentes registrarem os Planos de Ensino dos cursos de graduação no AVA', '', '2018-04-10 00:00:00', '2018-04-18 23:59:59', 'Período para os docentes registrarem os Planos de Ensino dos cursos de graduação\r\nno ambiente virtual de aprendizagem (AVA)', 'http://ava.ufmt.br');
+INSERT INTO `tbl_eventos` (`eve_id`, `eve_periodo`, `eve_categoria`, `eve_nome`, `eve_local`, `eve_data_ini`, `eve_data_fim`, `eve_descricao`, `eve_url`) VALUES
+(1, 1, 1, 'Evento1 editar', 'Local evento1 editar', '2021-06-16 00:00:00', '2021-06-16 23:59:59', 'Texto evento1 editar', 'Url evento1 editar');
 
 -- --------------------------------------------------------
 
@@ -99,8 +112,8 @@ INSERT INTO `tbl_eventos` (`eve_id`, `eve_periodo`, `eve_campus`, `eve_categoria
 
 CREATE TABLE `tbl_item_permissao` (
   `pri_id` int(11) NOT NULL,
-  `pri_nome_menu` varchar(100) COLLATE utf8_swedish_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+  `pri_nome_menu` varchar(200) COLLATE utf8_swedish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Extraindo dados da tabela `tbl_item_permissao`
@@ -110,8 +123,7 @@ INSERT INTO `tbl_item_permissao` (`pri_id`, `pri_nome_menu`) VALUES
 (1, 'Eventos'),
 (2, 'Categorias'),
 (3, 'Períodos'),
-(4, 'Campus'),
-(5, 'Usuários');
+(4, 'Usuários');
 
 -- --------------------------------------------------------
 
@@ -125,15 +137,14 @@ CREATE TABLE `tbl_periodos` (
   `prd_data_ini` datetime NOT NULL,
   `prd_data_fim` datetime NOT NULL,
   `prd_url` text COLLATE utf8_swedish_ci
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Extraindo dados da tabela `tbl_periodos`
 --
 
 INSERT INTO `tbl_periodos` (`prd_id`, `prd_nome`, `prd_data_ini`, `prd_data_fim`, `prd_url`) VALUES
-(1, 'Calendário 2018/1', '2018-03-21 00:00:00', '2018-10-19 00:00:00', 'http://www.ufmt.br/graduacao/arquivos/ce7cc5f9bf5faea5860bccdba31d8768.pdf'),
-(2, 'Calendário 2018/2', '2018-10-19 00:00:01', '2019-04-16 00:00:00', NULL);
+(1, 'Calendário1 editar', '2021-06-15 00:00:00', '2021-06-15 23:59:59', 'https://ufr.edu.br/');
 
 -- --------------------------------------------------------
 
@@ -145,10 +156,10 @@ CREATE TABLE `tbl_permissoes` (
   `prm_id` int(11) NOT NULL,
   `prm_usuario` int(11) NOT NULL,
   `prm_item_permitido` int(11) NOT NULL,
-  `prm_inserir` smallint(1) NOT NULL,
-  `prm_alterar` smallint(1) NOT NULL,
-  `prm_deletar` smallint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `prm_inserir` smallint(6) DEFAULT NULL,
+  `prm_alterar` smallint(6) DEFAULT NULL,
+  `prm_deletar` smallint(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Extraindo dados da tabela `tbl_permissoes`
@@ -158,13 +169,7 @@ INSERT INTO `tbl_permissoes` (`prm_id`, `prm_usuario`, `prm_item_permitido`, `pr
 (1, 1, 1, 1, 1, 1),
 (2, 1, 2, 1, 1, 1),
 (3, 1, 3, 1, 1, 1),
-(4, 1, 4, 1, 1, 1),
-(5, 1, 5, 1, 1, 1),
-(30, 6, 5, 1, 0, 1),
-(29, 6, 4, 1, 0, 1),
-(28, 6, 3, 1, 0, 1),
-(27, 6, 2, 1, 0, 1),
-(26, 6, 1, 1, 0, 1);
+(4, 1, 4, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -174,107 +179,149 @@ INSERT INTO `tbl_permissoes` (`prm_id`, `prm_usuario`, `prm_item_permitido`, `pr
 
 CREATE TABLE `tbl_usuarios` (
   `usu_id` int(11) NOT NULL,
-  `usu_nome` varchar(100) NOT NULL,
-  `usu_email` varchar(200) NOT NULL,
-  `usu_usuario` varchar(60) NOT NULL,
-  `usu_senha` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `usu_nome` varchar(100) COLLATE utf8_swedish_ci NOT NULL,
+  `usu_email` varchar(200) COLLATE utf8_swedish_ci NOT NULL,
+  `usu_usuario` varchar(60) COLLATE utf8_swedish_ci NOT NULL,
+  `usu_senha` text COLLATE utf8_swedish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Extraindo dados da tabela `tbl_usuarios`
 --
 
 INSERT INTO `tbl_usuarios` (`usu_id`, `usu_nome`, `usu_email`, `usu_usuario`, `usu_senha`) VALUES
-(1, 'Administrador', 'alisonoliveira1@gmail.com', 'admin', 'admin'),
-(6, 'Alison Oliveira', 'alison@usinadoingresso.com.br', 'alison1', 'alison1');
+(1, 'teste1', 'teste1@teste.com', 'admin', 'pbkdf2:sha256:260000$djM4ePzmroPyF0Y6$b09dd7fc6bf3eb1a6e668872a37f37f480295c6ed4b6dc0e94af99c26308b543');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tbl_campus`
+-- Indexes for table `alembic_version`
 --
-ALTER TABLE `tbl_campus`
-  ADD PRIMARY KEY (`cps_id`);
+ALTER TABLE `alembic_version`
+  ADD PRIMARY KEY (`version_num`);
 
 --
 -- Indexes for table `tbl_categoria`
 --
 ALTER TABLE `tbl_categoria`
-  ADD PRIMARY KEY (`cat_id`);
+  ADD PRIMARY KEY (`cat_id`),
+  ADD UNIQUE KEY `cat_nome` (`cat_nome`),
+  ADD UNIQUE KEY `cat_nome_2` (`cat_nome`);
+
+--
+-- Indexes for table `tbl_comentarios`
+--
+ALTER TABLE `tbl_comentarios`
+  ADD PRIMARY KEY (`com_id`);
 
 --
 -- Indexes for table `tbl_eventos`
 --
 ALTER TABLE `tbl_eventos`
-  ADD PRIMARY KEY (`eve_id`);
+  ADD PRIMARY KEY (`eve_id`),
+  ADD KEY `eve_categoria` (`eve_categoria`),
+  ADD KEY `eve_periodo` (`eve_periodo`);
 
 --
 -- Indexes for table `tbl_item_permissao`
 --
 ALTER TABLE `tbl_item_permissao`
-  ADD PRIMARY KEY (`pri_id`);
+  ADD PRIMARY KEY (`pri_id`),
+  ADD UNIQUE KEY `pri_nome_menu` (`pri_nome_menu`);
 
 --
 -- Indexes for table `tbl_periodos`
 --
 ALTER TABLE `tbl_periodos`
-  ADD PRIMARY KEY (`prd_id`);
+  ADD PRIMARY KEY (`prd_id`),
+  ADD UNIQUE KEY `prd_nome` (`prd_nome`),
+  ADD UNIQUE KEY `prd_nome_2` (`prd_nome`);
 
 --
 -- Indexes for table `tbl_permissoes`
 --
 ALTER TABLE `tbl_permissoes`
-  ADD PRIMARY KEY (`prm_id`);
+  ADD PRIMARY KEY (`prm_id`),
+  ADD KEY `prm_item_permitido` (`prm_item_permitido`),
+  ADD KEY `prm_usuario` (`prm_usuario`);
 
 --
 -- Indexes for table `tbl_usuarios`
 --
 ALTER TABLE `tbl_usuarios`
   ADD PRIMARY KEY (`usu_id`),
-  ADD KEY `usu_id` (`usu_id`),
-  ADD KEY `usu_id_2` (`usu_id`);
+  ADD UNIQUE KEY `usu_email` (`usu_email`),
+  ADD UNIQUE KEY `usu_email_2` (`usu_email`),
+  ADD UNIQUE KEY `usu_nome` (`usu_nome`),
+  ADD UNIQUE KEY `usu_nome_2` (`usu_nome`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tbl_campus`
---
-ALTER TABLE `tbl_campus`
-  MODIFY `cps_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
 -- AUTO_INCREMENT for table `tbl_categoria`
 --
 ALTER TABLE `tbl_categoria`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tbl_comentarios`
+--
+ALTER TABLE `tbl_comentarios`
+  MODIFY `com_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tbl_eventos`
 --
 ALTER TABLE `tbl_eventos`
-  MODIFY `eve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `eve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `tbl_item_permissao`
 --
 ALTER TABLE `tbl_item_permissao`
-  MODIFY `pri_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `pri_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `tbl_periodos`
 --
 ALTER TABLE `tbl_periodos`
-  MODIFY `prd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `prd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `tbl_permissoes`
 --
 ALTER TABLE `tbl_permissoes`
-  MODIFY `prm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `prm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `tbl_usuarios`
 --
 ALTER TABLE `tbl_usuarios`
-  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `tbl_eventos`
+--
+ALTER TABLE `tbl_eventos`
+  ADD CONSTRAINT `tbl_eventos_ibfk_1` FOREIGN KEY (`eve_categoria`) REFERENCES `tbl_categoria` (`cat_id`),
+  ADD CONSTRAINT `tbl_eventos_ibfk_2` FOREIGN KEY (`eve_periodo`) REFERENCES `tbl_periodos` (`prd_id`);
+
+--
+-- Limitadores para a tabela `tbl_permissoes`
+--
+ALTER TABLE `tbl_permissoes`
+  ADD CONSTRAINT `tbl_permissoes_ibfk_1` FOREIGN KEY (`prm_item_permitido`) REFERENCES `tbl_item_permissao` (`pri_id`),
+  ADD CONSTRAINT `tbl_permissoes_ibfk_2` FOREIGN KEY (`prm_usuario`) REFERENCES `tbl_usuarios` (`usu_id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,0 +1,28 @@
+bugs e correções 
+- input data se passado vazio, gera exception
+- solução: corrigir a validação
+
+- verificar os campos da model que são obrigatórios
+
+- datapicker não está carregando no update período 
+possivelmente não está recarregando
+
+- ao deletar período com eventos exception( corrigido com o delete de todos eventos pertencentes ao período)
+sqlalchemy.exc.IntegrityError: (MySQLdb._exceptions.IntegrityError) (1451, 'Cannot delete or update a parent row: a foreign key
+
+- link de inserir abrir o modal simultâneos no menu lateral não funciona (tentar passar na function javascript)
+
+- verificar título das rotas (todos no plural como menu lateral)
+----------------
+Em início é listado um período com a maior data final, de propósito?
+feito desta forma.
+
+- tratar a possibilidade de um período não ter evento!
+visto que esta sendo executado o grup by nos eventos ao trazer os dados, assim o período sem eventos não entra
+na busca(?)
+----------------
+
+
+
+
+

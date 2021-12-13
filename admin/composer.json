@@ -1,6 +1,0 @@
-{
-    "require": {
-        "moment/moment": "^2.22",
-        "itsjavi/bootstrap-colorpicker": "^3.0"
-    }
-}

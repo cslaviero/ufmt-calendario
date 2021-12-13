@@ -1,0 +1,118 @@
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ url_for('home.homepage') }}">Calendário UFR</a>
+    </div>
+    <!-- /.navbar-header -->
+    <ul class="nav navbar-top-links navbar-right">
+        <!-- /.dropdown -->
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url_for('usuario.usuarios', l='1') }}" clas="dropdown-menu"><i class="fa fa-user fa-fw"></i> Perfil do usuário</a></li>
+                <div class="divider"></div>
+                <li><a clas="dropdown-menu" href="{{ url_for('usuario.logout') }}"><i class="fa fa-sign-out fa-fw"></i> Sair</a></li>
+            </ul>
+            <!-- /.dropdown-user -->
+        </li>
+        <!-- /.dropdown -->
+    </ul>
+    <!-- /.navbar-top-links -->
+
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="listaInicio"><i class="fa fa-home fa-fw"></i> Início</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-calendar fa-fw"></i> Eventos<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="eventos">Listar</a>
+                        </li>
+                        <li>
+                            {% if prmEvento.prm_inserir == 1 %}
+                                <a href="{{ url_for('evento.eventos', l='?') }}">Inserir</a>
+                            {% else %}
+                                <a><i class="fa fa-lock"></i> Inserir</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-tags fa-fw"></i> Categorias<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="categorias">Listar</a>
+                        </li>
+                        <li>
+                            {% if prmCategoria.prm_inserir == 1 %}
+                                <a href="{{ url_for('categoria.categorias', l='?') }}">Inserir</a>
+                            {% else %}
+                                <a><i class="fa fa-lock"></i> Inserir</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-mortar-board fa-fw"></i> Períodos<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="periodos">Listar</a>
+                        </li>
+                        <li>
+                            {% if prmPeriodo.prm_inserir == 1 %}
+                                <a href="{{ url_for('periodo.periodos', l='?') }}">Inserir</a>
+                            {% else %}
+                                <a><i class="fa fa-lock"></i> Inserir</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i> Usuários<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="usuarios">Listar</a>
+                        </li>
+                        <li>
+                            {% if prmUsuario.prm_inserir == 1 %}
+                                <a href="{{ url_for('usuario.usuarios', l='?') }}">Inserir</a>
+                            {% else %}
+                                <a><i class="fa fa-lock"></i> Inserir</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                {% if current_user.usu_id == 1 %}
+                <li>
+                    <a href="#"><i class="fa fa-comment"></i> Comentários<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="comentarios"><i class="fa fa-unlock"></i> Listar</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+    <!-- /.navbar-static-side -->
+</nav>

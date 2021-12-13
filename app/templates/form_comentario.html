@@ -1,0 +1,55 @@
+<!-- /#modal comentário -->
+<!-- Modal -->
+<div class="modal fade" id="comentar" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="text-justify" id="">Olá, contribua para o desenvolvimento dessa aplicação com sua opinião, aqui você pode deixar sugestões, críticas, relatar bugs, etc.</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <div>
+          <form action="{{url_for('home.coment')}}" method="POST">
+            <label class="col-sm-2" for="name">Nome:</label>
+            <input class="col-sm-9" type="text" id="name" name="name" placeholder="" required="">
+
+            <label class="col-sm-2" for="email">Email:</label>
+            <input class="col-sm-9" type="text" id="email" name="email" placeholder="( Opcional )">
+
+            <label class="col-sm-2" for="curso">Curso:</label>
+            <input class="col-sm-9" type="text" id="curso" name="curso"placeholder="( Opcional )">
+          
+           
+            <hr><textarea class="col-sm-12" id="texto" name="texto" rows="3" cols="57" placeholder="Escreva aqui..." required=""></textarea>
+        </div>
+
+          <div class="col-sm-12 row justify-content-center">
+          <label class="col-sm-12 row justify-content-center">Quantas estrelas a aplicação ganha?</label>
+              <div class=" estrelas">
+                  <label for="cm_star-1"><i class="fa"></i></label>
+                  <input onclick="setTexto(); validar()" type="radio" id="cm_star-1" name="fb" value="1"/>
+                  <label for="cm_star-2"><i class="fa"></i></label>
+                  <input onclick="setTexto(); validar()" type="radio" id="cm_star-2" name="fb" value="2"/>
+                  <label for="cm_star-3"><i class="fa"></i></label>
+                  <input onclick="setTexto(); validar()" type="radio" id="cm_star-3" name="fb" value="3" checked/>
+                  <label for="cm_star-4"><i class="fa"></i></label>
+                  <input onclick="setTexto(); validar()" type="radio" id="cm_star-4" name="fb" value="4"/>
+                  <label for="cm_star-5"><i class="fa"></i></label>
+                  <input onclick="setTexto(); validar()" type="radio" id="cm_star-5" name="fb" value="5"/>
+              </div>
+
+          <p class="col-sm-12 row justify-content-center" type="input" name="" id="order">Marque a estrela</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" id="btnSubmit" class="btn btn-success" disabled="true">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- /#modal inserir comentário -->
