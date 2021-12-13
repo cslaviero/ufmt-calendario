@@ -1,6 +1,6 @@
-# Calendario Acadêmico UFMT
+# Calendario Acadêmico
 
-Reprojeto do calendário acadêmico da Universidade Federal de Mato Grosso.
+Reprojeto do calendário acadêmico da Universidade Federal de Mato Grosso/ Rondonópolis
 
 Pré Requisitos
 - PHP 5.6 ou superior
