@@ -1,0 +1,6 @@
+
+tasks:
+  - init: pip install -r requirements.txt
+vscode:
+  extensions:
+    - bpmn-io.vs-code-bpmn-io
