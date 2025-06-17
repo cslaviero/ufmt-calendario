@@ -1,39 +1,32 @@
 # Calendário UFR
 Reprojeto do calendário acadêmico da Universidade Federal de Rondonópolis
 #
-Start projeto
+## Como iniciar
 
-	Usando o clone do projeto acesse o diretório do projeto:
-	exemplo: 
-	cd c:/calendarioufr
-#
-Instalar o python: recomendável a version 3.9.5 ou superior
+1. Instale o **Python 3.11** ou superior.
+2. Crie e ative um ambiente virtual:
 
-	Python do projeto: (version 3.9.5)
-#
-Ativar ambiente virtual:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # no Windows use venv\Scripts\activate
+   ```
 
-	venv\Scripts\activate
-#
-Dependências: 
+3. Instale as dependências:
 
-	pip install -r requirements.txt
-#
-Windows cmd:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-	set FLASK_CONFIG=development
-	set FLASK_APP=run.py
-	set FLASK_ENV=development
-	set FLASK_DEBUG=True 
-	flask run
-#
-Linux and Mac:
+4. Defina as variáveis do Flask e execute a aplicação:
 
-	export FLASK_CONFIG=development
-	export FLASK_APP=run.py
-	export FLASK_ENV=development
-	export FLASK_DEBUG=True
-	flask run
+   ```bash
+   export FLASK_CONFIG=development
+   export FLASK_APP=run.py
+   export FLASK_ENV=development
+   export FLASK_DEBUG=True
+   flask run
+   ```
+   No Windows substitua `export` por `set`.
 #
 Configurar start projeto para (Development): referência ou (caso algo dê errado)
 
@@ -44,24 +37,14 @@ Configurar start projeto para (Production):
 	https://flask.palletsprojects.com/en/2.0.x/config/
 
 #
-Criar o base de dados MySql: Calendario
+### Banco de dados
 
-	Configurar o USER e PASSWORD no arquivo 'config.py', diretório 'C:\calendarioufr\instance'
+1. Crie um banco MySQL chamado **calendario**.
+2. Ajuste `USER` e `PASSWORD` em `instance/config.py`.
+3. Importe o arquivo `calendario.sql` para incluir os dados iniciais (usuário admin, itens de exemplo etc.).
+   A importação é necessária para que a aplicação funcione corretamente.
 
-	Realizar a importação da base de dados 'calendario.sql'
-
-Na importação serão inseridos:
-
-	Um usuário com o Login: admin e senha: 123
-	Um período teste
-	Um evento teste
-	Os itens permitidos ao acesso do usuário
-	Permissões do usuário
-	Categorias
-
-	Note: a importação é necessária para popular a base de dados para rodar a aplicação.
-
-Banco migração:
+### Migrações
 
 	flask db init
 
