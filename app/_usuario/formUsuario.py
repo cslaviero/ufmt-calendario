@@ -2,7 +2,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import widgets, Form as _Form
-from wtforms.fields.html5 import DateTimeField, DateField, TimeField
+from wtforms.fields import DateTimeField, DateField, TimeField
 from wtforms import PasswordField, StringField, SubmitField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 from .. models.models import Usuario
